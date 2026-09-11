@@ -1,0 +1,97 @@
+.elementor-kit-16{--e-global-color-primary:#FF5F01;--e-global-color-secondary:#000000;--e-global-color-text:#FFFFFF;--e-global-color-accent:#FF1D1D;--e-global-color-f34517e:#0A7F6E;--e-global-color-867e95c:#08665B;--e-global-typography-primary-font-family:"Khand";--e-global-typography-primary-font-weight:600;--e-global-typography-secondary-font-family:"Halcom";--e-global-typography-secondary-font-weight:400;--e-global-typography-text-font-family:"Khand";--e-global-typography-text-font-weight:500;--e-global-typography-accent-font-family:"Halcom";--e-global-typography-accent-font-weight:900;}.elementor-kit-16 e-page-transition{background-color:#FFBC7D;}.elementor-section.elementor-section-boxed > .elementor-container{max-width:1280px;}.e-con{--container-max-width:1280px;}.elementor-widget:not(:last-child){--kit-widget-spacing:20px;}.elementor-element{--widgets-spacing:20px 20px;--widgets-spacing-row:20px;--widgets-spacing-column:20px;}{}h1.entry-title{display:var(--page-title-display);}.site-header .site-branding{flex-direction:column;align-items:stretch;}.site-header{padding-inline-end:0px;padding-inline-start:0px;}.site-footer .site-branding{flex-direction:column;align-items:stretch;}@media(max-width:1024px){.elementor-section.elementor-section-boxed > .elementor-container{max-width:1024px;}.e-con{--container-max-width:1024px;}}@media(max-width:767px){.elementor-section.elementor-section-boxed > .elementor-container{max-width:767px;}.e-con{--container-max-width:767px;}}/* Start custom CSS */body::-webkit-scrollbar {
+  width: 12px;
+}
+body::-webkit-scrollbar-track {
+  background: #000000;
+}
+body::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(0deg, #FF8035, #F6422E);
+  border-radius: 20px;
+  border: 3px solid #000000;
+}/* End custom CSS */
+/* Start Custom Fonts CSS */@font-face {
+	font-family: 'Khand';
+	font-style: normal;
+	font-weight: normal;
+	font-display: auto;
+	src: url('../fonts/Khand-Regular.eot');
+	src: url('../fonts/Khand-Regular.eot#iefix') format('embedded-opentype'),
+		url('../fonts/Khand-Regular.woff2') format('woff2'),
+		url('../fonts/Khand-Regular.woff') format('woff'),
+		url('../fonts/Khand-Regular.ttf') format('truetype'),
+		url('../images/Khand-Regular.svg#Khand') format('svg');
+}
+@font-face {
+	font-family: 'Khand';
+	font-style: normal;
+	font-weight: 600;
+	font-display: auto;
+	src: url('../fonts/Khand-Medium.eot');
+	src: url('../fonts/Khand-Medium.eot#iefix') format('embedded-opentype'),
+		url('../fonts/Khand-Medium.woff2') format('woff2'),
+		url('../fonts/Khand-Medium.woff') format('woff'),
+		url('../fonts/Khand-Medium.ttf') format('truetype'),
+		url('../images/Khand-Medium.svg#Khand') format('svg');
+}
+@font-face {
+	font-family: 'Khand';
+	font-style: normal;
+	font-weight: 800;
+	font-display: auto;
+	src: url('../fonts/Khand-Bold.eot');
+	src: url('../fonts/Khand-Bold.eot#iefix') format('embedded-opentype'),
+		url('../fonts/Khand-Bold.woff2') format('woff2'),
+		url('../fonts/Khand-Bold.woff') format('woff'),
+		url('../fonts/Khand-Bold.ttf') format('truetype'),
+		url('../images/Khand-Bold.svg#Khand') format('svg');
+}
+/* End Custom Fonts CSS */
+/* Start Custom Fonts CSS */@font-face {
+	font-family: 'Halcom';
+	font-style: normal;
+	font-weight: normal;
+	font-display: auto;
+	src: url('../fonts/Halcom-Regular.eot');
+	src: url('../fonts/Halcom-Regular.eot#iefix') format('embedded-opentype'),
+		url('../fonts/Halcom-Regular.woff2') format('woff2'),
+		url('../fonts/Halcom-Regular.woff') format('woff'),
+		url('../fonts/Halcom-Regular.ttf') format('truetype'),
+		url('../images/Halcom-Regular.svg#Halcom') format('svg');
+}
+@font-face {
+	font-family: 'Halcom';
+	font-style: normal;
+	font-weight: 500;
+	font-display: auto;
+	src: url('../fonts/Halcom-Medium.eot');
+	src: url('../fonts/Halcom-Medium.eot#iefix') format('embedded-opentype'),
+		url('../fonts/Halcom-Medium.woff2') format('woff2'),
+		url('../fonts/Halcom-Medium.woff') format('woff'),
+		url('../fonts/Halcom-Medium.ttf') format('truetype'),
+		url('../images/Halcom-Medium.svg#Halcom') format('svg');
+}
+@font-face {
+	font-family: 'Halcom';
+	font-style: normal;
+	font-weight: 800;
+	font-display: auto;
+	src: url('../fonts/Halcom-Bold.eot');
+	src: url('../fonts/Halcom-Bold.eot#iefix') format('embedded-opentype'),
+		url('../fonts/Halcom-Bold.woff2') format('woff2'),
+		url('../fonts/Halcom-Bold.woff') format('woff'),
+		url('../fonts/Halcom-Bold.ttf') format('truetype'),
+		url('../images/Halcom-Bold.svg#Halcom') format('svg');
+}
+@font-face {
+	font-family: 'Halcom';
+	font-style: normal;
+	font-weight: 900;
+	font-display: auto;
+	src: url('../fonts/Halcom-ExtraBold.eot');
+	src: url('../fonts/Halcom-ExtraBold.eot#iefix') format('embedded-opentype'),
+		url('../fonts/Halcom-ExtraBold.woff2') format('woff2'),
+		url('../fonts/Halcom-ExtraBold.woff') format('woff'),
+		url('../fonts/Halcom-ExtraBold.ttf') format('truetype'),
+		url('../images/Halcom-ExtraBold.svg#Halcom') format('svg');
+}
+/* End Custom Fonts CSS */

@@ -1,0 +1,27 @@
+.elementor-2034 .elementor-element.elementor-element-2fb183a8{--display:flex;--flex-direction:row;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--justify-content:center;--align-items:center;--gap:30px 30px;--row-gap:30px;--column-gap:30px;--padding-top:18px;--padding-bottom:18px;--padding-left:20px;--padding-right:0px;}.elementor-widget-image .widget-image-caption{color:var( --e-global-color-text );font-family:var( --e-global-typography-text-font-family ), Khand;font-weight:var( --e-global-typography-text-font-weight );}.elementor-2034 .elementor-element.elementor-element-45ddfcdb{width:var( --container-widget-width, 108px );max-width:108px;--container-widget-width:108px;--container-widget-flex-grow:0;}.elementor-2034 .elementor-element.elementor-element-45ddfcdb.elementor-element{--align-self:center;}.elementor-2034 .elementor-element.elementor-element-45ddfcdb img{width:100%;}.elementor-widget-button .elementor-button{background-color:var( --e-global-color-accent );font-family:var( --e-global-typography-accent-font-family ), Khand;font-weight:var( --e-global-typography-accent-font-weight );}.elementor-2034 .elementor-element.elementor-element-50c0f249 .elementor-button{background-color:var( --e-global-color-primary );font-family:"Khand", Khand;font-weight:900;border-style:solid;border-width:1px 1px 1px 1px;border-color:#B697FF47;border-radius:10px 10px 10px 10px;padding:18px 35px 18px 35px;}.elementor-2034 .elementor-element.elementor-element-50c0f249 .elementor-button:hover, .elementor-2034 .elementor-element.elementor-element-50c0f249 .elementor-button:focus{background-color:transparent;background-image:linear-gradient(180deg, var( --e-global-color-primary ) 0%, var( --e-global-color-accent ) 100%);}.elementor-2034 .elementor-element.elementor-element-50c0f249.elementor-element{--align-self:center;}body.elementor-page-2034:not(.elementor-motion-effects-element-type-background), body.elementor-page-2034 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-color:#000000;}:root{--page-title-display:none;}@media(max-width:767px){.elementor-2034 .elementor-element.elementor-element-2fb183a8{--width:250px;--min-height:0px;--flex-direction:row;--container-widget-width:initial;--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--gap:20px 20px;--row-gap:20px;--column-gap:20px;--padding-top:20px;--padding-bottom:2px;--padding-left:9px;--padding-right:0px;--z-index:22222;}.elementor-2034 .elementor-element.elementor-element-45ddfcdb{--container-widget-width:73px;--container-widget-flex-grow:0;width:var( --container-widget-width, 73px );max-width:73px;}.elementor-2034 .elementor-element.elementor-element-50c0f249 .elementor-button{border-radius:10px 10px 10px 10px;padding:12px 15px 10px 10px;}}@media(min-width:768px){.elementor-2034 .elementor-element.elementor-element-2fb183a8{--width:400px;}}/* Start custom CSS for container, class: .elementor-element-2fb183a8 */.preco {
+  position: fixed;
+  bottom: 30px;
+  right: -420px;
+  opacity: 0;
+  z-index: 9999999;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background-color: rgba(0, 0, 0, 0.3); /* necessário pro blur aparecer */
+  border-radius: 10px;
+  border: solid 1px #ffffff30;
+  transition: 0.5s ease;
+}
+
+.preco-ativo {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  opacity: 1;
+  z-index: 9999999;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: solid 1px #ffffff30;
+  transition: 0.7s ease;
+}/* End custom CSS */
