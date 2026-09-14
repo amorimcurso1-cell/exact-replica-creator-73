@@ -4,5 +4,5 @@
 - [x] Restaurar CTAs “Quero Dominar as Vendas”
 - [x] Validar layout, build e preview
 - [x] Executar sem nova confirmação e deixar o preview atualizado
-- [ ] Aplicar a nova foto na seção do Mark Diniz e seu rosto nos banners
-- [ ] Validar a nova foto em desktop e celular
+- [x] Aplicar a nova foto na seção do Mark Diniz e seu rosto nos banners
+- [x] Validar a nova foto em desktop e celular
