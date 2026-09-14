@@ -25,3 +25,12 @@
   border: solid 1px #ffffff30;
   transition: 0.7s ease;
 }/* End custom CSS */
+
+/* Ajustes solicitados */
+.elementor-1759 .elementor-element.elementor-element-4d3ee4a{position:relative;overflow:hidden;}
+.elementor-1759 .elementor-element.elementor-element-4d3ee4a::before{content:"";position:absolute;z-index:1;pointer-events:none;left:50%;top:42px;width:150px;height:175px;background:url('/images/face-overlay.webp') center/contain no-repeat;}
+.elementor-1759 .elementor-element.elementor-element-dd57f5c{position:relative;z-index:2;}
+.elementor-element.elementor-element-ed7c18a img{display:block;width:100%;height:auto;border-radius:28px;overflow:hidden;}
+.elementor-element.elementor-element-d7bc221{display:none!important;}
+img[src*="selo.png"],img[src*="selo-300x300.png"],img[src*="selo-150x150.png"]{display:none!important;}
+@media(max-width:767px){.elementor-1759 .elementor-element.elementor-element-4d3ee4a::before{display:none;}.elementor-element.elementor-element-ed7c18a img{border-radius:22px;}}
