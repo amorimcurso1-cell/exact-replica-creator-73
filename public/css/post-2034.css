@@ -1,10 +1,10 @@
 /* Ajustes visuais do banner */
 .elementor-1759 .elementor-element.elementor-element-4d3ee4a{position:relative;overflow:hidden}
-.elementor-1759 .elementor-element.elementor-element-4d3ee4a::before{content:"";position:absolute;left:58%;top:72px;width:118px;height:145px;background:url('/images/face-overlay.webp') center/cover no-repeat;transform:translateX(-50%);z-index:1;pointer-events:none;border-radius:0;filter:saturate(.9) brightness(.94);-webkit-mask-image:radial-gradient(ellipse 54% 58% at 50% 50%,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse 54% 58% at 50% 50%,#000 58%,transparent 100%)}
+.elementor-1759 .elementor-element.elementor-element-4d3ee4a::before{content:"";position:absolute;left:56.5%;top:58px;width:125px;height:145px;background:url('/images/face-only-overlay.png') center/100% 100% no-repeat;transform:translateX(-50%);z-index:1;pointer-events:none}
 .elementor-1759 .elementor-element.elementor-element-dd57f5c{position:relative;z-index:2}
 .elementor-1759 .elementor-element.elementor-element-ed7c18a{position:relative;overflow:hidden;border-radius:28px;background:#111}
 .elementor-1759 .elementor-element.elementor-element-ed7c18a img{display:none!important}
 .elementor-1759 .elementor-element.elementor-element-ed7c18a::before{content:"";display:block;width:100%;aspect-ratio:436/682;background:url('/images/second-banner.png') center/cover no-repeat;border-radius:28px}
 .elementor-1759 .elementor-element.elementor-element-d7bc221{display:none!important}
 .elementor-1759 img[src*="selo.png"],.elementor-1759 img[src*="selo-300x300.png"],.elementor-1759 img[src*="selo-150x150.png"]{display:none!important}
-@media(max-width:767px){.elementor-1759 .elementor-element.elementor-element-4d3ee4a::before{display:block;left:58%;top:50px;width:86px;height:105px}.elementor-1759 .elementor-element.elementor-element-ed7c18a::before{border-radius:22px}}
+@media(max-width:767px){.elementor-1759 .elementor-element.elementor-element-4d3ee4a::before{display:block;left:56.5%;top:50px;width:86px;height:105px}.elementor-1759 .elementor-element.elementor-element-ed7c18a::before{border-radius:22px}}
