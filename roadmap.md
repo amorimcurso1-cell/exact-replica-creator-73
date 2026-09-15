@@ -6,3 +6,7 @@
 - [x] Executar sem nova confirmação e deixar o preview atualizado
 - [x] Aplicar a nova foto na seção do Mark Diniz e seu rosto nos banners
 - [x] Validar a nova foto em desktop e celular
+- [ ] Aplicar as novas imagens na capa, dispositivos e seção “Pra quem é”
+- [ ] Substituir os feedbacks pelas quatro imagens enviadas
+- [ ] Remover o certificado e os ícones pequenos dos CTAs
+- [ ] Validar as alterações em desktop e celular
