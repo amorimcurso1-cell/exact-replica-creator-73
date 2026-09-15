@@ -1,24 +1,125 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRouteWithContext,
+  useRouter,
+  HeadContent,
+  Scripts,
+} from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
-function NotFoundComponent(){return <div className="flex min-h-screen items-center justify-center bg-background px-4"><div className="max-w-md text-center"><h1 className="text-7xl font-bold text-foreground">404</h1><h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2><p className="mt-2 text-sm text-muted-foreground">The page you're looking for doesn't exist or has been moved.</p><div className="mt-6"><Link to="/" className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">Go home</Link></div></div></div>}
-function ErrorComponent({error,reset}:{error:Error;reset:()=>void}){console.error(error);const router=useRouter();useEffect(()=>{reportLovableError(error,{boundary:"tanstack_root_error_component"})},[error]);return <div className="flex min-h-screen items-center justify-center bg-background px-4"><div className="max-w-md text-center"><h1 className="text-xl font-semibold text-foreground">This page didn't load</h1><button onClick={()=>{router.invalidate();reset()}} className="mt-6 rounded-md bg-primary px-4 py-2 text-white">Try again</button></div></div>}
+function NotFoundComponent() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-7xl font-bold text-foreground">404</h1>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+        <div className="mt-6">
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Go home
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-export const Route=createRootRouteWithContext<{queryClient:QueryClient}>()({
- head:()=>({meta:[{charSet:"utf-8"},{name:"viewport",content:"width=device-width, initial-scale=1"},{title:"Projeto dos 100K"},{name:"description",content:"Estratégias práticas para vender na Shopee."},{name:"author",content:"Mark Diniz"},{property:"og:title",content:"Projeto dos 100K"},{property:"og:description",content:"Estratégias práticas para vender na Shopee."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}],links:[{rel:"stylesheet",href:appCss},{rel:"icon",href:"/favicon.ico",type:"image/x-icon"}]}),
- shellComponent:RootShell,component:RootComponent,notFoundComponent:NotFoundComponent,errorComponent:ErrorComponent
+function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+  console.error(error);
+  const router = useRouter();
+  useEffect(() => {
+    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+  }, [error]);
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+          This page didn't load
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Something went wrong on our end. You can try refreshing or head back home.
+        </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          <button
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Try again
+          </button>
+          <a
+            href="/"
+            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+          >
+            Go home
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "Projeto dos 100K" },
+      { name: "description", content: "Estratégias práticas para vender na Shopee." },
+      { name: "author", content: "Mark Diniz" },
+      { property: "og:title", content: "Projeto dos 100K" },
+      { property: "og:description", content: "Estratégias práticas para vender na Shopee." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [
+      {
+        rel: "stylesheet",
+        href: appCss,
+      },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+    ],
+  }),
+  shellComponent: RootShell,
+  component: RootComponent,
+  notFoundComponent: NotFoundComponent,
+  errorComponent: ErrorComponent,
 });
-function RootShell({children}:{children:ReactNode}){return <html lang="en"><head><HeadContent/></head><body>{children}<Scripts/></body></html>}
 
-function RootComponent(){const{queryClient}=Route.useRouteContext();useEffect(()=>{
- const css=document.createElement("style");css.id="nextgen-fix-css";css.textContent=`.nextgen-cta-logo{width:30px!important;height:30px!important;object-fit:contain!important;background:transparent!important;mix-blend-mode:multiply!important;display:block!important}.nextgen-live-countdown{width:100%;display:flex;align-items:center;justify-content:center}.nextgen-live-countdown .countdown-numbers{display:flex!important;align-items:baseline!important;justify-content:center!important;gap:4px!important}.nextgen-live-countdown .countdown-item{display:flex!important;align-items:baseline!important;gap:2px!important}.nextgen-live-countdown .countdown-num{font-size:24px!important;font-weight:800!important;line-height:1!important}.nextgen-live-countdown .countdown-unit{font-size:9px!important}.nextgen-live-countdown .countdown-sep{font-size:18px!important}`;document.head.appendChild(css);
- const norm=(s:string)=>(s||"").replace(/\s+/g," ").trim().toUpperCase(),ctaText="QUERO DOMINAR AS VENDAS",key="nextgen_24h_offer_started",duration=86400000;
- const ctas=()=>Array.from(document.querySelectorAll<HTMLElement>("a,button,[role='button']")).filter(e=>norm(e.textContent||"").includes(ctaText));
- const enhance=()=>ctas().forEach(cta=>{if(!cta.querySelector(".nextgen-cta-logo")){const img=document.createElement("img");img.className="nextgen-cta-logo";img.src="https://present-crimson-8pbuvjls.edgeone.dev/";img.alt="";img.setAttribute("aria-hidden","true");img.onerror=()=>img.remove();(cta.querySelector(".elementor-button-content-wrapper")||cta).prepend(img)}const security=cta.parentElement?.parentElement?.querySelector<HTMLImageElement>("img[src*='compra-segura']");if(security)security.style.background="transparent"});
- const countdown=()=>{const bar=document.querySelector<HTMLElement>(".countdown-bar");if(!bar)return;let box=bar.querySelector<HTMLElement>(".nextgen-live-countdown");if(!box){bar.innerHTML=`<span class="countdown-label">⏳ Oferta encerra em:</span><div class="nextgen-live-countdown"><div class="countdown-numbers"><div class="countdown-item"><span class="countdown-num" data-n="d">00</span><span class="countdown-unit">dias</span></div><span class="countdown-sep">:</span><div class="countdown-item"><span class="countdown-num" data-n="h">24</span><span class="countdown-unit">horas</span></div><span class="countdown-sep">:</span><div class="countdown-item"><span class="countdown-num" data-n="m">00</span><span class="countdown-unit">min</span></div><span class="countdown-sep">:</span><div class="countdown-item"><span class="countdown-num" data-n="s">00</span><span class="countdown-unit">seg</span></div></div></div>`;box=bar.querySelector<HTMLElement>(".nextgen-live-countdown")}if(!box)return;const started=localStorage.getItem(key),remain=started?Math.max(0,Number(started)+duration-Date.now()):duration,total=Math.floor(remain/1000),v={d:Math.floor(total/86400),h:Math.floor(total%86400/3600),m:Math.floor(total%3600/60),s:total%60};Object.entries(v).forEach(([k,n])=>{const e=box!.querySelector<HTMLElement>(`[data-n="${k}"]`);if(e)e.textContent=String(n).padStart(2,"0")})};
- const bind=()=>ctas().forEach(cta=>{if(cta.dataset.nextgenTimer)return;cta.dataset.nextgenTimer="1";cta.addEventListener("click",()=>{if(!localStorage.getItem(key))localStorage.setItem(key,String(Date.now()))},true)});
- enhance();bind();countdown();const timer=window.setInterval(countdown,1000),observer=new MutationObserver(()=>{enhance();bind();countdown()});observer.observe(document.body,{childList:true,subtree:true});return()=>{clearInterval(timer);observer.disconnect();css.remove()}
- },[]);return <QueryClientProvider client={queryClient}><Outlet/></QueryClientProvider>}
+function RootShell({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+
+function RootComponent() {
+  const { queryClient } = Route.useRouteContext();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      <Outlet />
+    </QueryClientProvider>
+  );
+}
