@@ -1,6 +1,6 @@
 /* Ajustes visuais do banner */
 .elementor-1759 .elementor-element.elementor-element-4d3ee4a{position:relative;overflow:hidden}
-.elementor-1759 .elementor-element.elementor-element-4d3ee4a::before{content:"";position:absolute;left:56.5%;top:58px;width:125px;height:145px;background:url('/images/face-only-overlay.png') center/100% 100% no-repeat;transform:translateX(-50%);z-index:1;pointer-events:none}
+.elementor-1759 .elementor-element.elementor-element-4d3ee4a::before{display:none}
 .elementor-1759 .elementor-element.elementor-element-dd57f5c{position:relative;z-index:2}
 .elementor-1759 .elementor-element.elementor-element-ed7c18a{position:relative;overflow:hidden;border-radius:28px;background:#111}
 .elementor-1759 .elementor-element.elementor-element-ed7c18a img{display:none!important}
