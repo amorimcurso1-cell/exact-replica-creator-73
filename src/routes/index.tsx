@@ -1,29 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 import siteHtml from "../site/index.html?raw";
 
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Projeto dos 100K | Vendas na Shopee" },
-      {
-        name: "description",
-        content: "Projeto dos 100K com Mark Diniz: estratégias para vender na Shopee com margem, validação e escala.",
-      },
-      { property: "og:title", content: "Projeto dos 100K | Vendas na Shopee" },
-      {
-        property: "og:description",
-        content: "Aprenda com Mark Diniz a vender na Shopee com estratégia, margem e escala.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
-  server: {
-    handlers: {
-      GET: () =>
-        new Response(siteHtml, {
-          headers: { "content-type": "text/html; charset=utf-8" },
-        }),
-    },
-  },
+const visualEnhancements = `<style id="nextgen-visual-enhancements">
+.nextgen-cta-enhanced{display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;position:relative!important}.nextgen-cta-enhanced .nextgen-store-logo{width:30px!important;height:30px!important;object-fit:contain!important;flex:0 0 auto!important;filter:drop-shadow(0 1px 1px rgba(0,0,0,.25))}.nextgen-trust-strip{display:flex;justify-content:center;align-items:center;width:min(100%,420px);margin:7px auto 0;min-height:25px;overflow:hidden}.nextgen-trust-strip img{width:min(100%,300px);height:25px;object-fit:contain;opacity:.98}.nextgen-countdown-host{overflow:hidden!important}.nextgen-live-countdown{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:100%;padding:10px 8px 12px;box-sizing:border-box;background:linear-gradient(100deg,#ff7b32 0%,#ff3d2e 55%,#ff3328 100%);color:#fff;font-family:Arial,Helvetica,sans-serif;text-align:center}.nextgen-live-countdown .nextgen-countdown-label{font-size:12px;font-weight:800;letter-spacing:.04em}.nextgen-live-countdown .nextgen-countdown-values{display:flex;align-items:baseline;justify-content:center;gap:5px;font-weight:800;white-space:nowrap}.nextgen-live-countdown .nextgen-unit{display:flex;align-items:baseline;gap:2px}.nextgen-live-countdown .nextgen-number{font-size:24px;line-height:1}.nextgen-live-countdown .nextgen-caption{font-size:9px;font-weight:600;opacity:.95}.nextgen-live-countdown .nextgen-sep{font-size:18px;opacity:.9}.nextgen-ribbon-enhanced{display:flex!important;justify-content:center!important;align-items:center!important;gap:28px!important;flex-wrap:wrap!important}@media(max-width:480px){.nextgen-live-countdown .nextgen-number{font-size:21px}.nextgen-live-countdown .nextgen-values{gap:3px}.nextgen-live-countdown .nextgen-caption{font-size:8px}.nextgen-cta-enhanced .nextgen-store-logo{width:28px!important;height:28px!important}}
+</style>`;
+
+const visualScript = `<script id="nextgen-visual-enhancements-script">
+(function(){
+const LOGO='/images/store-logo-transparent.png',TRUST='/images/compra-segura-300x25.webp',KEY='nextgen_offer_started_at',DURATION=24*60*60*1000;
+const norm=s=>(s||'').replace(/\s+/g,' ').trim().toUpperCase();
+function makeTrust(){const w=document.createElement('div');w.className='nextgen-trust-strip';const i=document.createElement('img');i.src=TRUST;i.alt='Compra segura, satisfação garantida e privacidade protegida';w.appendChild(i);return w}
+function enhanceCtas(){[...document.querySelectorAll('a,button,[role="button"]')].filter(e=>norm(e.textContent).includes('QUERO DOMINAR AS VENDAS')).forEach(e=>{if(!e.classList.contains('nextgen-cta-enhanced')){e.classList.add('nextgen-cta-enhanced');const i=document.createElement('img');i.className='nextgen-store-logo';i.src=LOGO;i.alt='';i.setAttribute('aria-hidden','true');e.insertBefore(i,e.firstChild)}const n=e.nextElementSibling;if(!n||!n.classList.contains('nextgen-trust-strip'))e.insertAdjacentElement('afterend',makeTrust())})}
+function enhanceRibbon(){[...document.querySelectorAll('body *')].filter(e=>{const t=norm(e.textContent);return t.includes('0 AO 100K')&&t.includes('NOVA OPORTUNIDADE')&&t.length<100}).slice(0,5).forEach(e=>e.classList.add('nextgen-ribbon-enhanced'))}
+function countdownHost(){const l=[...document.querySelectorAll('body *')].find(e=>norm(e.textContent).includes('OFERTA ENCERRA EM:')&&e.textContent.length<120);if(!l)return null;let h=l;for(let i=0;i<5&&h.parentElement;i++){const p=h.parentElement;if(p.textContent.length<220&&p.children.length<=12)h=p;else break}return h}
+function startOffer(){if(!localStorage.getItem(KEY))localStorage.setItem(KEY,String(Date.now()))}
+function renderCountdown(){const h=countdownHost();if(!h)return;let b=h.querySelector('.nextgen-live-countdown');if(!b){h.classList.add('nextgen-countdown-host');h.innerHTML='<div class="nextgen-live-countdown"><div class="nextgen-countdown-label">⌛ OFERTA ENCERRA EM:</div><div class="nextgen-countdown-values"><span class="nextgen-unit"><b class="nextgen-number" data-u="d">00</b><small class="nextgen-caption">dias</small></span><span class="nextgen-sep">:</span><span class="nextgen-unit"><b class="nextgen-number" data-u="h">24</b><small class="nextgen-caption">horas</small></span><span class="nextgen-sep">:</span><span class="nextgen-unit"><b class="nextgen-number" data-u="m">00</b><small class="nextgen-caption">min</small></span><span class="nextgen-sep">:</span><span class="nextgen-unit"><b class="nextgen-number" data-u="s">00</b><small class="nextgen-caption">seg</small></span></div></div>';b=h.querySelector('.nextgen-live-countdown')}const st=Number(localStorage.getItem(KEY));if(!st)return;const total=Math.floor(Math.max(0,st+DURATION-Date.now())/1000),d=Math.floor(total/86400),hr=Math.floor(total%86400/3600),m=Math.floor(total%3600/60),s=total%60;[['d',d],['h',hr],['m',m],['s',s]].forEach(([u,v])=>{const n=b.querySelector('[data-u="'+u+'"]');if(n)n.textContent=String(v).padStart(2,'0')})}
+function bindStart(){[...document.querySelectorAll('a,button,[role="button"]')].filter(e=>norm(e.textContent).includes('QUERO DOMINAR AS VENDAS')).forEach(e=>{if(e.dataset.nextgenBound)return;e.dataset.nextgenBound='1';e.addEventListener('click',startOffer,{capture:true})})}
+function init(){enhanceCtas();enhanceRibbon();bindStart();renderCountdown();setInterval(renderCountdown,1000)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();new MutationObserver(()=>{enhanceCtas();enhanceRibbon();bindStart();renderCountdown()}).observe(document.documentElement,{childList:true,subtree:true});
+})();</script>`;
+
+const enhancedSiteHtml=siteHtml.includes('</head>')?siteHtml.replace('</head>',`${visualEnhancements}</head>`).replace('</body>',`${visualScript}</body>`):`${siteHtml}${visualEnhancements}${visualScript}`;
+
+export const Route=createFileRoute("/")({
+head:()=>({meta:[{title:"Projeto dos 100K | Vendas na Shopee"},{name:"description",content:"Projeto dos 100K com Mark Diniz: estratégias para vender na Shopee com margem, validação e escala."},{property:"og:title",content:"Projeto dos 100K | Vendas na Shopee"},{property:"og:description",content:"Aprenda com Mark Diniz a vender na Shopee com estratégia, margem e escala."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),
+server:{handlers:{GET:()=>new Response(enhancedSiteHtml,{headers:{"content-type":"text/html; charset=utf-8"}})}}
 });
