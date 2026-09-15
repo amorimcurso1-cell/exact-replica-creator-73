@@ -1,7 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import siteHtml from "../site/index.html?raw";
 
-const countdownOverride = `<script>
+const countdownOverride = `<style>
+#cd-dias,#cd-horas,#cd-min,#cd-seg{
+  animation:none !important;
+  transition:none !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1;
+}
+</style><script>
 (function(){
   const START = 23 * 60 * 60 + 59 * 60 + 10;
   const KEY = "nextgen_countdown_started";
