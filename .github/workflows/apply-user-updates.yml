@@ -40,13 +40,14 @@ jobs:
           from pathlib import Path
           import html
           import json
+          import os
           import re
           import requests
 
           repo = Path('.')
           public = repo / 'public' / 'feedbacks'
           public.mkdir(parents=True, exist_ok=True)
-          pages = [x.strip() for x in '''${FEEDBACK_PAGES}'''.split('|') if x.strip()]
+          pages = [x.strip() for x in os.environ['FEEDBACK_PAGES'].split('|') if x.strip()]
 
           headers = {
               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140 Safari/537.36'
@@ -87,7 +88,8 @@ jobs:
               print(f'Saved {page} -> {target}')
 
           ts = repo / 'src' / 'routes' / 'index.tsx'
-          text = ts.read_text(encoding='utf-8')
+          original = ts.read_text(encoding='utf-8')
+          text = original
           marker = 'NEXTGEN_USER_UPDATES_V2'
           if marker not in text:
               assets_json = json.dumps(saved, ensure_ascii=False)
@@ -191,18 +193,15 @@ jobs:
           }})();
           </script>'''
 
-              if not text.endswith('\n'):
-                  text += '\n'
               text = text.replace(
                   "const enhancedSiteHtml = siteHtml.replace('<head>', `<head>${timerGuard}`).replace('</body>', `${countdownOverride}</body>`);",
                   "const pageEnhancements = " + json.dumps(page_html, ensure_ascii=False) + ";\n\nconst enhancedSiteHtml = siteHtml.replace(/\\+70/g, '+20').replace('<head>', `<head>${timerGuard}`).replace('</body>', `${countdownOverride}${pageEnhancements}</body>`);",
               )
-              if text == ts.read_text(encoding='utf-8'):
+              if text == original:
                   raise SystemExit('Anchor principal de index.tsx nao encontrado; nenhuma alteracao aplicada.')
               ts.write_text(text, encoding='utf-8')
               print('index.tsx patched')
 
-          # Ensure build-visible assets have a stable manifest for future edits.
           (public / 'manifest.json').write_text(json.dumps(saved, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           PY
 
@@ -210,7 +209,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/routes/index.tsx public/feedbacks
+          git add src/routes/index.tsx public/feedbacks public/feedbacks/manifest.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
