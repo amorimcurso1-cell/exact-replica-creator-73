@@ -21,86 +21,6 @@
   .ng-who-float-fast{animation:ngWhoFloat 3s ease-in-out infinite;will-change:transform}
   @keyframes ngWhoFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-10px,0)}}
 
-  /* Faixa laranja diagonal — corrigida para ficar preenchida, estável e alinhada */
-  #faixas-secao{position:relative!important;overflow:visible!important}
-  #faixas-secao .nextgen-marquee{
-    box-sizing:border-box!important;
-    width:116%!important;
-    height:58px!important;
-    min-height:58px!important;
-    margin-left:-8%!important;
-    margin-right:0!important;
-    padding:0!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    background:#F94F17!important;
-    background-image:none!important;
-    border:0!important;
-    border-radius:0!important;
-    overflow:hidden!important;
-    position:relative!important;
-    z-index:20!important;
-    transform:rotate(-4deg)!important;
-    transform-origin:center center!important;
-  }
-  #faixas-secao .nextgen-marquee-track{
-    position:absolute!important;
-    left:0!important;
-    top:50%!important;
-    display:flex!important;
-    align-items:center!important;
-    width:max-content!important;
-    min-width:max-content!important;
-    height:58px!important;
-    white-space:nowrap!important;
-    will-change:transform!important;
-    animation:nextgenMarqueeFixed 12s linear infinite!important;
-    animation-play-state:running!important;
-    backface-visibility:hidden!important;
-  }
-  #faixas-secao .nextgen-marquee-item{
-    display:inline-flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    flex:0 0 auto!important;
-    height:58px!important;
-    margin-right:72px!important;
-    padding:0!important;
-    color:#fff!important;
-    font-family:"Barlow Condensed",Arial,sans-serif!important;
-    font-size:clamp(25px,3vw,36px)!important;
-    font-weight:400!important;
-    text-transform:uppercase!important;
-    letter-spacing:.025em!important;
-    line-height:1!important;
-    position:relative!important;
-    top:0!important;
-    text-shadow:none!important;
-    -webkit-font-smoothing:antialiased!important;
-    font-synthesis:none!important;
-  }
-  @keyframes nextgenMarqueeFixed{
-    0%{transform:translate3d(0,-50%,0)}
-    100%{transform:translate3d(-50%,-50%,0)}
-  }
-  @media(max-width:700px){
-    #faixas-secao .nextgen-marquee{
-      width:122%!important;
-      height:46px!important;
-      min-height:46px!important;
-      margin-left:-11%!important;
-      transform:rotate(-5deg)!important;
-    }
-    #faixas-secao .nextgen-marquee-track{height:46px!important}
-    #faixas-secao .nextgen-marquee-item{
-      height:46px!important;
-      margin-right:48px!important;
-      font-size:clamp(20px,5vw,27px)!important;
-      letter-spacing:.02em!important;
-    }
-  }
-
   /* Final da página: somente preto, sem conteúdo */
   .ng-final-page-clean{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important}
   `;
@@ -151,7 +71,16 @@
     section.classList.add('ng-who-float-root');
     section.querySelectorAll('img').forEach((img,i)=>{
       const wrap=img.closest('.elementor-element')||img.parentElement;
-      if(wrap&&wrap!==section)wrap.classList.add(i%2?'ng-who-float-slow':'ng-who-float');
+      if(!wrap||wrap===section)return;
+      wrap.classList.add(i%2?'ng-who-float-slow':'ng-who-float');
+    });
+    const targets=[...section.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,.elementor-icon-list-item')]
+      .filter(el=>!el.closest('.ng-live-feedbacks'))
+      .filter((el,i)=>i<14);
+    targets.forEach((el,i)=>{
+      if(el.classList.contains('ng-who-float')||el.classList.contains('ng-who-float-slow'))return;
+      el.classList.add(i%3===0?'ng-who-float-fast':i%3===1?'ng-who-float-slow':'ng-who-float');
+      el.style.animationDelay=(i*0.09)+'s';
     });
   }
 
