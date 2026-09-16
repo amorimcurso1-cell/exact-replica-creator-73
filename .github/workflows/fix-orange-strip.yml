@@ -1,0 +1,45 @@
+name: Fix orange strip angle
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.github/workflows/fix-orange-strip.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore diagonal orange strip
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          p = Path('src/routes/index.tsx')
+          s = p.read_text(encoding='utf-8')
+          marker = 'NEXTGEN_ORANGE_STRIP_DIAGONAL_V1'
+          if marker in s:
+              print('Already applied')
+              raise SystemExit(0)
+          anchor = '/* Faixa promocional */'
+          if anchor not in s:
+              raise SystemExit('Faixa promocional block not found')
+          css = '''\n/* NEXTGEN_ORANGE_STRIP_DIAGONAL_V1 */\n#faixas-secao .nextgen-marquee{\n  width:110% !important;\n  margin-left:-5% !important;\n  transform:rotate(-3.2deg) !important;\n  transform-origin:center center !important;\n  overflow:hidden !important;\n}\n#faixas-secao .nextgen-marquee-track{\n  width:max-content !important;\n}\n@media (max-width:700px){\n  #faixas-secao .nextgen-marquee{\n    width:112% !important;\n    margin-left:-6% !important;\n    transform:rotate(-4deg) !important;\n  }\n}\n'''
+          s = s.replace(anchor, anchor + css, 1)
+          p.write_text(s, encoding='utf-8')
+          print('Applied diagonal orange strip')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/routes/index.tsx
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "fix: deixar faixa laranja diagonal no mobile"
+          git push
