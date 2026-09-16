@@ -160,6 +160,47 @@ html,body{
 #faixas-secao .elementor-element-d29ef32 > .elementor-widget-container > .elementor-icon-list-items{
   display:none !important;
 }
+
+/* Imagens da seção de feedbacks */
+.nextgen-feedback-images{
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:18px !important;
+  width:min(1100px,calc(100vw - 32px)) !important;
+  margin:28px auto 10px !important;
+  padding:0 !important;
+  position:relative !important;
+  z-index:5 !important;
+}
+.nextgen-feedback-images a{
+  display:block !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  text-decoration:none !important;
+}
+.nextgen-feedback-images img{
+  display:block !important;
+  width:100% !important;
+  height:auto !important;
+  max-width:none !important;
+  margin:0 !important;
+  border:0 !important;
+  border-radius:14px !important;
+  box-shadow:0 12px 30px rgba(0,0,0,.24) !important;
+  background:transparent !important;
+}
+@media (max-width:800px){
+  .nextgen-feedback-images{
+    grid-template-columns:1fr !important;
+    gap:16px !important;
+    width:min(92vw,520px) !important;
+    margin-top:22px !important;
+  }
+  .nextgen-feedback-images img{
+    border-radius:12px !important;
+  }
+}
 </style><script>
 (function(){
   const START = 23 * 60 * 60 + 59 * 60 + 10;
@@ -266,6 +307,35 @@ html,body{
     wrapper.appendChild(source);
     buttonWidget.insertAdjacentElement('afterend',wrapper);
   }
+  function placeFeedbackImages(){
+    if(document.querySelector('.nextgen-feedback-images')) return;
+    const headings=[...document.querySelectorAll('.elementor-heading-title')];
+    const target=headings.find(el=>/feedback|depoimento|avalia[cç][aã]o|o que dizem|clientes/i.test((el.textContent||'').trim()));
+    if(!target) return;
+    let host=target.closest('.e-con') || target.closest('.elementor-section') || target.parentElement;
+    if(!host) return;
+    const wrapper=document.createElement('div');
+    wrapper.className='nextgen-feedback-images';
+    const urls=[
+      'https://socialist-blue-d5bf6z6q.edgeone.dev/',
+      'https://xerothermic-apricot-usnjxqq5.edgeone.dev/',
+      'https://colorful-yellow-sf4knjay.edgeone.dev/'
+    ];
+    urls.forEach(url=>{
+      const link=document.createElement('a');
+      link.href=url;
+      link.target='_blank';
+      link.rel='noopener noreferrer';
+      const img=document.createElement('img');
+      img.src=url;
+      img.alt='Feedback de aluno';
+      img.loading='lazy';
+      link.appendChild(img);
+      wrapper.appendChild(link);
+    });
+    const inner=host.querySelector(':scope > .e-con-inner');
+    (inner || host).appendChild(wrapper);
+  }
   function init(){
     if(window.__nextgenNativeSetInterval) window.setInterval = window.__nextgenNativeSetInterval;
     update();
@@ -273,6 +343,7 @@ html,body{
     replaceDeviceImage();
     buildMovingStrip();
     placeSecurityImage();
+    placeFeedbackImages();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
   nativeSetInterval(update,1000);
