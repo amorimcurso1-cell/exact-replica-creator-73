@@ -53,6 +53,43 @@ const countdownOverride = `<style>
   height:auto !important;
   margin:0 auto !important;
 }
+
+/* Faixa promocional */
+#faixas-secao .nextgen-marquee{
+  width:100% !important;
+  overflow:hidden !important;
+  display:flex !important;
+  align-items:center !important;
+  position:relative !important;
+}
+#faixas-secao .nextgen-marquee-track{
+  display:flex !important;
+  align-items:center !important;
+  width:max-content !important;
+  min-width:max-content !important;
+  white-space:nowrap !important;
+  will-change:transform !important;
+  animation:nextgenMarquee 55s linear infinite !important;
+  animation-play-state:running !important;
+}
+#faixas-secao .nextgen-marquee-item{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  flex:0 0 auto !important;
+  margin-right:72px !important;
+  font-weight:800 !important;
+  text-transform:uppercase !important;
+  letter-spacing:.04em !important;
+  line-height:1 !important;
+}
+@keyframes nextgenMarquee{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+#faixas-secao .elementor-element-d29ef32 > .elementor-widget-container > .elementor-icon-list-items{
+  display:none !important;
+}
 </style><script>
 (function(){
   const START = 23 * 60 * 60 + 59 * 60 + 10;
@@ -74,32 +111,6 @@ const countdownOverride = `<style>
       node.style.setProperty('transform','none','important');
       node.style.setProperty('filter','none','important');
     }
-  }
-  function fixCountdownVisual(){
-    ['cd-dias','cd-horas','cd-min','cd-seg'].forEach(id=>{
-      const el=document.getElementById(id);
-      if(el)stopAncestorAnimations(el);
-    });
-  }
-  function slowMovingStrip(){
-    const needles=['0 AO 100K','NOVA OPORTUNIDADE'];
-    const nodes=[...document.querySelectorAll('body *')].filter(el=>{
-      if(!el.children.length)return needles.some(text=>(el.textContent||'').trim().includes(text));
-      return false;
-    });
-    nodes.forEach(el=>{
-      let node=el;
-      for(let i=0;i<12 && node;i++,node=node.parentElement){
-        const cs=getComputedStyle(node);
-        if(cs.animationName && cs.animationName!=='none'){
-          node.style.setProperty('animation-duration','42s','important');
-          node.style.setProperty('animation-timing-function','linear','important');
-          node.style.setProperty('animation-iteration-count','infinite','important');
-          node.style.setProperty('animation-play-state','running','important');
-          break;
-        }
-      }
-    });
   }
   function update(){
     const els={
@@ -123,7 +134,31 @@ const countdownOverride = `<style>
     els.h.textContent=pad(h);
     els.m.textContent=pad(m);
     els.s.textContent=pad(s);
-    fixCountdownVisual();
+    ['cd-dias','cd-horas','cd-min','cd-seg'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el)stopAncestorAnimations(el);
+    });
+  }
+  function buildMovingStrip(){
+    const section=document.getElementById('faixas-secao');
+    if(!section || section.querySelector('.nextgen-marquee')) return;
+    const existing=section.querySelector('.elementor-icon-list-items');
+    if(!existing) return;
+    const labels=['0 AO 100K','NOVA OPORTUNIDADE'];
+    const marquee=document.createElement('div');
+    marquee.className='nextgen-marquee';
+    const track=document.createElement('div');
+    track.className='nextgen-marquee-track';
+    const items=[...labels,...labels,...labels,...labels];
+    items.forEach(label=>{
+      const item=document.createElement('span');
+      item.className='nextgen-marquee-item';
+      item.textContent=label;
+      track.appendChild(item);
+    });
+    marquee.appendChild(track);
+    existing.parentElement.insertAdjacentElement('beforebegin',marquee);
+    existing.style.display='none';
   }
   function placeSecurityImage(){
     if(document.querySelector('.nextgen-security-image'))return;
@@ -142,19 +177,14 @@ const countdownOverride = `<style>
     wrapper.appendChild(source);
     buttonWidget.insertAdjacentElement('afterend',wrapper);
   }
-  function restoreInterval(){
-    if(window.__nextgenNativeSetInterval) window.setInterval = window.__nextgenNativeSetInterval;
-  }
   function init(){
-    restoreInterval();
+    if(window.__nextgenNativeSetInterval) window.setInterval = window.__nextgenNativeSetInterval;
     update();
+    buildMovingStrip();
     placeSecurityImage();
-    fixCountdownVisual();
-    slowMovingStrip();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
   nativeSetInterval(update,1000);
-  nativeSetInterval(slowMovingStrip,3000);
 })();
 </script>`;
 
