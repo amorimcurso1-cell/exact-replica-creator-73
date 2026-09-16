@@ -67,6 +67,23 @@ html,body{
   background:linear-gradient(to bottom,#000 0%,#020202 26%,#050505 52%,#080808 78%,#0a0a0a 100%) !important;
 }
 
+/* Área dos dispositivos: sem fundo preto/laranja, deixando somente os dispositivos visíveis */
+.elementor-element-6a282cb,
+.elementor-element-6a282cb > .e-con-inner,
+.elementor-element-e964a3d,
+.elementor-element-60d7a7b,
+.elementor-element-60d7a7b > .elementor-widget-container{
+  background:transparent !important;
+  background-image:none !important;
+  box-shadow:none !important;
+}
+.elementor-element-60d7a7b img{
+  display:block !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  border:0 !important;
+}
+
 /* Faixa promocional */
 #faixas-secao .nextgen-marquee{
   width:100% !important;
