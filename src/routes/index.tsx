@@ -69,7 +69,7 @@ const countdownOverride = `<style>
   min-width:max-content !important;
   white-space:nowrap !important;
   will-change:transform !important;
-  animation:nextgenMarquee 28s linear infinite !important;
+  animation:nextgenMarquee 36s linear infinite !important;
   animation-play-state:running !important;
 }
 #faixas-secao .nextgen-marquee-item{
@@ -77,7 +77,7 @@ const countdownOverride = `<style>
   align-items:center !important;
   justify-content:center !important;
   flex:0 0 auto !important;
-  margin-right:84px !important;
+  margin-right:48px !important;
   color:#fff !important;
   font-size:clamp(28px,4.2vw,54px) !important;
   font-weight:900 !important;
@@ -87,13 +87,13 @@ const countdownOverride = `<style>
   text-shadow:0 2px 18px rgba(255,255,255,.12) !important;
 }
 #faixas-secao .nextgen-marquee-logo{
-  width:92px !important;
-  height:92px !important;
-  object-fit:cover !important;
-  border-radius:16px !important;
-  flex:0 0 92px !important;
-  margin-right:84px !important;
-  filter:drop-shadow(0 7px 18px rgba(0,0,0,.3)) !important;
+  width:72px !important;
+  height:72px !important;
+  object-fit:contain !important;
+  border-radius:12px !important;
+  flex:0 0 72px !important;
+  margin-right:22px !important;
+  filter:drop-shadow(0 6px 16px rgba(0,0,0,.28)) !important;
 }
 @keyframes nextgenMarquee{
   from{transform:translate3d(0,0,0)}
@@ -156,21 +156,24 @@ const countdownOverride = `<style>
     if(!section || section.querySelector('.nextgen-marquee')) return;
     const existing=section.querySelector('.elementor-icon-list-items');
     if(!existing) return;
-    const labels=['0 AO 100K','NOVA OPORTUNIDADE'];
     const marquee=document.createElement('div');
     marquee.className='nextgen-marquee';
     const track=document.createElement('div');
     track.className='nextgen-marquee-track';
     const items=[
+      {type:'logo'},
       {type:'text',value:'0 AO 100K'},
       {type:'logo'},
       {type:'text',value:'NOVA OPORTUNIDADE'},
+      {type:'logo'},
       {type:'text',value:'0 AO 100K'},
       {type:'logo'},
       {type:'text',value:'NOVA OPORTUNIDADE'},
+      {type:'logo'},
       {type:'text',value:'0 AO 100K'},
       {type:'logo'},
       {type:'text',value:'NOVA OPORTUNIDADE'},
+      {type:'logo'},
       {type:'text',value:'0 AO 100K'},
       {type:'logo'},
       {type:'text',value:'NOVA OPORTUNIDADE'}
@@ -180,7 +183,7 @@ const countdownOverride = `<style>
         const img=document.createElement('img');
         img.className='nextgen-marquee-logo';
         img.src='/images/zero-100k.svg';
-        img.alt='0 ao 100K';
+        img.alt='Logo 0 ao 100K';
         track.appendChild(img);
       }else{
         const el=document.createElement('span');
