@@ -55,7 +55,6 @@ const countdownOverride = `<style>
   margin:0 auto !important;
 }
 
-/* Preto do topo descendo suavemente até a mesma cor do restante da página */
 html,body{
   background:#0a0a0a !important;
 }
@@ -67,7 +66,6 @@ html,body{
   background:linear-gradient(to bottom,#000 0%,#020202 26%,#050505 52%,#080808 78%,#0a0a0a 100%) !important;
 }
 
-/* Área dos dispositivos: sem fundo preto/laranja, deixando somente os dispositivos visíveis */
 .elementor-element-6a282cb,
 .elementor-element-6a282cb > .e-con-inner,
 .elementor-element-e964a3d,
@@ -84,7 +82,6 @@ html,body{
   border:0 !important;
 }
 
-/* Faixa promocional */
 #faixas-secao .nextgen-marquee{
   width:100% !important;
   height:54px !important;
@@ -161,7 +158,6 @@ html,body{
   display:none !important;
 }
 
-/* Carrossel de feedbacks em movimento contínuo */
 .nextgen-fb-marquee{
   width:100% !important;
   overflow:hidden !important;
@@ -202,7 +198,6 @@ html,body{
   100%{transform:translate3d(-50%,0,0)}
 }
 
-/* Animações de entrada ao rolar a página */
 .ng-reveal{
   opacity:0;
   transform:translate3d(0,28px,0);
@@ -327,7 +322,7 @@ html,body{
 })();
 </script>`;
 
-const enhancedSiteHtml = siteHtml.replace('<head>', `<head>${timerGuard}`).replace('</body>', `${countdownOverride}</body>`);
+const enhancedSiteHtml = siteHtml.replace(/\+70/g, '+20').replace('<head>', `<head>${timerGuard}`).replace('</body>', `${countdownOverride}<script src="/site-enhancements.js"></script></body>`);
 
 export const Route = createFileRoute("/")({
   head: () => ({
