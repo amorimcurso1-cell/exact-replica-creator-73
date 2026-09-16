@@ -107,9 +107,11 @@ const countdownOverride = `<style>
   }
   function placeSecurityImage(){
     if(document.querySelector('.nextgen-security-image'))return;
-    const firstMiniPhoto=document.querySelector('.profile');
-    if(!firstMiniPhoto)return;
-    const target=firstMiniPhoto.closest('.elementor-widget') || firstMiniPhoto;
+    const button=[...document.querySelectorAll('.elementor-button-text')]
+      .find(el=>el.textContent.trim()==='QUERO DOMINAR AS VENDAS');
+    if(!button)return;
+    const buttonWidget=button.closest('.elementor-widget-button');
+    if(!buttonWidget)return;
     const source=[...document.querySelectorAll('img')].find(img=>{
       const src=img.getAttribute('src')||'';
       return src.includes('compra-segura.webp');
@@ -118,7 +120,7 @@ const countdownOverride = `<style>
     const wrapper=document.createElement('div');
     wrapper.className='nextgen-security-image';
     wrapper.appendChild(source);
-    target.parentElement.insertBefore(wrapper,target);
+    buttonWidget.insertAdjacentElement('afterend',wrapper);
   }
   function restoreInterval(){
     if(window.__nextgenNativeSetInterval) window.setInterval = window.__nextgenNativeSetInterval;
