@@ -1,6 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import siteHtml from "../site/index.html?raw";
 
+const timerGuard = `<script>
+(function(){
+  const nativeSetInterval = window.setInterval.bind(window);
+  window.__nextgenNativeSetInterval = nativeSetInterval;
+  window.setInterval = function(fn, delay, ...args){
+    try{
+      const src = Function.prototype.toString.call(fn);
+      if(/cd-(dias|horas|min|seg)|deadline|countdown/i.test(src)) return 0;
+    }catch(e){}
+    return nativeSetInterval(fn, delay, ...args);
+  };
+})();
+</script>`;
+
 const countdownOverride = `<style>
 #cd-dias,#cd-horas,#cd-min,#cd-seg,
 #cd-dias *,#cd-horas *,#cd-min *,#cd-seg *{
@@ -15,6 +29,7 @@ const countdownOverride = `<style>
   transform:none !important;
   filter:none !important;
   text-shadow:none !important;
+  caret-color:transparent !important;
   font-variant-numeric:tabular-nums;
   font-feature-settings:"tnum" 1;
 }
@@ -28,7 +43,7 @@ const countdownOverride = `<style>
   justify-content:center !important;
   align-items:center !important;
   width:100% !important;
-  margin:10px auto 12px !important;
+  margin:8px auto 12px !important;
   padding:0 !important;
 }
 .nextgen-security-image img{
@@ -42,13 +57,16 @@ const countdownOverride = `<style>
 (function(){
   const START = 23 * 60 * 60 + 59 * 60 + 10;
   const KEY = "nextgen_countdown_started";
+  const nativeSetInterval = window.__nextgenNativeSetInterval || window.setInterval.bind(window);
   function pad(n){ return String(n).padStart(2,"0"); }
   function stopAncestorAnimations(el){
     let node=el;
-    for(let i=0;i<10 && node;i++,node=node.parentElement){
+    for(let i=0;i<30 && node;i++,node=node.parentElement){
       node.classList.remove('elementor-invisible','animated','elementor-element-animated');
       node.style.setProperty('animation','none','important');
       node.style.setProperty('animation-name','none','important');
+      node.style.setProperty('animation-duration','0s','important');
+      node.style.setProperty('animation-iteration-count','1','important');
       node.style.setProperty('animation-play-state','paused','important');
       node.style.setProperty('transition','none','important');
       node.style.setProperty('opacity','1','important');
@@ -88,11 +106,10 @@ const countdownOverride = `<style>
     fixCountdownVisual();
   }
   function placeSecurityImage(){
-    const heading=[...document.querySelectorAll('.elementor-heading-title')]
-      .find(el=>el.textContent.trim()==='+300 alunos já garantiram');
-    if(!heading)return;
-    const headingWidget=heading.closest('.elementor-widget-heading');
-    if(!headingWidget || document.querySelector('.nextgen-security-image'))return;
+    if(document.querySelector('.nextgen-security-image'))return;
+    const firstMiniPhoto=document.querySelector('.profile');
+    if(!firstMiniPhoto)return;
+    const target=firstMiniPhoto.closest('.elementor-widget') || firstMiniPhoto;
     const source=[...document.querySelectorAll('img')].find(img=>{
       const src=img.getAttribute('src')||'';
       return src.includes('compra-segura.webp');
@@ -101,19 +118,23 @@ const countdownOverride = `<style>
     const wrapper=document.createElement('div');
     wrapper.className='nextgen-security-image';
     wrapper.appendChild(source);
-    headingWidget.insertAdjacentElement('beforebegin',wrapper);
+    target.parentElement.insertBefore(wrapper,target);
+  }
+  function restoreInterval(){
+    if(window.__nextgenNativeSetInterval) window.setInterval = window.__nextgenNativeSetInterval;
   }
   function init(){
+    restoreInterval();
     update();
     placeSecurityImage();
     fixCountdownVisual();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  setInterval(update,1000);
+  nativeSetInterval(update,1000);
 })();
 </script>`;
 
-const enhancedSiteHtml = siteHtml.replace('</body>', `${countdownOverride}</body>`);
+const enhancedSiteHtml = siteHtml.replace('<head>', `<head>${timerGuard}`).replace('</body>', `${countdownOverride}</body>`);
 
 export const Route = createFileRoute("/")({
   head: () => ({
