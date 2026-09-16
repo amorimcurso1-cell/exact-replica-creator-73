@@ -77,23 +77,23 @@ const countdownOverride = `<style>
   align-items:center !important;
   justify-content:center !important;
   flex:0 0 auto !important;
-  margin-right:48px !important;
+  margin-right:32px !important;
   color:#fff !important;
-  font-size:clamp(28px,4.2vw,54px) !important;
+  font-size:clamp(20px,3vw,34px) !important;
   font-weight:900 !important;
   text-transform:uppercase !important;
-  letter-spacing:.045em !important;
+  letter-spacing:.035em !important;
   line-height:1 !important;
-  text-shadow:0 2px 18px rgba(255,255,255,.12) !important;
+  text-shadow:0 2px 12px rgba(255,255,255,.1) !important;
 }
 #faixas-secao .nextgen-marquee-logo{
-  width:72px !important;
-  height:72px !important;
+  width:48px !important;
+  height:48px !important;
   object-fit:contain !important;
-  border-radius:12px !important;
-  flex:0 0 72px !important;
-  margin-right:22px !important;
-  filter:drop-shadow(0 6px 16px rgba(0,0,0,.28)) !important;
+  border-radius:8px !important;
+  flex:0 0 48px !important;
+  margin-right:14px !important;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.24)) !important;
 }
 @keyframes nextgenMarquee{
   from{transform:translate3d(0,0,0)}
