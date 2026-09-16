@@ -14,54 +14,30 @@
   .ng-live-feedbacks__device img{display:block;width:100%;height:auto;border-radius:16px;background:transparent}
   .ng-live-feedbacks__dots{display:flex;justify-content:center;gap:6px;margin-top:8px}.ng-live-feedbacks__dots i{display:block;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25)}.ng-live-feedbacks__dots i:first-child{background:#f94f17;box-shadow:0 0 9px rgba(249,79,23,.55)}
   .ng-live-reveal{opacity:0;transform:translate3d(0,24px,0);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}.ng-live-reveal.ng-live-in{opacity:1!important;transform:none!important}
-
-  /* Movimento vertical suave, como na versão original */
-  .ng-who-float{animation:ngWhoFloat 3.6s ease-in-out infinite;will-change:transform}
-  .ng-who-float-slow{animation:ngWhoFloat 4.6s ease-in-out infinite;will-change:transform}
-  .ng-who-float-fast{animation:ngWhoFloat 3.0s ease-in-out infinite;will-change:transform}
-  @keyframes ngWhoFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-10px,0)}}
-
-  @keyframes ngLiveFeedbackScroll{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
-  @media(max-width:767px){.ng-live-feedbacks{width:100%;margin:14px auto 22px}.ng-live-feedbacks__track{gap:13px;animation-duration:29s}.ng-live-feedbacks__card{width:78vw}.ng-who-float{animation-duration:4.0s}.ng-who-float-slow{animation-duration:5.0s}.ng-who-float-fast{animation-duration:3.4s}}
-  @media(prefers-reduced-motion:reduce){.ng-live-feedbacks__track{animation:none}.ng-live-reveal{opacity:1!important;transform:none!important;transition:none!important}.ng-who-float,.ng-who-float-slow,.ng-who-float-fast{animation:none!important}}
+  .ng-final-blackout-root{background:#000!important;background-image:none!important;box-shadow:none!important;border:0!important;overflow:hidden!important}
+  .ng-final-blackout-root,.ng-final-blackout-root *{animation:none!important;transition:none!important}
   `;document.head.appendChild(style);
   const findText=t=>[...document.querySelectorAll('body *')].find(e=>e.children.length===0&&(e.textContent||'').trim().toUpperCase()===t);
   function plus20(){const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n=[];let x;while(x=w.nextNode())n.push(x);n.forEach(x=>{if(/\+70(?!\d)/.test(x.nodeValue||''))x.nodeValue=x.nodeValue.replace(/\+70(?!\d)/g,'+20')})}
   function feedbacks(){if(document.querySelector('.ng-live-feedbacks'))return;document.querySelectorAll('img').forEach(img=>{const a=(img.alt||'').toLowerCase(),s=(img.src||'').toLowerCase();if(a.includes('feedback')||s.includes('feedback')){const w=img.closest('.elementor-element');if(w)w.style.display='none'}});const a=findText('FEEDBACKS');if(!a)return;const h=a.closest('.elementor-element')||a.parentElement;if(!h)return;const sec=document.createElement('section');sec.className='ng-live-feedbacks';const vp=document.createElement('div');vp.className='ng-live-feedbacks__viewport';const tr=document.createElement('div');tr.className='ng-live-feedbacks__track';[...feedbackImages,...feedbackImages].forEach((src,i)=>{const c=document.createElement('article');c.className='ng-live-feedbacks__card';const d=document.createElement('div');d.className='ng-live-feedbacks__device';const im=document.createElement('img');im.src=src;im.alt='Feedback de aluno '+((i%5)+1);im.loading='lazy';d.appendChild(im);c.appendChild(d);tr.appendChild(c)});vp.appendChild(tr);sec.appendChild(vp);const dots=document.createElement('div');dots.className='ng-live-feedbacks__dots';feedbackImages.forEach(()=>dots.appendChild(document.createElement('i')));sec.appendChild(dots);h.insertAdjacentElement('afterend',sec)}
-
-  function findWhoSection(){
-    const heading=findText('PARA QUEM É');
-    if(!heading)return null;
-    let node=heading.closest('.elementor-section, .e-con, .elementor-element');
-    while(node&&node.parentElement){
-      const text=(node.textContent||'').toUpperCase();
-      if(text.includes('INICIANTES QUE QUEREM COMEÇAR DO ZERO') || text.includes('VENDEDORES QUE JÁ ESTÃO NA SHOPEE')) return node;
-      node=node.parentElement;
-      if(node&&node.textContent.length>5000)break;
-    }
-    return heading.closest('.elementor-section, .e-con')||heading.parentElement;
+  function findWhoSection(){const heading=findText('PARA QUEM É');if(!heading)return null;let node=heading.closest('.elementor-section, .e-con, .elementor-element');while(node&&node.parentElement){const text=(node.textContent||'').toUpperCase();if(text.includes('INICIANTES QUE QUEREM COMEÇAR DO ZERO')||text.includes('VENDEDORES QUE JÁ ESTÃO NA SHOPEE'))return node;node=node.parentElement;if(node&&node.textContent.length>5000)break}return heading.closest('.elementor-section, .e-con')||heading.parentElement}
+  function whoFloat(){const section=findWhoSection();if(!section||section.classList.contains('ng-who-float-root'))return;section.classList.add('ng-who-float-root');section.querySelectorAll('img').forEach((img,i)=>{const wrap=img.closest('.elementor-element')||img.parentElement;if(!wrap||wrap===section)return;wrap.classList.add(i%2?'ng-who-float-slow':'ng-who-float')});const targets=[...section.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,.elementor-icon-list-item')].filter(el=>!el.closest('.ng-live-feedbacks')).filter((el,i)=>i<14);targets.forEach((el,i)=>{if(el.classList.contains('ng-who-float')||el.classList.contains('ng-who-float-slow'))return;el.classList.add(i%3===0?'ng-who-float-fast':i%3===1?'ng-who-float-slow':'ng-who-float');el.style.animationDelay=(i*0.09)+'s'})}
+  function finalBlackout(){
+    if(document.querySelector('.ng-final-blackout-root'))return true;
+    const candidates=[...document.querySelectorAll('body *')].filter(e=>e.children.length===0);
+    const leaf=candidates.find(e=>/GARANTIR AGORA!?|COPYRIGHT\s*©?\s*2026|TODOS OS DIREITOS RESERVADOS/i.test((e.textContent||'').trim()));
+    if(!leaf)return false;
+    let section=leaf.closest('.elementor-section, .e-con');
+    if(!section)section=leaf.closest('.elementor-element');
+    if(!section)return false;
+    section.classList.add('ng-final-blackout-root');
+    section.querySelectorAll('*').forEach(el=>{el.style.setProperty('display','none','important');el.style.setProperty('visibility','hidden','important');el.style.setProperty('opacity','0','important');});
+    section.style.setProperty('background','#000','important');
+    section.style.setProperty('background-image','none','important');
+    section.style.setProperty('box-shadow','none','important');
+    return true;
   }
-
-  function whoFloat(){
-    const section=findWhoSection();
-    if(!section||section.classList.contains('ng-who-float-root'))return;
-    section.classList.add('ng-who-float-root');
-    section.querySelectorAll('img').forEach((img,i)=>{
-      const wrap=img.closest('.elementor-element')||img.parentElement;
-      if(!wrap||wrap===section)return;
-      wrap.classList.add(i%2?'ng-who-float-slow':'ng-who-float');
-    });
-    const targets=[...section.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,.elementor-icon-list-item')]
-      .filter(el=>!el.closest('.ng-live-feedbacks'))
-      .filter((el,i)=>i<14);
-    targets.forEach((el,i)=>{
-      if(el.classList.contains('ng-who-float')||el.classList.contains('ng-who-float-slow'))return;
-      el.classList.add(i%3===0?'ng-who-float-fast':i%3===1?'ng-who-float-slow':'ng-who-float');
-      el.style.animationDelay=(i*0.09)+'s';
-    });
-  }
-
-  function reveal(){const t=[...document.querySelectorAll('.elementor-section,.e-con,.elementor-element')].filter(e=>!e.closest('.ng-live-feedbacks')&&!e.classList.contains('ng-live-reveal'));t.forEach(e=>e.classList.add('ng-live-reveal'));const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('ng-live-in');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});t.forEach(e=>io.observe(e))}
-  function init(){plus20();feedbacks();whoFloat();reveal()}
+  function reveal(){const t=[...document.querySelectorAll('.elementor-section,.e-con,.elementor-element')].filter(e=>!e.closest('.ng-live-feedbacks')&&!e.closest('.ng-final-blackout-root')&&!e.classList.contains('ng-live-reveal'));t.forEach(e=>e.classList.add('ng-live-reveal'));const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('ng-live-in');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});t.forEach(e=>io.observe(e));}
+  function init(){plus20();feedbacks();whoFloat();finalBlackout();reveal();setTimeout(finalBlackout,250);setTimeout(finalBlackout,1000)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
