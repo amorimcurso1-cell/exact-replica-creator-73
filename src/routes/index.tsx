@@ -81,7 +81,7 @@ const countdownOverride = `<style>
   height:54px !important;
   white-space:nowrap !important;
   will-change:transform !important;
-  animation:nextgenMarquee 22s linear infinite !important;
+  animation:nextgenMarquee 18s linear infinite !important;
   animation-play-state:running !important;
   backface-visibility:hidden !important;
   transform:translate3d(0,-50%,0);
