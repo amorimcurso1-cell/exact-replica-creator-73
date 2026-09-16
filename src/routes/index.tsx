@@ -3,20 +3,33 @@ import siteHtml from "../site/index.html?raw";
 
 const countdownOverride = `<style>
 #cd-dias,#cd-horas,#cd-min,#cd-seg{
-  animation: none !important;
-  transition: none !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-  filter: none !important;
-  text-shadow: none !important;
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1;
+  animation:none !important;
+  transition:none !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:none !important;
+  filter:none !important;
+  text-shadow:none !important;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1;
 }
 #cd-dias::before,#cd-horas::before,#cd-min::before,#cd-seg::before,
 #cd-dias::after,#cd-horas::after,#cd-min::after,#cd-seg::after{
-  animation: none !important;
-  content: none !important;
+  animation:none !important;
+  content:none !important;
+}
+.nextgen-security-image{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  width:100% !important;
+  margin:14px 0 8px !important;
+}
+.nextgen-security-image img{
+  display:block !important;
+  width:min(462px,92vw) !important;
+  max-width:100% !important;
+  height:auto !important;
 }
 </style><script>
 (function(){
@@ -46,7 +59,28 @@ const countdownOverride = `<style>
     els.m.textContent=pad(m);
     els.s.textContent=pad(s);
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',update);else update();
+  function placeSecurityImage(){
+    const headings=[...document.querySelectorAll('.elementor-heading-title')];
+    const heading=headings.find(el=>el.textContent.trim()==='+300 alunos já garantiram');
+    if(!heading)return;
+    const widget=heading.closest('.elementor-widget-heading');
+    if(!widget||document.querySelector('.nextgen-security-image'))return;
+    const source=[...document.querySelectorAll('img')].find(img=>{
+      const src=img.getAttribute('src')||'';
+      return src.includes('compra-segura.webp');
+    });
+    if(!source)return;
+    const wrapper=document.createElement('div');
+    wrapper.className='nextgen-security-image';
+    wrapper.appendChild(source);
+    widget.insertAdjacentElement('afterend',wrapper);
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',function(){update();placeSecurityImage();});
+  }else{
+    update();
+    placeSecurityImage();
+  }
   setInterval(update,1000);
 })();
 </script>`;
