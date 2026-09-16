@@ -209,6 +209,11 @@ html,body{
       if(el)stopAncestorAnimations(el);
     });
   }
+  function updateWhoText(){
+    const heading=document.querySelector('[data-id="aa8cff5"] .elementor-heading-title');
+    if(!heading) return;
+    heading.innerHTML='É um treinamento completo para quem quer vender na <span style="color:#F94F17;font-weight:700">Shopee</span> com estratégia, margem e escala. <span style="color:#F94F17">Ele é indicado para:</span>';
+  }
   function buildMovingStrip(){
     const section=document.getElementById('faixas-secao');
     if(!section || section.querySelector('.nextgen-marquee')) return;
@@ -256,6 +261,7 @@ html,body{
   function init(){
     if(window.__nextgenNativeSetInterval) window.setInterval = window.__nextgenNativeSetInterval;
     update();
+    updateWhoText();
     buildMovingStrip();
     placeSecurityImage();
   }
