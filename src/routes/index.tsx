@@ -69,7 +69,7 @@ const countdownOverride = `<style>
   min-width:max-content !important;
   white-space:nowrap !important;
   will-change:transform !important;
-  animation:nextgenMarquee 55s linear infinite !important;
+  animation:nextgenMarquee 28s linear infinite !important;
   animation-play-state:running !important;
 }
 #faixas-secao .nextgen-marquee-item{
@@ -77,11 +77,23 @@ const countdownOverride = `<style>
   align-items:center !important;
   justify-content:center !important;
   flex:0 0 auto !important;
-  margin-right:72px !important;
-  font-weight:800 !important;
+  margin-right:84px !important;
+  color:#fff !important;
+  font-size:clamp(28px,4.2vw,54px) !important;
+  font-weight:900 !important;
   text-transform:uppercase !important;
-  letter-spacing:.04em !important;
+  letter-spacing:.045em !important;
   line-height:1 !important;
+  text-shadow:0 2px 18px rgba(255,255,255,.12) !important;
+}
+#faixas-secao .nextgen-marquee-logo{
+  width:92px !important;
+  height:92px !important;
+  object-fit:cover !important;
+  border-radius:16px !important;
+  flex:0 0 92px !important;
+  margin-right:84px !important;
+  filter:drop-shadow(0 7px 18px rgba(0,0,0,.3)) !important;
 }
 @keyframes nextgenMarquee{
   from{transform:translate3d(0,0,0)}
@@ -149,12 +161,33 @@ const countdownOverride = `<style>
     marquee.className='nextgen-marquee';
     const track=document.createElement('div');
     track.className='nextgen-marquee-track';
-    const items=[...labels,...labels,...labels,...labels];
-    items.forEach(label=>{
-      const item=document.createElement('span');
-      item.className='nextgen-marquee-item';
-      item.textContent=label;
-      track.appendChild(item);
+    const items=[
+      {type:'text',value:'0 AO 100K'},
+      {type:'logo'},
+      {type:'text',value:'NOVA OPORTUNIDADE'},
+      {type:'text',value:'0 AO 100K'},
+      {type:'logo'},
+      {type:'text',value:'NOVA OPORTUNIDADE'},
+      {type:'text',value:'0 AO 100K'},
+      {type:'logo'},
+      {type:'text',value:'NOVA OPORTUNIDADE'},
+      {type:'text',value:'0 AO 100K'},
+      {type:'logo'},
+      {type:'text',value:'NOVA OPORTUNIDADE'}
+    ];
+    items.forEach(item=>{
+      if(item.type==='logo'){
+        const img=document.createElement('img');
+        img.className='nextgen-marquee-logo';
+        img.src='/images/zero-100k.svg';
+        img.alt='0 ao 100K';
+        track.appendChild(img);
+      }else{
+        const el=document.createElement('span');
+        el.className='nextgen-marquee-item';
+        el.textContent=item.value;
+        track.appendChild(el);
+      }
     });
     marquee.appendChild(track);
     existing.parentElement.insertAdjacentElement('beforebegin',marquee);
