@@ -216,7 +216,46 @@ html,body{
 })();
 </script>`;
 
-const enhancedSiteHtml = siteHtml.replace(/\+70/g, '+20').replace('<head>', `<head>${timerGuard}`).replace('</body>', `${countdownOverride}<script src="/site-enhancements.js"></script></body>`);
+const enhancedSiteHtml = siteHtml.replace(/\+70/g, '+20').replace('<head>', `<head>${timerGuard}`).replace('</body>', `${countdownOverride}<script src="/site-enhancements.js"></script><script>
+(function(){
+  function findText(text){return [...document.querySelectorAll('body *')].find(el=>el.children.length===0&&(el.textContent||'').trim().toUpperCase()===text);}
+  function findWhoSection(){
+    const heading=findText('PARA QUEM É');
+    if(!heading)return null;
+    let node=heading.closest('.elementor-section,.e-con,.elementor-element');
+    while(node&&node.parentElement){
+      const txt=(node.textContent||'').toUpperCase();
+      if(txt.includes('INICIANTES QUE QUEREM COMEÇAR DO ZERO')||txt.includes('VENDEDORES QUE JÁ ESTÃO NA SHOPEE'))return node;
+      node=node.parentElement;
+      if(node&&node.textContent.length>5000)break;
+    }
+    return heading.closest('.elementor-section,.e-con')||heading.parentElement;
+  }
+  function restoreOriginalMotion(){
+    const section=findWhoSection();
+    if(!section||section.dataset.originalMotionReady==='1')return;
+    section.dataset.originalMotionReady='1';
+    const style=document.createElement('style');
+    style.textContent=`
+      .ng-original-tablet-float{animation:ngOriginalTabletFloat 4.2s ease-in-out infinite!important;will-change:transform!important;transform-origin:center center!important}
+      @keyframes ngOriginalTabletFloat{0%,100%{transform:translate3d(0,0,0) rotate(0deg)}50%{transform:translate3d(0,-14px,0) rotate(-0.7deg)}}
+      @media(max-width:767px){.ng-original-tablet-float{animation-duration:4.6s!important}}
+      @media(prefers-reduced-motion:reduce){.ng-original-tablet-float{animation:none!important}}
+    `;
+    document.head.appendChild(style);
+    const imgs=[...section.querySelectorAll('img')];
+    let target=imgs.find(img=>/tablet|ipad|laptop/i.test((img.alt||'')+' '+(img.src||'')));
+    if(!target&&imgs.length)target=imgs.sort((a,b)=>(b.naturalWidth*b.naturalHeight)-(a.naturalWidth*a.naturalHeight))[0];
+    if(target){
+      target.classList.remove('ng-who-float','ng-who-float-slow','ng-who-float-fast');
+      target.classList.add('ng-original-tablet-float');
+      target.style.setProperty('animation-delay','0s','important');
+    }
+    section.querySelectorAll('.ng-who-float,.ng-who-float-slow,.ng-who-float-fast').forEach(el=>el.classList.remove('ng-who-float','ng-who-float-slow','ng-who-float-fast'));
+  }
+  function init(){restoreOriginalMotion();setTimeout(restoreOriginalMotion,700);setTimeout(restoreOriginalMotion,1600)}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();</script></body>`);
 
 export const Route = createFileRoute("/")({
   head: () => ({
