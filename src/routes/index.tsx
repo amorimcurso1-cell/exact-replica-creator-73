@@ -2,8 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import siteHtml from "../site/index.html?raw";
 
 const countdownOverride = `<style>
-#cd-dias,#cd-horas,#cd-min,#cd-seg{
+#cd-dias,#cd-horas,#cd-min,#cd-seg,
+#cd-dias *,#cd-horas *,#cd-min *,#cd-seg *{
   animation:none !important;
+  animation-name:none !important;
+  animation-duration:0s !important;
+  animation-iteration-count:1 !important;
+  animation-play-state:paused !important;
   transition:none !important;
   opacity:1 !important;
   visibility:visible !important;
@@ -23,19 +28,41 @@ const countdownOverride = `<style>
   justify-content:center !important;
   align-items:center !important;
   width:100% !important;
-  margin:14px 0 8px !important;
+  margin:10px auto 12px !important;
+  padding:0 !important;
 }
 .nextgen-security-image img{
   display:block !important;
-  width:min(462px,92vw) !important;
-  max-width:100% !important;
+  width:min(320px,72vw) !important;
+  max-width:320px !important;
   height:auto !important;
+  margin:0 auto !important;
 }
 </style><script>
 (function(){
   const START = 23 * 60 * 60 + 59 * 60 + 10;
   const KEY = "nextgen_countdown_started";
   function pad(n){ return String(n).padStart(2,"0"); }
+  function stopAncestorAnimations(el){
+    let node=el;
+    for(let i=0;i<10 && node;i++,node=node.parentElement){
+      node.classList.remove('elementor-invisible','animated','elementor-element-animated');
+      node.style.setProperty('animation','none','important');
+      node.style.setProperty('animation-name','none','important');
+      node.style.setProperty('animation-play-state','paused','important');
+      node.style.setProperty('transition','none','important');
+      node.style.setProperty('opacity','1','important');
+      node.style.setProperty('visibility','visible','important');
+      node.style.setProperty('transform','none','important');
+      node.style.setProperty('filter','none','important');
+    }
+  }
+  function fixCountdownVisual(){
+    ['cd-dias','cd-horas','cd-min','cd-seg'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el)stopAncestorAnimations(el);
+    });
+  }
   function update(){
     const els={
       d:document.getElementById("cd-dias"),
@@ -58,13 +85,14 @@ const countdownOverride = `<style>
     els.h.textContent=pad(h);
     els.m.textContent=pad(m);
     els.s.textContent=pad(s);
+    fixCountdownVisual();
   }
   function placeSecurityImage(){
-    const headings=[...document.querySelectorAll('.elementor-heading-title')];
-    const heading=headings.find(el=>el.textContent.trim()==='+300 alunos já garantiram');
+    const heading=[...document.querySelectorAll('.elementor-heading-title')]
+      .find(el=>el.textContent.trim()==='+300 alunos já garantiram');
     if(!heading)return;
-    const widget=heading.closest('.elementor-widget-heading');
-    if(!widget||document.querySelector('.nextgen-security-image'))return;
+    const headingWidget=heading.closest('.elementor-widget-heading');
+    if(!headingWidget || document.querySelector('.nextgen-security-image'))return;
     const source=[...document.querySelectorAll('img')].find(img=>{
       const src=img.getAttribute('src')||'';
       return src.includes('compra-segura.webp');
@@ -73,14 +101,14 @@ const countdownOverride = `<style>
     const wrapper=document.createElement('div');
     wrapper.className='nextgen-security-image';
     wrapper.appendChild(source);
-    widget.insertAdjacentElement('afterend',wrapper);
+    headingWidget.insertAdjacentElement('beforebegin',wrapper);
   }
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',function(){update();placeSecurityImage();});
-  }else{
+  function init(){
     update();
     placeSecurityImage();
+    fixCountdownVisual();
   }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
   setInterval(update,1000);
 })();
 </script>`;
