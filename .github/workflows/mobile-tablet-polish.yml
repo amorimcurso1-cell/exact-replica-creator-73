@@ -1,0 +1,93 @@
+name: Mobile tablet polish
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'src/routes/index.tsx'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-mobile-tablet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply mobile tablet sizing and motion
+        run: |
+          python <<'PY'
+          from pathlib import Path
+
+          p = Path('src/routes/index.tsx')
+          text = p.read_text(encoding='utf-8')
+          marker = 'NEXTGEN_MOBILE_TABLET_POLISH_V1'
+          if marker in text:
+              print('Mobile tablet polish already applied')
+              raise SystemExit(0)
+
+          anchor = "const enhancedSiteHtml = siteHtml.replace('<head>', `<head>${timerGuard}`).replace('</body>', `${countdownOverride}</body>`);"
+          if anchor not in text:
+              raise SystemExit('Expected index.tsx anchor not found')
+
+          mobile_css = '''<style id="nextgen-mobile-tablet-polish">
+          /* NEXTGEN_MOBILE_TABLET_POLISH_V1 */
+          @media (max-width: 767px){
+            .elementor-element-60d7a7b img,
+            .elementor-element-60d7a7b .elementor-widget-image img,
+            .nextgen-device-frame img{
+              width:min(78vw,340px) !important;
+              max-width:340px !important;
+              height:auto !important;
+              margin-left:auto !important;
+              margin-right:auto !important;
+              object-fit:contain !important;
+              transform-origin:center center !important;
+              animation:nextgenTabletFloat 4.8s ease-in-out infinite !important;
+              will-change:transform !important;
+            }
+            .elementor-element-60d7a7b,
+            .elementor-element-60d7a7b > .e-con-inner,
+            .elementor-element-60d7a7b > .elementor-widget-container{
+              display:flex !important;
+              justify-content:center !important;
+              align-items:center !important;
+              width:100% !important;
+              max-width:100% !important;
+              overflow:visible !important;
+            }
+          }
+          @keyframes nextgenTabletFloat{
+            0%,100%{ transform:translate3d(0,0,0) rotate(0deg); }
+            25%{ transform:translate3d(0,-7px,0) rotate(-0.45deg); }
+            50%{ transform:translate3d(0,-11px,0) rotate(0deg); }
+            75%{ transform:translate3d(0,-6px,0) rotate(0.45deg); }
+          }
+          @media (prefers-reduced-motion:reduce){
+            .elementor-element-60d7a7b img,
+            .elementor-element-60d7a7b .elementor-widget-image img,
+            .nextgen-device-frame img{ animation:none !important; }
+          }
+          </style>'''
+
+          replacement = anchor.replace('${countdownOverride}</body>', '${countdownOverride}' + mobile_css + '</body>')
+          p.write_text(text.replace(anchor, replacement), encoding='utf-8')
+          print('Mobile tablet polish applied')
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/routes/index.tsx
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "fix: diminuir tablet e restaurar movimento no mobile"
+          git push
