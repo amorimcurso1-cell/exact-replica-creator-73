@@ -54,7 +54,7 @@ const countdownOverride = `<style>
   margin:0 auto !important;
 }
 
-/* Faixa promocional — tipografia igual à referência e movimento contínuo */
+/* Faixa promocional — tipografia igual à referência e movimento natural */
 #faixas-secao .nextgen-marquee{
   width:100% !important;
   overflow:hidden !important;
@@ -74,9 +74,9 @@ const countdownOverride = `<style>
   min-width:max-content !important;
   white-space:nowrap !important;
   will-change:transform !important;
-  animation:nextgenMarquee 24s linear infinite !important;
+  animation:nextgenMarquee 22s linear infinite !important;
   animation-play-state:running !important;
-  transform:translate3d(0,0,0) !important;
+  backface-visibility:hidden !important;
 }
 #faixas-secao .nextgen-marquee-item{
   display:inline-flex !important;
@@ -104,8 +104,8 @@ const countdownOverride = `<style>
   }
 }
 @keyframes nextgenMarquee{
-  from{transform:translate3d(0,0,0)}
-  to{transform:translate3d(-50%,0,0)}
+  0%{transform:translate3d(0,0,0)}
+  100%{transform:translate3d(-50%,0,0)}
 }
 #faixas-secao .elementor-element-d29ef32 > .elementor-widget-container > .elementor-icon-list-items{
   display:none !important;
