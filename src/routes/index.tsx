@@ -101,6 +101,8 @@ const countdownOverride = `<style>
   text-transform:uppercase !important;
   letter-spacing:.025em !important;
   line-height:1 !important;
+  position:relative !important;
+  top:6px !important;
   text-shadow:none !important;
   -webkit-font-smoothing:antialiased !important;
   font-synthesis:none !important;
@@ -119,6 +121,7 @@ const countdownOverride = `<style>
     font-size:clamp(20px,5vw,27px) !important;
     letter-spacing:.02em !important;
     line-height:1 !important;
+    top:5px !important;
   }
 }
 @keyframes nextgenMarquee{
