@@ -10,3 +10,4 @@
 - [x] Substituir os feedbacks pelas quatro imagens enviadas
 - [x] Remover o certificado e os ícones pequenos dos CTAs
 - [x] Validar as alterações em desktop e celular
+- [ ] Aplicar o pacote final solicitado no site (feedbacks, animações, +20 e wrapper transparente)
