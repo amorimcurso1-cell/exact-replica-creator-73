@@ -55,16 +55,16 @@ const countdownOverride = `<style>
   margin:0 auto !important;
 }
 
-/* Transição suave do preto superior para o mesmo preto do conteúdo abaixo */
+/* Preto superior mais suave, para reduzir ao máximo a diferença para o restante */
 html,body{
-  background:#000 !important;
+  background:#080808 !important;
 }
 .elementor-location-header,
 #page,
 .site,
 .site-main,
 .elementor{
-  background:#000 !important;
+  background:linear-gradient(to bottom,#080808 0%,#090909 28%,#0a0a0a 58%,#0a0a0a 100%) !important;
 }
 
 /* Faixa promocional */
