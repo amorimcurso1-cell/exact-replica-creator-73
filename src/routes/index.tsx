@@ -55,6 +55,18 @@ const countdownOverride = `<style>
   margin:0 auto !important;
 }
 
+/* Transição suave do preto superior para o mesmo preto do conteúdo abaixo */
+html,body{
+  background:#000 !important;
+}
+.elementor-location-header,
+#page,
+.site,
+.site-main,
+.elementor{
+  background:#000 !important;
+}
+
 /* Faixa promocional */
 #faixas-secao .nextgen-marquee{
   width:100% !important;
