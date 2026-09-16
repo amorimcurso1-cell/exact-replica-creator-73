@@ -3,12 +3,20 @@ import siteHtml from "../site/index.html?raw";
 
 const countdownOverride = `<style>
 #cd-dias,#cd-horas,#cd-min,#cd-seg{
-  animation:none !important;
-  transition:none !important;
-  opacity:1 !important;
-  visibility:visible !important;
-  font-variant-numeric:tabular-nums;
-  font-feature-settings:"tnum" 1;
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+#cd-dias::before,#cd-horas::before,#cd-min::before,#cd-seg::before,
+#cd-dias::after,#cd-horas::after,#cd-min::after,#cd-seg::after{
+  animation: none !important;
+  content: none !important;
 }
 </style><script>
 (function(){
