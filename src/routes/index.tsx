@@ -81,6 +81,26 @@ const countdownOverride = `<style>
       if(el)stopAncestorAnimations(el);
     });
   }
+  function slowMovingStrip(){
+    const needles=['0 AO 100K','NOVA OPORTUNIDADE'];
+    const nodes=[...document.querySelectorAll('body *')].filter(el=>{
+      if(!el.children.length)return needles.some(text=>(el.textContent||'').trim().includes(text));
+      return false;
+    });
+    nodes.forEach(el=>{
+      let node=el;
+      for(let i=0;i<12 && node;i++,node=node.parentElement){
+        const cs=getComputedStyle(node);
+        if(cs.animationName && cs.animationName!=='none'){
+          node.style.setProperty('animation-duration','42s','important');
+          node.style.setProperty('animation-timing-function','linear','important');
+          node.style.setProperty('animation-iteration-count','infinite','important');
+          node.style.setProperty('animation-play-state','running','important');
+          break;
+        }
+      }
+    });
+  }
   function update(){
     const els={
       d:document.getElementById("cd-dias"),
@@ -130,9 +150,11 @@ const countdownOverride = `<style>
     update();
     placeSecurityImage();
     fixCountdownVisual();
+    slowMovingStrip();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
   nativeSetInterval(update,1000);
+  nativeSetInterval(slowMovingStrip,3000);
 })();
 </script>`;
 
