@@ -160,6 +160,63 @@ html,body{
 #faixas-secao .elementor-element-d29ef32 > .elementor-widget-container > .elementor-icon-list-items{
   display:none !important;
 }
+
+/* Carrossel de feedbacks em movimento contínuo */
+.nextgen-fb-marquee{
+  width:100% !important;
+  overflow:hidden !important;
+  position:relative !important;
+  padding:8px 0 4px !important;
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 6%,#000 94%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0,#000 6%,#000 94%,transparent 100%);
+}
+.nextgen-fb-track{
+  display:flex !important;
+  align-items:stretch !important;
+  width:max-content !important;
+  gap:18px !important;
+  animation:nextgenFbScroll 45s linear infinite;
+  will-change:transform;
+}
+.nextgen-fb-marquee:hover .nextgen-fb-track{ animation-play-state:paused; }
+.nextgen-fb-item{
+  flex:0 0 auto !important;
+  width:clamp(230px,24vw,320px) !important;
+  border-radius:18px !important;
+  overflow:hidden !important;
+  background:#f4f4f5 !important;
+  box-shadow:0 18px 40px rgba(0,0,0,.45) !important;
+  border:1px solid rgba(249,79,23,.25) !important;
+}
+.nextgen-fb-item img{
+  display:block !important;
+  width:100% !important;
+  height:auto !important;
+}
+@media (max-width:767px){
+  .nextgen-fb-item{ width:74vw !important; }
+  .nextgen-fb-track{ gap:14px !important; animation-duration:38s; }
+}
+@keyframes nextgenFbScroll{
+  0%{transform:translate3d(0,0,0)}
+  100%{transform:translate3d(-50%,0,0)}
+}
+
+/* Animações de entrada ao rolar a página */
+.ng-reveal{
+  opacity:0;
+  transform:translate3d(0,28px,0);
+  transition:opacity .75s cubic-bezier(.22,.61,.36,1),transform .75s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity,transform;
+}
+.ng-reveal.ng-in{
+  opacity:1 !important;
+  transform:none !important;
+}
+@media (prefers-reduced-motion:reduce){
+  .ng-reveal{opacity:1 !important;transform:none !important;transition:none !important}
+  .nextgen-fb-track{animation:none !important}
+}
 </style><script>
 (function(){
   const START = 23 * 60 * 60 + 59 * 60 + 10;
