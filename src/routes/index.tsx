@@ -16,6 +16,7 @@ const timerGuard = `<script>
 </script>`;
 
 const countdownOverride = `<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400&display=swap');
 #cd-dias,#cd-horas,#cd-min,#cd-seg,
 #cd-dias *,#cd-horas *,#cd-min *,#cd-seg *{
   animation:none !important;
@@ -54,14 +55,16 @@ const countdownOverride = `<style>
   margin:0 auto !important;
 }
 
-/* Faixa promocional — tipografia igual à referência e movimento natural */
+/* Faixa promocional — letra fina, maior e centralizada */
 #faixas-secao .nextgen-marquee{
   width:100% !important;
+  height:56px !important;
+  min-height:56px !important;
   overflow:hidden !important;
   display:flex !important;
   align-items:center !important;
+  justify-content:center !important;
   position:relative !important;
-  min-height:56px !important;
 }
 #faixas-secao .nextgen-marquee::before,
 #faixas-secao .nextgen-marquee::after{
@@ -72,35 +75,45 @@ const countdownOverride = `<style>
   align-items:center !important;
   width:max-content !important;
   min-width:max-content !important;
+  height:56px !important;
   white-space:nowrap !important;
   will-change:transform !important;
   animation:nextgenMarquee 22s linear infinite !important;
   animation-play-state:running !important;
   backface-visibility:hidden !important;
+  transform:translate3d(0,0,0);
 }
 #faixas-secao .nextgen-marquee-item{
   display:inline-flex !important;
   align-items:center !important;
   justify-content:center !important;
   flex:0 0 auto !important;
+  height:56px !important;
   margin-right:84px !important;
+  padding-top:1px !important;
   color:#fff !important;
   font-family:"Barlow Condensed",Arial,sans-serif !important;
-  font-size:clamp(17px,2.15vw,28px) !important;
-  font-weight:800 !important;
+  font-size:clamp(22px,2.8vw,34px) !important;
+  font-weight:400 !important;
   text-transform:uppercase !important;
-  letter-spacing:.02em !important;
-  line-height:1 !important;
+  letter-spacing:.025em !important;
+  line-height:56px !important;
   text-shadow:none !important;
   -webkit-font-smoothing:antialiased !important;
   font-synthesis:none !important;
 }
 @media (max-width:700px){
-  #faixas-secao .nextgen-marquee{min-height:48px !important;}
+  #faixas-secao .nextgen-marquee,
+  #faixas-secao .nextgen-marquee-track,
+  #faixas-secao .nextgen-marquee-item{
+    height:48px !important;
+    min-height:48px !important;
+    line-height:48px !important;
+  }
   #faixas-secao .nextgen-marquee-item{
     margin-right:54px !important;
-    font-size:clamp(15px,4.1vw,21px) !important;
-    letter-spacing:.015em !important;
+    font-size:clamp(19px,5vw,25px) !important;
+    letter-spacing:.02em !important;
   }
 }
 @keyframes nextgenMarquee{
