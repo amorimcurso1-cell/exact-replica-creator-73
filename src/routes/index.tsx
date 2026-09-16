@@ -54,7 +54,7 @@ const countdownOverride = `<style>
   margin:0 auto !important;
 }
 
-/* Faixa promocional profissional */
+/* Faixa promocional — tipografia igual à referência e movimento contínuo */
 #faixas-secao .nextgen-marquee{
   width:100% !important;
   overflow:hidden !important;
@@ -62,26 +62,10 @@ const countdownOverride = `<style>
   align-items:center !important;
   position:relative !important;
   min-height:56px !important;
-  background:linear-gradient(90deg,rgba(255,255,255,.02),rgba(255,255,255,.05),rgba(255,255,255,.02)) !important;
 }
 #faixas-secao .nextgen-marquee::before,
 #faixas-secao .nextgen-marquee::after{
-  content:"" !important;
-  position:absolute !important;
-  top:0 !important;
-  bottom:0 !important;
-  width:9vw !important;
-  max-width:110px !important;
-  z-index:2 !important;
-  pointer-events:none !important;
-}
-#faixas-secao .nextgen-marquee::before{
-  left:0 !important;
-  background:linear-gradient(90deg,#090909,rgba(9,9,9,0)) !important;
-}
-#faixas-secao .nextgen-marquee::after{
-  right:0 !important;
-  background:linear-gradient(270deg,#090909,rgba(9,9,9,0)) !important;
+  content:none !important;
 }
 #faixas-secao .nextgen-marquee-track{
   display:flex !important;
@@ -90,31 +74,33 @@ const countdownOverride = `<style>
   min-width:max-content !important;
   white-space:nowrap !important;
   will-change:transform !important;
-  animation:nextgenMarquee 28s linear infinite !important;
+  animation:nextgenMarquee 24s linear infinite !important;
   animation-play-state:running !important;
+  transform:translate3d(0,0,0) !important;
 }
 #faixas-secao .nextgen-marquee-item{
   display:inline-flex !important;
   align-items:center !important;
   justify-content:center !important;
   flex:0 0 auto !important;
-  margin-right:92px !important;
+  margin-right:84px !important;
   color:#fff !important;
   font-family:"Barlow Condensed",Arial,sans-serif !important;
-  font-size:clamp(18px,2.4vw,30px) !important;
+  font-size:clamp(17px,2.15vw,28px) !important;
   font-weight:800 !important;
   text-transform:uppercase !important;
-  letter-spacing:.045em !important;
-  line-height:.95 !important;
-  text-shadow:0 1px 10px rgba(255,255,255,.08) !important;
+  letter-spacing:.02em !important;
+  line-height:1 !important;
+  text-shadow:none !important;
   -webkit-font-smoothing:antialiased !important;
+  font-synthesis:none !important;
 }
 @media (max-width:700px){
   #faixas-secao .nextgen-marquee{min-height:48px !important;}
   #faixas-secao .nextgen-marquee-item{
-    margin-right:58px !important;
-    font-size:clamp(16px,4.5vw,22px) !important;
-    letter-spacing:.04em !important;
+    margin-right:54px !important;
+    font-size:clamp(15px,4.1vw,21px) !important;
+    letter-spacing:.015em !important;
   }
 }
 @keyframes nextgenMarquee{
