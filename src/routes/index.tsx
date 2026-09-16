@@ -54,13 +54,34 @@ const countdownOverride = `<style>
   margin:0 auto !important;
 }
 
-/* Faixa promocional */
+/* Faixa promocional profissional */
 #faixas-secao .nextgen-marquee{
   width:100% !important;
   overflow:hidden !important;
   display:flex !important;
   align-items:center !important;
   position:relative !important;
+  min-height:56px !important;
+  background:linear-gradient(90deg,rgba(255,255,255,.02),rgba(255,255,255,.05),rgba(255,255,255,.02)) !important;
+}
+#faixas-secao .nextgen-marquee::before,
+#faixas-secao .nextgen-marquee::after{
+  content:"" !important;
+  position:absolute !important;
+  top:0 !important;
+  bottom:0 !important;
+  width:9vw !important;
+  max-width:110px !important;
+  z-index:2 !important;
+  pointer-events:none !important;
+}
+#faixas-secao .nextgen-marquee::before{
+  left:0 !important;
+  background:linear-gradient(90deg,#090909,rgba(9,9,9,0)) !important;
+}
+#faixas-secao .nextgen-marquee::after{
+  right:0 !important;
+  background:linear-gradient(270deg,#090909,rgba(9,9,9,0)) !important;
 }
 #faixas-secao .nextgen-marquee-track{
   display:flex !important;
@@ -69,7 +90,7 @@ const countdownOverride = `<style>
   min-width:max-content !important;
   white-space:nowrap !important;
   will-change:transform !important;
-  animation:nextgenMarquee 36s linear infinite !important;
+  animation:nextgenMarquee 32s linear infinite !important;
   animation-play-state:running !important;
 }
 #faixas-secao .nextgen-marquee-item{
@@ -77,23 +98,22 @@ const countdownOverride = `<style>
   align-items:center !important;
   justify-content:center !important;
   flex:0 0 auto !important;
-  margin-right:32px !important;
+  margin-right:92px !important;
   color:#fff !important;
-  font-size:clamp(20px,3vw,34px) !important;
-  font-weight:900 !important;
+  font-size:clamp(18px,2.4vw,30px) !important;
+  font-weight:800 !important;
   text-transform:uppercase !important;
-  letter-spacing:.035em !important;
+  letter-spacing:.055em !important;
   line-height:1 !important;
-  text-shadow:0 2px 12px rgba(255,255,255,.1) !important;
+  text-shadow:0 1px 10px rgba(255,255,255,.08) !important;
 }
-#faixas-secao .nextgen-marquee-logo{
-  width:48px !important;
-  height:48px !important;
-  object-fit:contain !important;
-  border-radius:8px !important;
-  flex:0 0 48px !important;
-  margin-right:14px !important;
-  filter:drop-shadow(0 4px 10px rgba(0,0,0,.24)) !important;
+@media (max-width:700px){
+  #faixas-secao .nextgen-marquee{min-height:48px !important;}
+  #faixas-secao .nextgen-marquee-item{
+    margin-right:58px !important;
+    font-size:clamp(16px,4.5vw,22px) !important;
+    letter-spacing:.045em !important;
+  }
 }
 @keyframes nextgenMarquee{
   from{transform:translate3d(0,0,0)}
@@ -160,37 +180,19 @@ const countdownOverride = `<style>
     marquee.className='nextgen-marquee';
     const track=document.createElement('div');
     track.className='nextgen-marquee-track';
-    const items=[
-      {type:'logo'},
-      {type:'text',value:'0 AO 100K'},
-      {type:'logo'},
-      {type:'text',value:'NOVA OPORTUNIDADE'},
-      {type:'logo'},
-      {type:'text',value:'0 AO 100K'},
-      {type:'logo'},
-      {type:'text',value:'NOVA OPORTUNIDADE'},
-      {type:'logo'},
-      {type:'text',value:'0 AO 100K'},
-      {type:'logo'},
-      {type:'text',value:'NOVA OPORTUNIDADE'},
-      {type:'logo'},
-      {type:'text',value:'0 AO 100K'},
-      {type:'logo'},
-      {type:'text',value:'NOVA OPORTUNIDADE'}
+    const labels=[
+      '0 AO 100K','NOVA OPORTUNIDADE',
+      '0 AO 100K','NOVA OPORTUNIDADE',
+      '0 AO 100K','NOVA OPORTUNIDADE',
+      '0 AO 100K','NOVA OPORTUNIDADE',
+      '0 AO 100K','NOVA OPORTUNIDADE',
+      '0 AO 100K','NOVA OPORTUNIDADE'
     ];
-    items.forEach(item=>{
-      if(item.type==='logo'){
-        const img=document.createElement('img');
-        img.className='nextgen-marquee-logo';
-        img.src='/images/zero-100k.svg';
-        img.alt='Logo 0 ao 100K';
-        track.appendChild(img);
-      }else{
-        const el=document.createElement('span');
-        el.className='nextgen-marquee-item';
-        el.textContent=item.value;
-        track.appendChild(el);
-      }
+    labels.forEach(label=>{
+      const el=document.createElement('span');
+      el.className='nextgen-marquee-item';
+      el.textContent=label;
+      track.appendChild(el);
     });
     marquee.appendChild(track);
     existing.parentElement.insertAdjacentElement('beforebegin',marquee);
