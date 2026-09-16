@@ -214,6 +214,14 @@ html,body{
     if(!heading) return;
     heading.innerHTML='É um treinamento completo para quem quer vender na <span style="color:#F94F17;font-weight:700">Shopee</span> com estratégia, margem e escala. <span style="color:#F94F17">Ele é indicado para:</span>';
   }
+  function replaceDeviceImage(){
+    const img=document.querySelector('.elementor-element-60d7a7b img');
+    if(!img) return;
+    img.src='/images/plataforma-projeto-100k-transparent.svg?v=2';
+    img.removeAttribute('srcset');
+    img.removeAttribute('sizes');
+    img.style.background='transparent';
+  }
   function buildMovingStrip(){
     const section=document.getElementById('faixas-secao');
     if(!section || section.querySelector('.nextgen-marquee')) return;
@@ -262,6 +270,7 @@ html,body{
     if(window.__nextgenNativeSetInterval) window.setInterval = window.__nextgenNativeSetInterval;
     update();
     updateWhoText();
+    replaceDeviceImage();
     buildMovingStrip();
     placeSecurityImage();
   }
