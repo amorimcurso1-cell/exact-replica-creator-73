@@ -55,11 +55,11 @@ const countdownOverride = `<style>
   margin:0 auto !important;
 }
 
-/* Faixa promocional — maior e centralizada */
+/* Faixa promocional */
 #faixas-secao .nextgen-marquee{
   width:100% !important;
-  height:64px !important;
-  min-height:64px !important;
+  height:54px !important;
+  min-height:54px !important;
   overflow:hidden !important;
   display:flex !important;
   align-items:center !important;
@@ -75,7 +75,7 @@ const countdownOverride = `<style>
   align-items:center !important;
   width:max-content !important;
   min-width:max-content !important;
-  height:64px !important;
+  height:54px !important;
   white-space:nowrap !important;
   will-change:transform !important;
   animation:nextgenMarquee 22s linear infinite !important;
@@ -88,16 +88,16 @@ const countdownOverride = `<style>
   align-items:center !important;
   justify-content:center !important;
   flex:0 0 auto !important;
-  height:64px !important;
-  margin-right:78px !important;
+  height:54px !important;
+  margin-right:72px !important;
   padding:0 !important;
   color:#fff !important;
   font-family:"Barlow Condensed",Arial,sans-serif !important;
-  font-size:clamp(28px,3.2vw,40px) !important;
+  font-size:clamp(25px,3vw,36px) !important;
   font-weight:400 !important;
   text-transform:uppercase !important;
   letter-spacing:.025em !important;
-  line-height:64px !important;
+  line-height:54px !important;
   text-shadow:none !important;
   -webkit-font-smoothing:antialiased !important;
   font-synthesis:none !important;
@@ -106,13 +106,13 @@ const countdownOverride = `<style>
   #faixas-secao .nextgen-marquee,
   #faixas-secao .nextgen-marquee-track,
   #faixas-secao .nextgen-marquee-item{
-    height:54px !important;
-    min-height:54px !important;
-    line-height:54px !important;
+    height:46px !important;
+    min-height:46px !important;
+    line-height:46px !important;
   }
   #faixas-secao .nextgen-marquee-item{
-    margin-right:52px !important;
-    font-size:clamp(23px,5.5vw,30px) !important;
+    margin-right:48px !important;
+    font-size:clamp(20px,5vw,27px) !important;
     letter-spacing:.02em !important;
   }
 }
