@@ -55,7 +55,7 @@ const countdownOverride = `<style>
   margin:0 auto !important;
 }
 
-/* Fundo unificado da área inicial/da logo para a diferença ficar quase imperceptível */
+/* Preto do topo descendo suavemente até a mesma cor do restante da página */
 html,body{
   background:#0a0a0a !important;
 }
@@ -64,7 +64,7 @@ html,body{
 .site,
 .site-main,
 .elementor{
-  background:#0a0a0a !important;
+  background:linear-gradient(to bottom,#000 0%,#020202 26%,#050505 52%,#080808 78%,#0a0a0a 100%) !important;
 }
 
 /* Faixa promocional */
