@@ -71,6 +71,9 @@ const countdownOverride = `<style>
   content:none !important;
 }
 #faixas-secao .nextgen-marquee-track{
+  position:absolute !important;
+  left:0 !important;
+  top:50% !important;
   display:flex !important;
   align-items:center !important;
   width:max-content !important;
@@ -81,7 +84,7 @@ const countdownOverride = `<style>
   animation:nextgenMarquee 22s linear infinite !important;
   animation-play-state:running !important;
   backface-visibility:hidden !important;
-  transform:translate3d(0,0,0);
+  transform:translate3d(0,-50%,0);
 }
 #faixas-secao .nextgen-marquee-item{
   display:inline-flex !important;
@@ -97,28 +100,30 @@ const countdownOverride = `<style>
   font-weight:400 !important;
   text-transform:uppercase !important;
   letter-spacing:.025em !important;
-  line-height:54px !important;
+  line-height:1 !important;
   text-shadow:none !important;
   -webkit-font-smoothing:antialiased !important;
   font-synthesis:none !important;
 }
 @media (max-width:700px){
-  #faixas-secao .nextgen-marquee,
-  #faixas-secao .nextgen-marquee-track,
-  #faixas-secao .nextgen-marquee-item{
+  #faixas-secao .nextgen-marquee{
     height:46px !important;
     min-height:46px !important;
-    line-height:46px !important;
+  }
+  #faixas-secao .nextgen-marquee-track{
+    height:46px !important;
   }
   #faixas-secao .nextgen-marquee-item{
+    height:46px !important;
     margin-right:48px !important;
     font-size:clamp(20px,5vw,27px) !important;
     letter-spacing:.02em !important;
+    line-height:1 !important;
   }
 }
 @keyframes nextgenMarquee{
-  0%{transform:translate3d(0,0,0)}
-  100%{transform:translate3d(-50%,0,0)}
+  0%{transform:translate3d(0,-50%,0)}
+  100%{transform:translate3d(-50%,-50%,0)}
 }
 #faixas-secao .elementor-element-d29ef32 > .elementor-widget-container > .elementor-icon-list-items{
   display:none !important;
