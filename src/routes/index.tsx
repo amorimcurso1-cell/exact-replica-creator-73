@@ -256,6 +256,57 @@ html,body{
 .elementor-element-11e7250{
   display:none !important;
 }
+html,body{
+  background:#000 !important;
+  color:#fff !important;
+}
+body,
+#page,
+.site,
+.site-main,
+.elementor,
+.elementor-page,
+.elementor-section-wrap{
+  background:#000 !important;
+}
+.elementor .e-con,
+.elementor .elementor-section,
+.elementor .elementor-element{
+  background-color:transparent !important;
+  background-image:none !important;
+}
+.elementor .e-con::before,
+.elementor .e-con::after,
+.elementor .elementor-section::before,
+.elementor .elementor-section::after{
+  box-sizing:border-box !important;
+}
+.elementor > .e-con.e-parent:nth-of-type(3),
+.elementor > .e-con.e-parent:nth-of-type(6),
+.elementor > .e-con.e-parent:nth-of-type(9),
+.elementor > .e-con.e-parent:nth-of-type(12){
+  position:relative !important;
+}
+.elementor > .e-con.e-parent:nth-of-type(3)::before,
+.elementor > .e-con.e-parent:nth-of-type(6)::before,
+.elementor > .e-con.e-parent:nth-of-type(9)::before,
+.elementor > .e-con.e-parent:nth-of-type(12)::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:8% 8% auto 8% !important;
+  height:52% !important;
+  background:radial-gradient(circle at 50% 50%,rgba(249,79,23,.20) 0%,rgba(249,79,23,.10) 30%,rgba(249,79,23,0) 72%) !important;
+  filter:blur(20px) !important;
+  pointer-events:none !important;
+  z-index:0 !important;
+}
+.elementor > .e-con.e-parent:nth-of-type(3) > *,
+.elementor > .e-con.e-parent:nth-of-type(6) > *,
+.elementor > .e-con.e-parent:nth-of-type(9) > *,
+.elementor > .e-con.e-parent:nth-of-type(12) > *{
+  position:relative !important;
+  z-index:1 !important;
+}
 .elementor-element-60d7a7b{
   width:min(733px,88vw) !important;
   max-width:733px !important;
