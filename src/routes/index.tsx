@@ -128,7 +128,7 @@ html,body{
   letter-spacing:.025em !important;
   line-height:1 !important;
   position:relative !important;
-  top:6px !important;
+  top:0 !important;
   text-shadow:none !important;
   -webkit-font-smoothing:antialiased !important;
   font-synthesis:none !important;
@@ -147,7 +147,7 @@ html,body{
     font-size:clamp(20px,5vw,27px) !important;
     letter-spacing:.02em !important;
     line-height:1 !important;
-    top:5px !important;
+    top:0 !important;
   }
 }
 @keyframes nextgenMarquee{
