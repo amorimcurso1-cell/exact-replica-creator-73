@@ -324,7 +324,6 @@ html,body{
     if(track){
       track.style.setProperty('display','flex','important');
       track.style.setProperty('align-items','center','important');
-      track.style.setProperty('transform','none','important');
     }
   }
 
