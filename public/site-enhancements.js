@@ -21,83 +21,97 @@
   .ng-who-float-fast{animation:ngWhoFloat 3s ease-in-out infinite;will-change:transform}
   @keyframes ngWhoFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-10px,0)}}
 
-  /* Faixa laranja diagonal — formato original restaurado */
-  #faixas-secao{position:relative!important;overflow:visible!important}
-  #faixas-secao .nextgen-marquee{
-    box-sizing:border-box!important;
-    width:116%!important;
-    height:58px!important;
-    min-height:58px!important;
-    margin-left:-8%!important;
-    margin-right:0!important;
-    padding:0!important;
+  /* Faixa laranja: usa literalmente o texto e os ícones originais da página */
+  #faixas-secao{
+    position:relative!important;
+    width:200vw!important;
+    max-width:none!important;
+    height:72px!important;
+    min-height:72px!important;
+    margin-top:4px!important;
+    margin-bottom:4px!important;
+    overflow:hidden!important;
     display:flex!important;
     align-items:center!important;
     justify-content:center!important;
     background:#F94F17!important;
-    background-image:none!important;
-    border:0!important;
-    border-radius:0!important;
-    overflow:hidden!important;
-    position:relative!important;
-    z-index:20!important;
+    background-image:linear-gradient(90deg,#FF8035 -12.95%,#F6422E 82.93%)!important;
+    box-shadow:0 10px 40px 0 rgba(249,79,23,.40)!important;
     transform:rotate(-4deg)!important;
     transform-origin:center center!important;
+    z-index:20!important;
   }
-  #faixas-secao .nextgen-marquee-track{
-    position:absolute!important;
-    left:0!important;
-    top:50%!important;
+  #faixas-secao .elementor-icon-list-items{
     display:flex!important;
+    flex-wrap:nowrap!important;
     align-items:center!important;
     width:max-content!important;
     min-width:max-content!important;
-    height:58px!important;
     white-space:nowrap!important;
-    will-change:transform!important;
-    animation:nextgenMarqueeFixed 12s linear infinite!important;
-    animation-play-state:running!important;
-    backface-visibility:hidden!important;
+    margin:0!important;
+    padding:0!important;
   }
-  #faixas-secao .nextgen-marquee-item{
+  #faixas-secao .carrossel-ativo{
+    display:flex!important;
+    flex:0 0 auto!important;
+    align-items:center!important;
+    width:max-content!important;
+    min-width:max-content!important;
+    gap:56px!important;
+    animation:nextgenOriginalStrip 20s linear infinite!important;
+    will-change:transform!important;
+  }
+  #faixas-secao .elementor-icon-list-item{
     display:inline-flex!important;
+    flex:0 0 auto!important;
     align-items:center!important;
     justify-content:center!important;
-    flex:0 0 auto!important;
-    height:58px!important;
-    margin-right:72px!important;
+    height:72px!important;
+    margin:0!important;
     padding:0!important;
-    color:#fff!important;
-    font-family:"Barlow Condensed",Arial,sans-serif!important;
-    font-size:clamp(25px,3vw,36px)!important;
-    font-weight:400!important;
-    text-transform:uppercase!important;
-    letter-spacing:.025em!important;
-    line-height:1!important;
-    position:relative!important;
-    top:0!important;
-    text-shadow:none!important;
-    -webkit-font-smoothing:antialiased!important;
-    font-synthesis:none!important;
+    white-space:nowrap!important;
   }
-  @keyframes nextgenMarqueeFixed{
-    0%{transform:translate3d(0,-50%,0)}
-    100%{transform:translate3d(-50%,-50%,0)}
+  #faixas-secao .elementor-icon-list-icon,
+  #faixas-secao .elementor-icon-list-text{
+    display:inline-flex!important;
+    align-items:center!important;
+  }
+  #faixas-secao .elementor-icon-list-icon{
+    flex:0 0 auto!important;
+    margin-inline-end:12px!important;
+  }
+  #faixas-secao .elementor-icon-list-icon svg{
+    display:block!important;
+  }
+  #faixas-secao .elementor-icon-list-text{
+    color:#fff!important;
+    white-space:nowrap!important;
+    line-height:1!important;
+    font-family:"Halcom","Barlow",Arial,sans-serif!important;
+    font-weight:400!important;
+  }
+  @keyframes nextgenOriginalStrip{
+    0%{transform:translate3d(0,0,0)}
+    100%{transform:translate3d(-50%,0,0)}
   }
   @media(max-width:700px){
-    #faixas-secao .nextgen-marquee{
-      width:122%!important;
-      height:46px!important;
-      min-height:46px!important;
-      margin-left:-11%!important;
-      transform:rotate(-5deg)!important;
+    #faixas-secao{
+      width:220vw!important;
+      height:60px!important;
+      min-height:60px!important;
+      transform:rotate(-4deg)!important;
+      margin-top:2px!important;
+      margin-bottom:2px!important;
     }
-    #faixas-secao .nextgen-marquee-track{height:46px!important}
-    #faixas-secao .nextgen-marquee-item{
-      height:46px!important;
-      margin-right:48px!important;
-      font-size:clamp(20px,5vw,27px)!important;
-      letter-spacing:.02em!important;
+    #faixas-secao .carrossel-ativo{
+      gap:38px!important;
+      animation-duration:18s!important;
+    }
+    #faixas-secao .elementor-icon-list-item{
+      height:60px!important;
+    }
+    #faixas-secao .elementor-icon-list-icon{
+      margin-inline-end:9px!important;
     }
   }
 
