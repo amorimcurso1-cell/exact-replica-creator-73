@@ -82,82 +82,94 @@ html,body{
   border:0 !important;
 }
 
-#faixas-secao .nextgen-marquee{
-  width:100% !important;
-  height:54px !important;
-  min-height:54px !important;
+#faixas-secao{
+  width:200vw !important;
+  max-width:none !important;
+  height:72px !important;
+  min-height:72px !important;
   overflow:hidden !important;
   display:flex !important;
   align-items:center !important;
   justify-content:center !important;
   position:relative !important;
+  transform:rotate(-4deg) !important;
+  transform-origin:center center !important;
+  z-index:5 !important;
+  margin-top:4px !important;
+  margin-bottom:4px !important;
 }
-#faixas-secao .nextgen-marquee::before,
-#faixas-secao .nextgen-marquee::after{
-  content:none !important;
-}
-#faixas-secao .nextgen-marquee-track{
-  position:absolute !important;
-  left:0 !important;
-  top:50% !important;
+#faixas-secao .elementor-icon-list-items{
   display:flex !important;
+  flex-wrap:nowrap !important;
   align-items:center !important;
   width:max-content !important;
   min-width:max-content !important;
-  height:54px !important;
   white-space:nowrap !important;
-  will-change:transform !important;
-  animation:nextgenMarquee 12s linear infinite !important;
-  animation-play-state:running !important;
-  backface-visibility:hidden !important;
-  transform:translate3d(0,-50%,0);
+  margin:0 !important;
+  padding:0 !important;
 }
-#faixas-secao .nextgen-marquee-item{
+#faixas-secao .carrossel-ativo{
+  display:flex !important;
+  flex:0 0 auto !important;
+  align-items:center !important;
+  width:max-content !important;
+  min-width:max-content !important;
+  gap:56px !important;
+  animation:nextgenOriginalStrip 20s linear infinite !important;
+  will-change:transform;
+}
+#faixas-secao .elementor-icon-list-item{
   display:inline-flex !important;
+  flex:0 0 auto !important;
   align-items:center !important;
   justify-content:center !important;
-  flex:0 0 auto !important;
-  height:54px !important;
-  margin-right:72px !important;
+  margin:0 !important;
   padding:0 !important;
-  color:#fff !important;
-  font-family:"Barlow Condensed",Arial,sans-serif !important;
-  font-size:clamp(25px,3vw,36px) !important;
-  font-weight:400 !important;
-  text-transform:uppercase !important;
-  letter-spacing:.025em !important;
+  white-space:nowrap !important;
+  height:72px !important;
+}
+#faixas-secao .elementor-icon-list-icon,
+#faixas-secao .elementor-icon-list-text{
+  display:inline-flex !important;
+  align-items:center !important;
+}
+#faixas-secao .elementor-icon-list-icon{
+  flex:0 0 auto !important;
+  margin-inline-end:12px !important;
+}
+#faixas-secao .elementor-icon-list-icon svg{
+  display:block !important;
+  flex:0 0 auto !important;
+}
+#faixas-secao .elementor-icon-list-text{
+  white-space:nowrap !important;
   line-height:1 !important;
-  position:relative !important;
-  top:0 !important;
-  text-shadow:none !important;
-  -webkit-font-smoothing:antialiased !important;
-  font-synthesis:none !important;
+  color:#fff !important;
+}
+@keyframes nextgenOriginalStrip{
+  0%{transform:translate3d(0,0,0)}
+  100%{transform:translate3d(-50%,0,0)}
 }
 @media (max-width:700px){
-  #faixas-secao .nextgen-marquee{
-    height:46px !important;
-    min-height:46px !important;
+  #faixas-secao{
+    width:220vw !important;
+    height:60px !important;
+    min-height:60px !important;
+    transform:rotate(-4deg) !important;
+    margin-top:2px !important;
+    margin-bottom:2px !important;
   }
-  #faixas-secao .nextgen-marquee-track{
-    height:46px !important;
+  #faixas-secao .carrossel-ativo{
+    gap:38px !important;
+    animation-duration:18s !important;
   }
-  #faixas-secao .nextgen-marquee-item{
-    height:46px !important;
-    margin-right:48px !important;
-    font-size:clamp(20px,5vw,27px) !important;
-    letter-spacing:.02em !important;
-    line-height:1 !important;
-    top:0 !important;
+  #faixas-secao .elementor-icon-list-item{
+    height:60px !important;
+  }
+  #faixas-secao .elementor-icon-list-icon{
+    margin-inline-end:9px !important;
   }
 }
-@keyframes nextgenMarquee{
-  0%{transform:translate3d(0,-50%,0)}
-  100%{transform:translate3d(-50%,-50%,0)}
-}
-#faixas-secao .elementor-element-d29ef32 > .elementor-widget-container > .elementor-icon-list-items{
-  display:none !important;
-}
-
 .nextgen-fb-marquee{
   width:100% !important;
   overflow:hidden !important;
@@ -199,23 +211,66 @@ html,body{
 }
 
 .ng-reveal{
-  opacity:0;
-  transform:translate3d(0,28px,0);
-  transition:opacity .75s cubic-bezier(.22,.61,.36,1),transform .75s cubic-bezier(.22,.61,.36,1);
+  opacity:0 !important;
+  transform:translate3d(0,34px,0) !important;
+  transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);
   will-change:opacity,transform;
 }
 .ng-reveal.ng-in{
   opacity:1 !important;
   transform:none !important;
 }
+#cd-dias,
+.countdown-numbers > .countdown-item:first-child,
+.countdown-numbers > .countdown-item:first-child + .countdown-sep{
+  display:none !important;
+}
+#elementor-element-6a282cb{}
+#faixas-secao + .elementor-element{}
+.elementor-element-60d7a7b{
+  animation:none !important;
+  transform:none !important;
+  width:min(733px,88vw) !important;
+  max-width:733px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+.elementor-element-60d7a7b img{
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  height:auto !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  transform:none !important;
+}
+@media (max-width:1024px){
+  .elementor-element-6a282cb{
+    margin-left:0 !important;
+    margin-right:0 !important;
+    padding-left:20px !important;
+    padding-right:20px !important;
+  }
+  .elementor-element-60d7a7b{
+    width:min(650px,90vw) !important;
+    max-width:650px !important;
+  }
+}
+@media (max-width:767px){
+  .elementor-element-60d7a7b{
+    width:min(560px,94vw) !important;
+    max-width:94vw !important;
+  }
+}
 @media (prefers-reduced-motion:reduce){
   .ng-reveal{opacity:1 !important;transform:none !important;transition:none !important}
   .nextgen-fb-track{animation:none !important}
+  #faixas-secao .carrossel-ativo{animation:none !important}
 }
 </style><script>
 (function(){
   const START = 23 * 60 * 60 + 59 * 60 + 10;
-  const KEY = "nextgen_countdown_started";
+  const started = Date.now();
   const nativeSetInterval = window.__nextgenNativeSetInterval || window.setInterval.bind(window);
   function pad(n){ return String(n).padStart(2,"0"); }
   function stopAncestorAnimations(el){
@@ -242,18 +297,12 @@ html,body{
       s:document.getElementById("cd-seg")
     };
     if(!els.h||!els.m||!els.s)return;
-    let started=Number(localStorage.getItem(KEY));
-    if(!started){
-      started=Date.now();
-      localStorage.setItem(KEY,String(started));
-    }
     const remaining=Math.max(0,START-Math.floor((Date.now()-started)/1000));
-    const d=Math.floor(remaining/86400);
-    const h=Math.floor((remaining%86400)/3600);
+    const totalHours=Math.floor(remaining/3600);
     const m=Math.floor((remaining%3600)/60);
     const s=remaining%60;
-    if(els.d)els.d.textContent=pad(d);
-    els.h.textContent=pad(h);
+    if(els.d)els.d.textContent='00';
+    els.h.textContent=pad(totalHours);
     els.m.textContent=pad(m);
     els.s.textContent=pad(s);
     ['cd-dias','cd-horas','cd-min','cd-seg'].forEach(id=>{
@@ -268,30 +317,38 @@ html,body{
   }
   function buildMovingStrip(){
     const section=document.getElementById('faixas-secao');
-    if(!section || section.querySelector('.nextgen-marquee')) return;
-    const existing=section.querySelector('.elementor-icon-list-items');
-    if(!existing) return;
-    const marquee=document.createElement('div');
-    marquee.className='nextgen-marquee';
-    const track=document.createElement('div');
-    track.className='nextgen-marquee-track';
-    const labels=[
-      '0 AO 100K','NOVA OPORTUNIDADE',
-      '0 AO 100K','NOVA OPORTUNIDADE',
-      '0 AO 100K','NOVA OPORTUNIDADE',
-      '0 AO 100K','NOVA OPORTUNIDADE',
-      '0 AO 100K','NOVA OPORTUNIDADE',
-      '0 AO 100K','NOVA OPORTUNIDADE'
-    ];
-    labels.forEach(label=>{
-      const el=document.createElement('span');
-      el.className='nextgen-marquee-item';
-      el.textContent=label;
-      track.appendChild(el);
+    const existing=section?.querySelector('.elementor-icon-list-items');
+    if(!existing)return;
+    existing.style.display='flex';
+    const track=existing.querySelector('.carrossel-ativo');
+    if(track){
+      track.style.setProperty('display','flex','important');
+      track.style.setProperty('align-items','center','important');
+      track.style.setProperty('transform','none','important');
+    }
+  }
+
+  function initScrollReveals(){
+    const targets=[...document.querySelectorAll('.elementor > .e-con.e-parent')];
+    if(!targets.length)return;
+    const revealTargets=targets.filter(el=>el.id!=='faixas-secao');
+    revealTargets.forEach(el=>{
+      el.classList.add('ng-reveal');
+      el.querySelectorAll('.elementor-invisible').forEach(child=>child.classList.remove('elementor-invisible'));
     });
-    marquee.appendChild(track);
-    existing.parentElement.insertAdjacentElement('beforebegin',marquee);
-    existing.style.display='none';
+    if(!('IntersectionObserver' in window)){
+      revealTargets.forEach(el=>el.classList.add('ng-in'));
+      return;
+    }
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting)return;
+        entry.target.classList.add('ng-in');
+        entry.target.querySelectorAll('.elementor-invisible').forEach(child=>child.classList.remove('elementor-invisible'));
+        observer.unobserve(entry.target);
+      });
+    },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+    revealTargets.forEach(el=>observer.observe(el));
   }
   function placeSecurityImage(){
     if(document.querySelector('.nextgen-security-image'))return;
@@ -315,6 +372,7 @@ html,body{
     update();
     updateWhoText();
     buildMovingStrip();
+    initScrollReveals();
     placeSecurityImage();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
