@@ -112,13 +112,17 @@ var cookieadmin_policy = {"cookieadmin_layout":"box","cookieadmin_modal":"center
 <style>
   .countdown-bar {
     background: linear-gradient(90deg, #FF8035 0%, #F6422E 100%);
-    padding: 14px 40px;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 64px;
+    margin: 0;
+    padding: 12px 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 32px;
-    width: 100%;
-    flex-wrap: wrap;
+    gap: 24px;
+    flex-wrap: nowrap;
+    overflow: hidden;
   }
   .countdown-label {
     color: #fff;
@@ -161,23 +165,45 @@ var cookieadmin_policy = {"cookieadmin_layout":"box","cookieadmin_modal":"center
   }
   @media (max-width: 767px) {
     .countdown-bar {
+      min-height: 58px;
       flex-direction: column;
-      gap: 10px;
-      padding: 16px 20px;
+      gap: 7px;
+      padding: 10px 14px;
+    }
+    .countdown-label {
+      font-size: 11px;
+      letter-spacing: .7px;
+    }
+    .countdown-numbers {
+      gap: 9px;
+      flex-wrap: nowrap;
     }
     .countdown-num {
-      font-size: 28px;
+      font-size: 26px;
     }
     .countdown-sep {
-      font-size: 22px;
+      font-size: 20px;
+    }
+    .countdown-unit {
+      font-size: 10px;
     }
   }
   @media (max-width: 400px) {
+    .countdown-bar {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
     .countdown-numbers {
-      gap: 10px;
+      gap: 7px;
     }
     .countdown-num {
-      font-size: 24px;
+      font-size: 23px;
+    }
+    .countdown-sep {
+      font-size: 18px;
+    }
+    .countdown-unit {
+      font-size: 9px;
     }
   }
 </style>
