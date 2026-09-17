@@ -121,6 +121,15 @@
   document.head.appendChild(style);
 
   const findText=t=>[...document.querySelectorAll('body *')].find(e=>e.children.length===0&&(e.textContent||'').trim().toUpperCase()===t);
+  function rewriteOriginalStrip(){
+    const section=document.getElementById('faixas-secao');
+    if(!section)return;
+    const items=[...section.querySelectorAll('.elementor-icon-list-item .elementor-icon-list-text')];
+    items.forEach((el,i)=>{
+      el.textContent=(i%2===0)?'0 AO 100K FACIL':'APROVEITA A OPORTUNIDADE';
+    });
+  }
+
 
   function plus20(){
     const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n=[];let x;
@@ -200,7 +209,7 @@
     });
   }
 
-  function init(){plus20();feedbacks();whoFloat();hideEnding();}
+  function init(){plus20();rewriteOriginalStrip();feedbacks();whoFloat();hideEnding();document.querySelectorAll('.elementor-element-11e7250').forEach(el=>el.style.setProperty('display','none','important'));}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
   setTimeout(hideEnding,500);
 })();
