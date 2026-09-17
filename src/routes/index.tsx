@@ -83,20 +83,36 @@ html,body{
 }
 
 #faixas-secao{
+  position:relative !important;
   width:200vw !important;
   max-width:none !important;
   height:72px !important;
   min-height:72px !important;
-  overflow:hidden !important;
+  margin:8px 0 !important;
+  overflow:visible !important;
   display:flex !important;
   align-items:center !important;
   justify-content:center !important;
-  position:relative !important;
+  background:linear-gradient(90deg,#FF8035 -12.95%,#F6422E 82.93%) !important;
+  box-shadow:0 10px 40px 0 rgba(249,79,23,.40) !important;
   transform:rotate(-4deg) !important;
   transform-origin:center center !important;
-  z-index:5 !important;
-  margin-top:4px !important;
-  margin-bottom:4px !important;
+  z-index:20 !important;
+}
+#faixas-secao::before{
+  content:"" !important;
+  position:absolute !important;
+  left:-10% !important;
+  top:58px !important;
+  width:120% !important;
+  height:58px !important;
+  background:linear-gradient(90deg,rgba(255,128,53,.16),rgba(246,66,46,.30),rgba(255,128,53,.10)) !important;
+  filter:blur(13px) !important;
+  opacity:.95 !important;
+  transform:rotate(-2deg) scaleX(1.02) !important;
+  transform-origin:center center !important;
+  pointer-events:none !important;
+  z-index:-1 !important;
 }
 #faixas-secao .elementor-icon-list-items{
   display:flex !important;
@@ -107,6 +123,7 @@ html,body{
   white-space:nowrap !important;
   margin:0 !important;
   padding:0 !important;
+  overflow:visible !important;
 }
 #faixas-secao .carrossel-ativo{
   display:flex !important;
@@ -116,17 +133,17 @@ html,body{
   min-width:max-content !important;
   gap:56px !important;
   animation:nextgenOriginalStrip 20s linear infinite !important;
-  will-change:transform;
+  will-change:transform !important;
 }
 #faixas-secao .elementor-icon-list-item{
   display:inline-flex !important;
   flex:0 0 auto !important;
   align-items:center !important;
   justify-content:center !important;
+  height:72px !important;
   margin:0 !important;
   padding:0 !important;
   white-space:nowrap !important;
-  height:72px !important;
 }
 #faixas-secao .elementor-icon-list-icon,
 #faixas-secao .elementor-icon-list-text{
@@ -139,25 +156,36 @@ html,body{
 }
 #faixas-secao .elementor-icon-list-icon svg{
   display:block !important;
-  flex:0 0 auto !important;
 }
 #faixas-secao .elementor-icon-list-text{
+  color:#fff !important;
   white-space:nowrap !important;
   line-height:1 !important;
-  color:#fff !important;
+  font-family:"Halcom","Barlow",Arial,sans-serif !important;
+  font-size:16px !important;
+  font-weight:400 !important;
+  letter-spacing:0 !important;
+  text-transform:uppercase !important;
 }
 @keyframes nextgenOriginalStrip{
   0%{transform:translate3d(0,0,0)}
   100%{transform:translate3d(-50%,0,0)}
 }
+@media (max-width:1024px){
+  #faixas-secao{ width:220vw !important; }
+}
 @media (max-width:700px){
   #faixas-secao{
-    width:220vw !important;
+    width:240vw !important;
     height:60px !important;
     min-height:60px !important;
+    margin:4px 0 !important;
     transform:rotate(-4deg) !important;
-    margin-top:2px !important;
-    margin-bottom:2px !important;
+  }
+  #faixas-secao::before{
+    top:48px !important;
+    height:46px !important;
+    filter:blur(11px) !important;
   }
   #faixas-secao .carrossel-ativo{
     gap:38px !important;
@@ -168,6 +196,9 @@ html,body{
   }
   #faixas-secao .elementor-icon-list-icon{
     margin-inline-end:9px !important;
+  }
+  #faixas-secao .elementor-icon-list-text{
+    font-size:14px !important;
   }
 }
 .nextgen-fb-marquee{
@@ -220,20 +251,17 @@ html,body{
   opacity:1 !important;
   transform:none !important;
 }
-#cd-dias,
-.countdown-numbers > .countdown-item:first-child,
-.countdown-numbers > .countdown-item:first-child + .countdown-sep{
-  display:none !important;
-}
 #elementor-element-6a282cb{}
 #faixas-secao + .elementor-element{}
+.elementor-element-11e7250{
+  display:none !important;
+}
 .elementor-element-60d7a7b{
-  animation:none !important;
-  transform:none !important;
   width:min(733px,88vw) !important;
   max-width:733px !important;
   margin-left:auto !important;
   margin-right:auto !important;
+  transform:none !important;
 }
 .elementor-element-60d7a7b img{
   display:block !important;
@@ -243,6 +271,12 @@ html,body{
   object-fit:contain !important;
   object-position:center center !important;
   transform:none !important;
+  animation:nextgenTabletOriginalFloat 3s ease-in-out infinite !important;
+  will-change:transform !important;
+}
+@keyframes nextgenTabletOriginalFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-30px)}
 }
 @media (max-width:1024px){
   .elementor-element-6a282cb{
