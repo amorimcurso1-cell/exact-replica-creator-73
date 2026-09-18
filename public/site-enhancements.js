@@ -58,7 +58,7 @@
     width:max-content!important;
     min-width:max-content!important;
     gap:56px!important;
-    animation:nextgenOriginalStrip 20s linear infinite!important;
+    animation:nextgenOriginalStrip 34s linear infinite!important;
     will-change:transform!important;
   }
   #faixas-secao .elementor-icon-list-item{
@@ -105,7 +105,7 @@
     }
     #faixas-secao .carrossel-ativo{
       gap:38px!important;
-      animation-duration:18s!important;
+      animation-duration:30s!important;
     }
     #faixas-secao .elementor-icon-list-item{
       height:60px!important;
