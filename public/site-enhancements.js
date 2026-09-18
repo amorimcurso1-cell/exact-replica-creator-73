@@ -602,7 +602,7 @@
     el.style.setProperty('display','block','important');
     el.style.setProperty('visibility','visible','important');
     el.style.setProperty('opacity','1','important');
-    el.style.setProperty('color','#fff','important');
+    el.style.setProperty('color','#111','important');
     el.style.setProperty('text-align','center','important');
     el.style.setProperty('margin','0','important');
     const box=el.closest('[data-id="507177e"]');
