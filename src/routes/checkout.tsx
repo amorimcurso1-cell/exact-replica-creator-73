@@ -393,7 +393,17 @@ function CheckoutPage() {
 
               <label style={styles.label}>Escolha o valor fixo no PIX</label>
 
-              <div className="pix-options" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9, marginBottom: 8 }}>
+              <div
+                className="pix-options"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(4,minmax(0,1fr))",
+                  gap: 10,
+                  width: "100%",
+                  maxWidth: 520,
+                  margin: "14px auto 10px",
+                }}
+              >
                 {pixOptions.map((value) => (
                   <button
                     key={value}
@@ -402,7 +412,12 @@ function CheckoutPage() {
                     style={{
                       ...styles.method,
                       ...(splitAmount === value ? styles.activeMethod : {}),
-                      padding: "12px 7px",
+                      width: "100%",
+                      minWidth: 0,
+                      padding: "13px 6px",
+                      whiteSpace: "nowrap",
+                      overflow: "visible",
+                      fontSize: 14,
                     }}
                     aria-pressed={splitAmount === value}
                   >
@@ -411,7 +426,7 @@ function CheckoutPage() {
                 ))}
               </div>
 
-              <div style={{ marginTop: 8, fontSize: 12, color: "#777" }}>
+              <div style={{ marginTop: 10, fontSize: 12, color: "#777", textAlign: "center" }}>
                 Opções disponíveis: R$ 15,00 • R$ 20,00 • R$ 25,00 • R$ 30,00.
               </div>
 
