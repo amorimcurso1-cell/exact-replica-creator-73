@@ -25,8 +25,8 @@ const PIX_BY_AMOUNT: Record<number, { code: string; qr: string }> = {
     qr: "https://i.postimg.cc/mr1tBHgt/Screenshot-3.png",
   },
   20: {
-    code: "",
-    qr: "",
+    code: "00020101021226900014br.gov.bcb.pix2568qrcode.somossimpay.com.br/v2/qr/cob/d510f36d0acd489ea33d79d03f87427e5204000053039865802BR5918ORBE SERVICES LTDA6009SAO PAULO62070503***630444E0",
+    qr: "https://i.postimg.cc/mD2Zh1bq/Screenshot-2.png",
   },
   25: {
     code: "00020101021226900014br.gov.bcb.pix2568qrcode.somossimpay.com.br/v2/qr/cob/c3faedb860004b148815353ce8d801bd5204000053039865802BR5918ORBE SERVICES LTDA6009SAO PAULO62070503***6304EEEB",
