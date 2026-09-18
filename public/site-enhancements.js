@@ -127,6 +127,15 @@
     }
   }
 
+  /* Remover as duas faixas finais do Manual do Milhão */
+  .elementor-element-832a124{
+    display:none!important;
+    height:0!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
   /* Remover carrossel antigo de imagens abaixo dos benefícios */
   .elementor-element-36758a8{
     display:none!important;
