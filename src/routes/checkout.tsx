@@ -1,14 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import React, { useEffect, useMemo, useState } from "react";
 
+const pixBrandLogo = "https://upload.wikimedia.org/wikipedia/commons/5/50/Pix_%28Brazil%29_logo.svg";
+
 const CHECKOUT = {
   productName: "Mentoria Projeto dos 100K",
   price: 59.98,
   paymentLink: "https://pay.kiwify.com.br/i5C8OzN",
 
   // Preencha estes campos quando enviar o QR Code e o código PIX.
-  pixQrImage: "",
-  pixCopyPaste: "",
+  pixQrImage: "https://i.postimg.cc/T2q5KT2r/Screenshot-2.png",
+  pixCopyPaste: "00020101021226900014br.gov.bcb.pix2568qrcode.somossimpay.com.br/v2/qr/cob/f9603aef8dff4823ba5c60797ef7e46d5204000053039865802BR5918ORBE SERVICES LTDA6009SAO PAULO62070503***6304A9ED",
 
   // Textos do banner: totalmente editáveis aqui.
   bannerTexts: ["O NOVO JOGO", "0 AO 100K FACIL", "APROVEITA A OPORTUNIDADE"],
@@ -316,23 +318,14 @@ function CheckoutPage() {
                   aria-pressed={paymentMode === value}
                 >
                   {value === "pix" ? (
-                    <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                      <span aria-hidden="true" style={{
-                        display: "inline-flex",
-                        width: 20,
-                        height: 20,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: 5,
-                        background: "#32bcad",
-                        color: "#fff",
-                        fontWeight: 900,
-                        fontSize: 11,
-                        lineHeight: 1,
-                      }}>P</span>
-                      PIX
+                    <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                      <img
+                        src={pixBrandLogo}
+                        alt="Pix"
+                        style={{ display: "block", width: 86, height: 30, objectFit: "contain" }}
+                      />
                     </span>
-                  ) : label}
+) : label}
                 </button>
               ))}
             </div>
@@ -460,7 +453,9 @@ function CheckoutPage() {
 
             {paymentMode === "pix" && (
               <div style={{ ...styles.panel, background: "#fff", textAlign: "center" as const }}>
-                <div style={styles.panelTitle}>PIX</div>
+                <div style={{ ...styles.panelTitle, display: "flex", justifyContent: "center", marginBottom: 12 }}>
+                  <img src={pixBrandLogo} alt="Pix" style={{ width: 96, height: 34, objectFit: "contain" }} />
+                </div>
                 {CHECKOUT.pixQrImage ? (
                   <img src={CHECKOUT.pixQrImage} alt="QR Code PIX" style={styles.qr} />
                 ) : (
@@ -470,7 +465,7 @@ function CheckoutPage() {
                 <textarea
                   style={styles.code}
                   readOnly
-                  value={CHECKOUT.pixCopyPaste || "Informe o código PIX em CHECKOUT.pixCopyPaste"}
+                  value={CHECKOUT.pixCopyPaste}
                 />
               </div>
             )}
