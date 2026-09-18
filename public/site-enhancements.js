@@ -668,12 +668,16 @@
   }
 
   function bindEnrollCheckout(){
+    const checkoutUrl='https://pay.kiwify.com.br/0MtgZYn';
     document.querySelectorAll('a').forEach(link=>{
       const label=(link.textContent||'').trim().toLowerCase();
-      if(label!=='inscreva-se agora')return;
+      if(label!=='inscreva-se agora' && label!=='inscreva-se')return;
+      link.setAttribute('href',checkoutUrl);
+      link.setAttribute('target','_blank');
+      link.setAttribute('rel','noopener noreferrer');
       link.addEventListener('click',event=>{
         event.preventDefault();
-        window.location.href='/checkout';
+        window.open(checkoutUrl,'_blank','noopener,noreferrer');
       },{passive:false});
     });
   }
