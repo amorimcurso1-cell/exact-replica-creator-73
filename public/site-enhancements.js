@@ -169,6 +169,24 @@
   #comprar .elementor-element-507177e .elementor-heading-title{
     color:#fff!important;
   }
+  #comprar .elementor-element-507177e{
+    display:flex!important;
+    width:100%!important;
+    min-height:24px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    opacity:1!important;
+    visibility:visible!important;
+    transform:none!important;
+    position:relative!important;
+    z-index:10!important;
+  }
+  #comprar .elementor-element-507177e .elementor-heading-title{
+    display:block!important;
+    visibility:visible!important;
+    opacity:1!important;
+    margin:0!important;
+  }
   /* Remove a marca/logotipo da área de pagamento */
   #comprar .elementor-element-324f9eb{
     display:none!important;
