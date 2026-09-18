@@ -1,14 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 const CHECKOUT = {
   productName: "Mentoria Projeto dos 100K",
-  subtitle: "Acesso à mentoria e aos materiais da oferta atual.",
-  price: "R$ 59,98",
-  installments: "12x de R$ 5,00",
+  price: 59.98,
   paymentLink: "https://pay.kiwify.com.br/i5C8OzN",
 
-  // Troque estes dois valores quando você enviar o QR Code e o código PIX.
+  // Preencha estes campos quando enviar o QR Code e o código PIX.
   pixQrImage: "",
   pixCopyPaste: "",
 
@@ -16,16 +14,18 @@ const CHECKOUT = {
   bannerTexts: ["O NOVO JOGO", "0 AO 100K FACIL", "APROVEITA A OPORTUNIDADE"],
 };
 
-type PaymentMethod = "card" | "pix";
-
 const installmentOptions = Array.from({ length: 12 }, (_, index) => index + 1);
+type SplitBase = "pix" | "card";
+
+const money = (value: number) =>
+  value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
 const styles = {
   page: {
     minHeight: "100vh",
     background: "#050505",
     color: "#111",
-    padding: "20px 14px 70px",
+    padding: "18px 14px 70px",
     fontFamily: "Arial, Helvetica, sans-serif",
   } as React.CSSProperties,
   shell: { width: "min(1120px,100%)", margin: "0 auto" } as React.CSSProperties,
@@ -37,7 +37,7 @@ const styles = {
     boxShadow: "0 10px 34px rgba(249,79,23,.18)",
     display: "flex",
     alignItems: "center",
-    marginBottom: 18,
+    marginBottom: 22,
   } as React.CSSProperties,
   bannerTrack: {
     display: "flex",
@@ -60,7 +60,7 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     gap: 16,
-    marginBottom: 18,
+    marginBottom: 16,
     color: "#fff",
   } as React.CSSProperties,
   brand: {
@@ -72,51 +72,42 @@ const styles = {
   back: { color: "#fff", textDecoration: "none", opacity: .75, fontSize: 14 } as React.CSSProperties,
   card: {
     display: "grid",
-    gridTemplateColumns: "minmax(300px,.9fr) minmax(0,1.3fr)",
+    gridTemplateColumns: "minmax(300px,.86fr) minmax(0,1.3fr)",
     background: "#fff",
     borderRadius: 24,
     overflow: "hidden",
     boxShadow: "0 28px 90px rgba(0,0,0,.48),0 0 34px rgba(249,79,23,.1)",
   } as React.CSSProperties,
   summary: {
-    padding: "38px 32px",
+    padding: "34px 30px",
     background: "linear-gradient(180deg,#111 0%,#080808 100%)",
     color: "#fff",
-  } as React.CSSProperties,
-  badge: {
-    display: "inline-flex",
-    padding: "7px 12px",
-    borderRadius: 999,
-    background: "rgba(249,79,23,.12)",
-    border: "1px solid rgba(249,79,23,.3)",
-    color: "#ff6a2a",
-    fontSize: 11,
-    fontWeight: 800,
-    letterSpacing: ".08em",
-    textTransform: "uppercase" as const,
+    textAlign: "center" as const,
   } as React.CSSProperties,
   title: {
     fontSize: "clamp(30px,4vw,48px)",
     lineHeight: 1,
-    margin: "20px 0 14px",
+    margin: "0 auto 14px",
     fontWeight: 900,
+    maxWidth: 430,
   } as React.CSSProperties,
   orange: { color: "#f94f17" } as React.CSSProperties,
-  price: { marginTop: 28, fontSize: "clamp(40px,5vw,58px)", lineHeight: 1, fontWeight: 900 } as React.CSSProperties,
+  price: { marginTop: 22, fontSize: "clamp(40px,5vw,58px)", lineHeight: 1, fontWeight: 900 } as React.CSSProperties,
   small: { marginTop: 8, color: "rgba(255,255,255,.68)", fontSize: 14 } as React.CSSProperties,
   timerBox: {
-    marginTop: 26,
-    padding: "16px 18px",
+    margin: "0 auto 24px",
+    padding: "14px 18px",
     borderRadius: 16,
     border: "1px solid rgba(249,79,23,.28)",
     background: "rgba(249,79,23,.07)",
+    width: "min(100%,250px)",
   } as React.CSSProperties,
   timerLabel: { color: "rgba(255,255,255,.68)", fontSize: 12, marginBottom: 7 } as React.CSSProperties,
   timer: { fontSize: 34, lineHeight: 1, fontWeight: 900, letterSpacing: ".08em" } as React.CSSProperties,
-  form: { padding: "30px clamp(20px,4vw,38px) 34px" } as React.CSSProperties,
-  sectionTitle: { margin: 0, fontSize: 27, fontWeight: 900 } as React.CSSProperties,
-  muted: { margin: "7px 0 0", color: "#6f6f6f", fontSize: 14 } as React.CSSProperties,
-  methodRow: { display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 10, margin: "24px 0 20px" } as React.CSSProperties,
+  form: { padding: "28px clamp(18px,4vw,38px) 34px" } as React.CSSProperties,
+  sectionTitle: { margin: 0, fontSize: 27, fontWeight: 900, textAlign: "center" as const } as React.CSSProperties,
+  muted: { margin: "7px 0 0", color: "#6f6f6f", fontSize: 14, textAlign: "center" as const } as React.CSSProperties,
+  methodRow: { display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 10, margin: "24px 0 16px" } as React.CSSProperties,
   method: {
     border: "1px solid #dfdfdf",
     borderRadius: 14,
@@ -124,7 +115,6 @@ const styles = {
     textAlign: "center" as const,
     fontWeight: 900,
     background: "#fff",
-    cursor: "pointer",
   } as React.CSSProperties,
   activeMethod: {
     border: "2px solid #f94f17",
@@ -138,19 +128,25 @@ const styles = {
     boxSizing: "border-box" as const,
     border: "1px solid #d9d9d9",
     borderRadius: 12,
-    padding: "14px 13px",
+    padding: "13px 13px",
     fontSize: 15,
     outline: "none",
-    marginBottom: 14,
+    marginBottom: 12,
     background: "#fff",
   } as React.CSSProperties,
   grid2: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 } as React.CSSProperties,
-  panel: { border: "1px solid #ececec", borderRadius: 18, padding: 18, background: "#fafafa", marginBottom: 18 } as React.CSSProperties,
+  panel: {
+    border: "1px solid #ececec",
+    borderRadius: 18,
+    padding: 18,
+    background: "#fafafa",
+    marginBottom: 16,
+  } as React.CSSProperties,
   panelTitle: { fontWeight: 900, fontSize: 15, marginBottom: 8 } as React.CSSProperties,
   panelText: { color: "#666", fontSize: 13, lineHeight: 1.55, margin: 0 } as React.CSSProperties,
   qr: {
-    width: 220,
-    height: 220,
+    width: 210,
+    height: 210,
     maxWidth: "100%",
     objectFit: "contain",
     display: "block",
@@ -160,8 +156,8 @@ const styles = {
     background: "#fff",
   } as React.CSSProperties,
   qrPlaceholder: {
-    width: 220,
-    height: 220,
+    width: 210,
+    height: 210,
     maxWidth: "100%",
     margin: "15px auto",
     borderRadius: 14,
@@ -194,6 +190,7 @@ const styles = {
     alignItems: "center",
     gap: 16,
     padding: "17px 0",
+    marginTop: 8,
     borderTop: "1px solid #eee",
     borderBottom: "1px solid #eee",
   } as React.CSSProperties,
@@ -219,7 +216,8 @@ export const Route = createFileRoute("/checkout")({
 });
 
 function CheckoutPage() {
-  const [method, setMethod] = useState<PaymentMethod>("card");
+  const [splitBase, setSplitBase] = useState<SplitBase>("pix");
+  const [splitAmount, setSplitAmount] = useState(CHECKOUT.price / 2);
   const [installments, setInstallments] = useState(12);
   const [secondsLeft, setSecondsLeft] = useState(59 * 60 + 59);
 
@@ -230,8 +228,34 @@ function CheckoutPage() {
     return () => window.clearInterval(timer);
   }, []);
 
+  const pixAmount = useMemo(
+    () =>
+      splitBase === "pix"
+        ? Math.min(CHECKOUT.price, Math.max(0, splitAmount))
+        : Math.max(0, CHECKOUT.price - splitAmount),
+    [splitAmount, splitBase],
+  );
+
+  const cardAmount = useMemo(
+    () => Math.max(0, CHECKOUT.price - pixAmount),
+    [pixAmount],
+  );
+
+  const cardPerInstallment = installments
+    ? cardAmount / installments
+    : cardAmount;
+
   const minutes = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
   const seconds = String(secondsLeft % 60).padStart(2, "0");
+
+  const handleAmountChange = (value: string) => {
+    const parsed = Number(value.replace(",", "."));
+    if (!Number.isFinite(parsed)) {
+      setSplitAmount(0);
+      return;
+    }
+    setSplitAmount(Math.min(CHECKOUT.price, Math.max(0, parsed)));
+  };
 
   return (
     <main style={styles.page}>
@@ -251,114 +275,120 @@ function CheckoutPage() {
 
         <section className="checkout-card" style={styles.card}>
           <aside style={styles.summary}>
-            <div style={styles.badge}>Inscrição segura</div>
-            <h1 style={styles.title}>
-              Garanta seu acesso à <span style={styles.orange}>mentoria</span>.
-            </h1>
-            <p style={{ margin: 0, color: "rgba(255,255,255,.74)", lineHeight: 1.6 }}>
-              {CHECKOUT.subtitle}
-            </p>
-
-            <div style={styles.price}>{CHECKOUT.price}</div>
-            <div style={styles.small}>{CHECKOUT.installments} ou {CHECKOUT.price} à vista</div>
-
             <div style={styles.timerBox}>
-              <div style={styles.timerLabel}>Aguardando pagamento</div>
+              <div style={styles.timerLabel}>Tempo reservado para concluir o pagamento</div>
               <div style={styles.timer}>{minutes}:{seconds}</div>
             </div>
 
-            <div style={{ marginTop: 26, display: "grid", gap: 10 }}>
-              {["Acesso à mentoria", "Aulas e materiais atualizados", "Pagamento seguro"].map((item) => (
+            <h1 style={styles.title}>
+              Garanta seu acesso à <span style={styles.orange}>mentoria</span>
+            </h1>
+
+            <div style={styles.price}>{money(CHECKOUT.price)}</div>
+            <div style={styles.small}>
+              Você pode combinar PIX e Cartão como preferir.
+            </div>
+
+            <div style={{ marginTop: 26, display: "grid", gap: 10, textAlign: "left" as const }}>
+              {["Pagamento com PIX + Cartão", "Parcelamento no cartão", "Ambiente seguro"].map((item) => (
                 <div key={item} style={{ color: "rgba(255,255,255,.84)", fontSize: 14 }}>✓ {item}</div>
               ))}
             </div>
           </aside>
 
           <div style={styles.form}>
-            <h2 style={styles.sectionTitle}>Finalizar inscrição</h2>
-            <p style={styles.muted}>Preencha seus dados e escolha uma forma de pagamento.</p>
+            <h2 style={styles.sectionTitle}>FORMAS DE PAGAMENTO</h2>
+            <p style={styles.muted}>Cartão + PIX na mesma tela, com divisão automática do valor.</p>
 
             <div style={styles.methodRow}>
-              {([
-                ["card", "Cartão"],
-                ["pix", "PIX"],
-              ] as const).map(([value, label]) => (
+              <div style={{ ...styles.method, ...styles.activeMethod }}>💳 Cartão</div>
+              <div style={{ ...styles.method, ...styles.activeMethod }}>PIX</div>
+            </div>
+
+            <div style={{ ...styles.panel, background: "#fff" }}>
+              <div style={styles.panelTitle}>Como deseja dividir os {money(CHECKOUT.price)}?</div>
+              <p style={styles.panelText}>
+                Escolha quanto vai no PIX ou quanto vai no cartão. O restante é calculado automaticamente.
+              </p>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 15, marginBottom: 15 }}>
                 <button
-                  key={value}
                   type="button"
-                  onClick={() => setMethod(value)}
-                  style={{ ...styles.method, ...(method === value ? styles.activeMethod : {}) }}
-                  aria-pressed={method === value}
+                  onClick={() => setSplitBase("pix")}
+                  style={{
+                    ...styles.method,
+                    ...(splitBase === "pix" ? styles.activeMethod : {}),
+                  }}
                 >
-                  {label}
+                  Definir valor do PIX
                 </button>
-              ))}
+                <button
+                  type="button"
+                  onClick={() => setSplitBase("card")}
+                  style={{
+                    ...styles.method,
+                    ...(splitBase === "card" ? styles.activeMethod : {}),
+                  }}
+                >
+                  Definir valor do cartão
+                </button>
+              </div>
+
+              <label style={styles.label}>
+                {splitBase === "pix" ? "Valor que vai no PIX" : "Valor que vai no cartão"}
+              </label>
+
+              <input
+                style={{ ...styles.input, fontSize: 19, fontWeight: 900 }}
+                value={splitAmount.toFixed(2).replace(".", ",")}
+                onChange={(event) => handleAmountChange(event.target.value)}
+                inputMode="decimal"
+                aria-label={splitBase === "pix" ? "Valor do PIX" : "Valor do cartão"}
+              />
+
+              <input
+                type="range"
+                min="0"
+                max={CHECKOUT.price}
+                step="0.01"
+                value={splitAmount}
+                onChange={(event) => setSplitAmount(Number(event.target.value))}
+                style={{ width: "100%", accentColor: "#f94f17" }}
+                aria-label="Divisão do pagamento"
+              />
+
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 10,
+                marginTop: 16,
+              }}>
+                <div style={{ padding: 14, borderRadius: 14, background: "#f5f5f5" }}>
+                  <div style={{ color: "#777", fontSize: 11, fontWeight: 800, textTransform: "uppercase" }}>PIX</div>
+                  <strong style={{ display: "block", marginTop: 5, fontSize: 22 }}>{money(pixAmount)}</strong>
+                </div>
+                <div style={{ padding: 14, borderRadius: 14, background: "#f5f5f5" }}>
+                  <div style={{ color: "#777", fontSize: 11, fontWeight: 800, textTransform: "uppercase" }}>Cartão</div>
+                  <strong style={{ display: "block", marginTop: 5, fontSize: 22 }}>{money(cardAmount)}</strong>
+                </div>
+              </div>
             </div>
 
             <label style={styles.label}>Nome completo</label>
-            <input style={styles.input} placeholder="Digite seu nome" />
+            <input style={styles.input} placeholder="Digite seu nome" autoComplete="name" />
 
             <label style={styles.label}>E-mail</label>
-            <input style={styles.input} type="email" placeholder="seuemail@exemplo.com" />
+            <input style={styles.input} type="email" placeholder="seuemail@exemplo.com" autoComplete="email" />
 
             <label style={styles.label}>CPF</label>
-            <input style={styles.input} placeholder="000.000.000-00" />
+            <input style={styles.input} placeholder="000.000.000-00" inputMode="numeric" autoComplete="off" />
 
             <label style={styles.label}>Celular</label>
-            <input style={styles.input} placeholder="(00) 00000-0000" />
+            <input style={styles.input} placeholder="(00) 00000-0000" inputMode="tel" autoComplete="tel" />
 
-            {method === "pix" && (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
               <div style={styles.panel}>
-                <div style={styles.panelTitle}>Pagamento via PIX</div>
-                <p style={styles.panelText}>
-                  O QR Code e o código copia e cola ficarão nesta mesma tela. Você poderá alterar os dados no objeto CHECKOUT acima.
-                </p>
-
-                {CHECKOUT.pixQrImage ? (
-                  <img src={CHECKOUT.pixQrImage} alt="QR Code PIX" style={styles.qr} />
-                ) : (
-                  <div style={styles.qrPlaceholder}>QR CODE PIX<br />aguardando o arquivo</div>
-                )}
-
-                <label style={styles.label}>Código PIX copia e cola</label>
-                <textarea
-                  style={styles.code}
-                  readOnly
-                  value={CHECKOUT.pixCopyPaste || "Informe o código PIX em CHECKOUT.pixCopyPaste"}
-                />
-              </div>
-            )}
-
-            {method === "card" && (
-              <div style={{ ...styles.panel, background: "#fff", border: "1px solid #e7e7e7", boxShadow: "0 14px 32px rgba(0,0,0,.07)" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, marginBottom: 14 }}>
-                  <div>
-                    <div style={styles.panelTitle}>Dados do cartão</div>
-                    <p style={{ ...styles.panelText, margin: 0 }}>Preencha os dados para finalizar sua inscrição.</p>
-                  </div>
-                  <div style={{ fontSize: 12, fontWeight: 900, color: "#666" }}>🔒 Seguro</div>
-                </div>
-
-                <div style={{
-                  borderRadius: 18,
-                  padding: 18,
-                  background: "linear-gradient(135deg,#151515 0%,#2a2a2a 100%)",
-                  color: "#fff",
-                  boxShadow: "0 16px 28px rgba(0,0,0,.16)",
-                  marginBottom: 18,
-                }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
-                    <span style={{ fontSize: 11, letterSpacing: ".14em", opacity: .65 }}>CARTÃO</span>
-                    <span style={{ fontSize: 12, fontWeight: 800, color: "#ff7a30" }}>{installments}x de R$ {(59.98 / installments).toFixed(2).replace(".", ",")}</span>
-                  </div>
-                  <div style={{ marginTop: 34, fontFamily: "monospace", fontSize: 18, letterSpacing: ".12em" }}>
-                    •••• •••• •••• ••••
-                  </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 18, fontSize: 11, opacity: .75 }}>
-                    <span>NOME NO CARTÃO</span>
-                    <span>MM/AA</span>
-                  </div>
-                </div>
+                <div style={styles.panelTitle}>💳 Dados do cartão</div>
 
                 <label style={styles.label}>Número do cartão</label>
                 <input
@@ -389,41 +419,64 @@ function CheckoutPage() {
                   </div>
                 </div>
 
-                <label style={styles.label}>Escolha o número de parcelas</label>
+                <label style={styles.label}>Parcelas no cartão</label>
                 <select
                   value={installments}
                   onChange={(event) => setInstallments(Number(event.target.value))}
                   style={{
                     ...styles.input,
                     appearance: "none",
-                    marginBottom: 8,
                     fontWeight: 800,
                     cursor: "pointer",
                   }}
                   aria-label="Escolha o número de parcelas"
                 >
-                  {installmentOptions.map((count) => {
-                    const amount = (59.98 / count).toFixed(2).replace(".", ",");
-                    return (
-                      <option key={count} value={count}>
-                        {count}x de R$ {amount}
-                      </option>
-                    );
-                  })}
+                  {installmentOptions.map((count) => (
+                    <option key={count} value={count}>
+                      {count}x de {money(cardPerInstallment)}
+                    </option>
+                  ))}
                 </select>
 
-                <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", paddingTop: 6 }}>
-                  <span style={{ fontSize: 12, color: "#777" }}>Parcelamento escolhido</span>
-                  <strong style={{ color: "#111", fontSize: 15 }}>
-                    {installments}x de R$ {(59.98 / installments).toFixed(2).replace(".", ",")}
-                  </strong>
+                <div style={{ fontSize: 12, color: "#666", marginTop: -3 }}>
+                  Total no cartão: <strong>{money(cardAmount)}</strong>
                 </div>
               </div>
-            )}
+
+              <div style={styles.panel}>
+                <div style={styles.panelTitle}>PIX</div>
+                <p style={styles.panelText}>
+                  Valor no PIX: <strong style={{ color: "#111" }}>{money(pixAmount)}</strong>
+                </p>
+
+                {pixAmount > 0 ? (
+                  <>
+                    {CHECKOUT.pixQrImage ? (
+                      <img src={CHECKOUT.pixQrImage} alt="QR Code PIX" style={styles.qr} />
+                    ) : (
+                      <div style={styles.qrPlaceholder}>
+                        QR CODE PIX<br />aguardando o arquivo
+                      </div>
+                    )}
+
+                    <label style={styles.label}>Código PIX copia e cola</label>
+                    <textarea
+                      style={styles.code}
+                      readOnly
+                      value={CHECKOUT.pixCopyPaste || "Informe o código PIX em CHECKOUT.pixCopyPaste"}
+                    />
+                  </>
+                ) : (
+                  <div style={{ padding: 18, borderRadius: 14, background: "#f3f3f3", color: "#777", fontSize: 13 }}>
+                    Valor do PIX definido como R$ 0,00.
+                  </div>
+                )}
+              </div>
+            </div>
 
             <div style={styles.total}>
               <span style={{ fontWeight: 700, color: "#666" }}>Total da inscrição</span>
-              <strong style={{ fontSize: 27 }}>{CHECKOUT.price}</strong>
+              <strong style={{ fontSize: 27 }}>{money(CHECKOUT.price)}</strong>
             </div>
 
             <a href={CHECKOUT.paymentLink} target="_blank" rel="noreferrer" style={styles.button}>
@@ -437,11 +490,11 @@ function CheckoutPage() {
         </section>
 
         <div style={{ marginTop: 18, color: "rgba(255,255,255,.42)", textAlign: "center", fontSize: 12 }}>
-          Textos, valores, banner e dados do PIX ficam concentrados no objeto CHECKOUT deste arquivo para facilitar a edição.
+          Valores, banner, textos, PIX e configurações ficam concentrados no objeto CHECKOUT deste arquivo para facilitar a edição.
         </div>
       </div>
 
-      <style dangerouslySetInnerHTML={{__html: "@keyframes checkoutBanner{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}@media(max-width:820px){.checkout-card{grid-template-columns:1fr!important}}@media(max-width:600px){.checkout-card{border-radius:18px!important}}"}} />
+      <style dangerouslySetInnerHTML={{__html: "@keyframes checkoutBanner{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}@media(max-width:900px){.checkout-card{grid-template-columns:1fr!important}.checkout-card>div{min-width:0!important}}@media(max-width:760px){.checkout-card>div>div[style*='grid-template-columns: 1fr 1fr']{grid-template-columns:1fr!important}}@media(max-width:600px){.checkout-card{border-radius:18px!important}.methodRow{grid-template-columns:1fr 1fr!important}}"}} />
     </main>
   );
 }
