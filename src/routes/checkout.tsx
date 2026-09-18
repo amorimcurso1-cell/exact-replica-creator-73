@@ -20,7 +20,6 @@ const installmentOptions = Array.from({ length: 12 }, (_, index) => index + 1);
 const pixOptions = [15, 20, 25, 30];
 const cardImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Credit-card-1369111.svg/600px-Credit-card-1369111.svg.png";
 type PaymentMode = "pix" | "card" | "split";
-type SplitBase = "pix" | "card";
 
 const money = (value: number) =>
   value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -223,7 +222,6 @@ export const Route = createFileRoute("/checkout")({
 
 function CheckoutPage() {
   const [paymentMode, setPaymentMode] = useState<PaymentMode>("card");
-  const [splitBase, setSplitBase] = useState<SplitBase>("pix");
   const [splitAmount, setSplitAmount] = useState(15);
   const [installments, setInstallments] = useState(12);
   const [secondsLeft, setSecondsLeft] = useState(59 * 60 + 59);
@@ -235,10 +233,7 @@ function CheckoutPage() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const pixAmount = useMemo(() => {
-    if (splitBase === "pix") return splitAmount;
-    return Math.max(0, CHECKOUT.price - splitAmount);
-  }, [splitAmount, splitBase]);
+  const pixAmount = Math.min(30, Math.max(15, splitAmount));
 
   const cardAmount = useMemo(
     () => Math.max(0, CHECKOUT.price - pixAmount),
@@ -328,34 +323,9 @@ function CheckoutPage() {
                 Escolha quanto vai no PIX ou quanto vai no cartão. O restante é calculado automaticamente.
               </p>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 15, marginBottom: 15 }}>
-                <button
-                  type="button"
-                  onClick={() => setSplitBase("pix")}
-                  style={{
-                    ...styles.method,
-                    ...(splitBase === "pix" ? styles.activeMethod : {}),
-                  }}
-                >
-                  Definir valor do PIX
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSplitBase("card")}
-                  style={{
-                    ...styles.method,
-                    ...(splitBase === "card" ? styles.activeMethod : {}),
-                  }}
-                >
-                  Definir valor do cartão
-                </button>
-              </div>
+              <label style={styles.label}>Escolha o valor fixo no PIX</label>
 
-              <label style={styles.label}>
-                {splitBase === "pix" ? "Escolha o valor fixo no PIX" : "Escolha o valor fixo no cartão"}
-              </label>
-
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9, marginBottom: 8 }}>
+              <div className="pix-options" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9, marginBottom: 8 }}>
                 {pixOptions.map((value) => (
                   <button
                     key={value}
