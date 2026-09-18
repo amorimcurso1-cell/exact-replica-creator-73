@@ -28,8 +28,8 @@
     max-width:none!important;
     height:72px!important;
     min-height:72px!important;
-    margin-top:4px!important;
-    margin-bottom:4px!important;
+    margin-top:-6px!important;
+    margin-bottom:2px!important;
     overflow:hidden!important;
     display:flex!important;
     align-items:center!important;
@@ -104,7 +104,7 @@
       height:60px!important;
       min-height:60px!important;
       transform:rotate(-4deg)!important;
-      margin-top:2px!important;
+      margin-top:-4px!important;
       margin-bottom:2px!important;
     }
     #faixas-secao .carrossel-ativo{
@@ -128,10 +128,13 @@
     }
   }
 
+  #faixas-secao .elementor-icon-list-icon{
+    display:none!important;
+  }
   /* Remover as duas faixas finais do Manual do Milhão */
   /* Ajuste visual da oferta */
   #comprar{
-    background:#fff!important;
+    background:#0a0a0a!important;
     background-image:none!important;
     box-shadow:0 18px 60px rgba(0,0,0,.28),0 0 28px rgba(249,79,23,.08)!important;
   }
@@ -164,7 +167,7 @@
     color:#F94F17!important;
   }
   #comprar .elementor-element-507177e .elementor-heading-title{
-    color:#222!important;
+    color:#fff!important;
   }
   /* Remove a marca/logotipo da área de pagamento */
   #comprar .elementor-element-324f9eb{
@@ -177,11 +180,11 @@
   }
   /* Tablet/computador/celular mais para baixo */
   .elementor-element-60d7a7b{
-    margin-top:110px!important;
+    margin-top:155px!important;
   }
   @media(max-width:700px){
     .elementor-element-60d7a7b{
-      margin-top:72px!important;
+      margin-top:105px!important;
     }
   }
 
