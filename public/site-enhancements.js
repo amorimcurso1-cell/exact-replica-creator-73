@@ -129,6 +129,62 @@
   }
 
   /* Remover as duas faixas finais do Manual do Milhão */
+  /* Ajuste visual da oferta */
+  #comprar{
+    background:#fff!important;
+    background-image:none!important;
+    box-shadow:0 18px 60px rgba(0,0,0,.28),0 0 28px rgba(249,79,23,.08)!important;
+  }
+  #comprar .lista-precos,
+  #comprar .lista-item,
+  #comprar .elementor-heading-title{
+    text-align:center!important;
+  }
+  #comprar .lista-precos{
+    align-items:center!important;
+  }
+  #comprar .lista-item{
+    justify-content:center!important;
+    border-bottom:0!important;
+    gap:6px!important;
+    padding:3px 0!important;
+  }
+  #comprar .lista-item .check{
+    display:inline-block!important;
+  }
+  #comprar .elementor-element-5a3d0c4,
+  #comprar .elementor-element-5f1d8d1,
+  #comprar .elementor-element-507177e{
+    width:100%!important;
+  }
+  #comprar .elementor-element-5a3d0c4 .elementor-heading-title{
+    color:#F94F17!important;
+  }
+  #comprar .elementor-element-5f1d8d1 .elementor-heading-title{
+    color:#F94F17!important;
+  }
+  #comprar .elementor-element-507177e .elementor-heading-title{
+    color:#222!important;
+  }
+  /* Remove a marca/logotipo da área de pagamento */
+  #comprar .elementor-element-324f9eb{
+    display:none!important;
+  }
+  /* Área ao redor do pagamento permanece no preto do site */
+  #comprar::before,#comprar::after{
+    background:none!important;
+    box-shadow:none!important;
+  }
+  /* Tablet/computador/celular mais para baixo */
+  .elementor-element-60d7a7b{
+    margin-top:110px!important;
+  }
+  @media(max-width:700px){
+    .elementor-element-60d7a7b{
+      margin-top:72px!important;
+    }
+  }
+
   /* Remover os dois blocos decorativos finais da página */
   .elementor-element-19a582c,
   .elementor-element-b4693e5{
