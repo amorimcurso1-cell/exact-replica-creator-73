@@ -17,6 +17,8 @@ const CHECKOUT = {
 };
 
 const installmentOptions = Array.from({ length: 12 }, (_, index) => index + 1);
+const pixOptions = [15, 20, 25, 30];
+const cardImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Credit-card-1369111.svg/600px-Credit-card-1369111.svg.png";
 type PaymentMode = "pix" | "card" | "split";
 type SplitBase = "pix" | "card";
 
@@ -98,15 +100,16 @@ const styles = {
   price: { marginTop: 22, fontSize: "clamp(40px,5vw,58px)", lineHeight: 1, fontWeight: 900 } as React.CSSProperties,
   small: { marginTop: 8, color: "rgba(255,255,255,.68)", fontSize: 14 } as React.CSSProperties,
   timerBox: {
-    margin: "0 auto 24px",
-    padding: "14px 18px",
-    borderRadius: 16,
-    border: "1px solid rgba(249,79,23,.28)",
-    background: "rgba(249,79,23,.07)",
-    width: "min(100%,250px)",
+    margin: "0 auto 22px",
+    padding: "16px 18px",
+    borderRadius: 18,
+    border: "1px solid rgba(249,79,23,.32)",
+    background: "linear-gradient(180deg,rgba(249,79,23,.12),rgba(249,79,23,.04))",
+    width: "min(100%,290px)",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,.04),0 12px 30px rgba(0,0,0,.18)",
   } as React.CSSProperties,
-  timerLabel: { color: "rgba(255,255,255,.68)", fontSize: 12, marginBottom: 7 } as React.CSSProperties,
-  timer: { fontSize: 34, lineHeight: 1, fontWeight: 900, letterSpacing: ".08em" } as React.CSSProperties,
+  timerLabel: { color: "rgba(255,255,255,.62)", fontSize: 11, marginBottom: 8, textTransform: "uppercase", letterSpacing: ".12em", fontWeight: 800 } as React.CSSProperties,
+  timer: { fontSize: "clamp(38px,6vw,54px)", lineHeight: 1, fontWeight: 900, letterSpacing: ".12em", fontVariantNumeric: "tabular-nums", textShadow: "0 0 24px rgba(249,79,23,.18)" } as React.CSSProperties,
   form: { padding: "28px clamp(18px,4vw,38px) 34px" } as React.CSSProperties,
   sectionTitle: { margin: 0, fontSize: 27, fontWeight: 900, textAlign: "center" as const } as React.CSSProperties,
   muted: { margin: "7px 0 0", color: "#6f6f6f", fontSize: 14, textAlign: "center" as const } as React.CSSProperties,
@@ -221,7 +224,7 @@ export const Route = createFileRoute("/checkout")({
 function CheckoutPage() {
   const [paymentMode, setPaymentMode] = useState<PaymentMode>("card");
   const [splitBase, setSplitBase] = useState<SplitBase>("pix");
-  const [splitAmount, setSplitAmount] = useState(CHECKOUT.price / 2);
+  const [splitAmount, setSplitAmount] = useState(15);
   const [installments, setInstallments] = useState(12);
   const [secondsLeft, setSecondsLeft] = useState(59 * 60 + 59);
 
@@ -232,13 +235,10 @@ function CheckoutPage() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const pixAmount = useMemo(
-    () =>
-      splitBase === "pix"
-        ? Math.min(CHECKOUT.price, Math.max(0, splitAmount))
-        : Math.max(0, CHECKOUT.price - splitAmount),
-    [splitAmount, splitBase],
-  );
+  const pixAmount = useMemo(() => {
+    if (splitBase === "pix") return splitAmount;
+    return Math.max(0, CHECKOUT.price - splitAmount);
+  }, [splitAmount, splitBase]);
 
   const cardAmount = useMemo(
     () => Math.max(0, CHECKOUT.price - pixAmount),
@@ -251,15 +251,6 @@ function CheckoutPage() {
 
   const minutes = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
   const seconds = String(secondsLeft % 60).padStart(2, "0");
-
-  const handleAmountChange = (value: string) => {
-    const parsed = Number(value.replace(",", "."));
-    if (!Number.isFinite(parsed)) {
-      setSplitAmount(0);
-      return;
-    }
-    setSplitAmount(Math.min(CHECKOUT.price, Math.max(0, parsed)));
-  };
 
   return (
     <main style={styles.page}>
@@ -361,27 +352,30 @@ function CheckoutPage() {
               </div>
 
               <label style={styles.label}>
-                {splitBase === "pix" ? "Valor que vai no PIX" : "Valor que vai no cartão"}
+                {splitBase === "pix" ? "Escolha o valor fixo no PIX" : "Escolha o valor fixo no cartão"}
               </label>
 
-              <input
-                style={{ ...styles.input, fontSize: 19, fontWeight: 900 }}
-                value={splitAmount.toFixed(2).replace(".", ",")}
-                onChange={(event) => handleAmountChange(event.target.value)}
-                inputMode="decimal"
-                aria-label={splitBase === "pix" ? "Valor do PIX" : "Valor do cartão"}
-              />
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 9, marginBottom: 8 }}>
+                {pixOptions.map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setSplitAmount(value)}
+                    style={{
+                      ...styles.method,
+                      ...(splitAmount === value ? styles.activeMethod : {}),
+                      padding: "12px 7px",
+                    }}
+                    aria-pressed={splitAmount === value}
+                  >
+                    {money(value)}
+                  </button>
+                ))}
+              </div>
 
-              <input
-                type="range"
-                min="0"
-                max={CHECKOUT.price}
-                step="0.01"
-                value={splitAmount}
-                onChange={(event) => setSplitAmount(Number(event.target.value))}
-                style={{ width: "100%", accentColor: "#f94f17" }}
-                aria-label="Divisão do pagamento"
-              />
+              <div style={{ marginTop: 8, fontSize: 12, color: "#777" }}>
+                Opções disponíveis: R$ 15,00 • R$ 20,00 • R$ 25,00 • R$ 30,00.
+              </div>
 
               <div style={{
                 display: "grid",
@@ -415,7 +409,18 @@ function CheckoutPage() {
 
             {paymentMode === "card" && (
               <div style={{ ...styles.panel, background: "#fff" }}>
-                <div style={styles.panelTitle}>💳 Pagamento com cartão</div>
+                <div style={styles.panelTitle}>Pagamento com cartão</div>
+                <img
+                  src={cardImageUrl}
+                  alt="Cartão de crédito"
+                  style={{
+                    display: "block",
+                    width: "min(260px,100%)",
+                    height: "auto",
+                    margin: "4px auto 18px",
+                    borderRadius: 14,
+                  }}
+                />
 
                 <label style={styles.label}>Número do cartão</label>
                 <input
