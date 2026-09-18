@@ -18,7 +18,27 @@ const CHECKOUT = {
 
 const installmentOptions = Array.from({ length: 12 }, (_, index) => index + 1);
 const pixOptions = [15, 20, 25, 30];
-type PaymentMode = "pix" | "card" | "split";
+
+const PIX_BY_AMOUNT: Record<number, { code: string; qr: string }> = {
+  15: {
+    code: "00020101021226900014br.gov.bcb.pix2568qrcode.somossimpay.com.br/v2/qr/cob/cf26cc1894794e849f23ba43a0d9fda35204000053039865802BR5918ORBE SERVICES LTDA6009SAO PAULO62070503***6304EE5D",
+    qr: "https://i.postimg.cc/mr1tBHgt/Screenshot-3.png",
+  },
+  20: {
+    code: "",
+    qr: "",
+  },
+  25: {
+    code: "",
+    qr: "",
+  },
+  30: {
+    code: "",
+    qr: "",
+  },
+};
+
+type PaymentMode = "card" | "pix" | "split";
 
 const money = (value: number) =>
   value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -307,6 +327,9 @@ function CheckoutPage() {
     ? cardAmount / installments
     : cardAmount;
 
+  const selectedPix = PIX_BY_AMOUNT[pixAmount] ?? PIX_BY_AMOUNT[15];
+
+
   const minutes = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
   const seconds = String(secondsLeft % 60).padStart(2, "0");
 
@@ -553,9 +576,9 @@ function CheckoutPage() {
                   {pixAmount > 0 ? (
                     <>
                       <label style={{ ...styles.label, textAlign: "left" as const }}>Código PIX copia e cola</label>
-                      <textarea style={styles.code} readOnly value={CHECKOUT.pixCopyPaste} />
-                      {CHECKOUT.pixQrImage ? (
-                        <img src={CHECKOUT.pixQrImage} alt="QR Code PIX" style={styles.qr} />
+                      <textarea style={styles.code} readOnly value={selectedPix.code || "Código PIX deste valor ainda não configurado"} />
+                      {selectedPix.qr ? (
+                        <img src={selectedPix.qr} alt={"QR Code PIX para R$ " + pixAmount} style={styles.qr} />
                       ) : (
                         <div style={styles.qrPlaceholder}>QR CODE PIX<br />aguardando o arquivo</div>
                       )}
