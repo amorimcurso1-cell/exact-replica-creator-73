@@ -219,6 +219,34 @@
     }
   }
 
+  .elementor-element-60d7a7b{
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    width:min(733px,88vw)!important;
+    max-width:733px!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    background:transparent!important;
+    position:relative!important;
+    z-index:5!important;
+  }
+  .elementor-element-60d7a7b img{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    height:auto!important;
+    margin:0 auto!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    background:transparent!important;
+    animation:ngDeviceFloat 3s ease-in-out infinite!important;
+    will-change:transform!important;
+  }
+  @keyframes ngDeviceFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-30px)}
+  }
   /* Nome do professor sobre a imagem e entrada suave do bloco */
    .ng-device-stage{
     position:relative!important;
@@ -357,11 +385,13 @@
     if(document.querySelector('.ng-module-gallery'))return;
 
     const heading=[...document.querySelectorAll('.elementor-heading-title')]
-      .find(el=>(el.textContent||'').trim().toLowerCase()==='o que você recebe dentro do curso:');
+      .find(el=>(el.textContent||'').trim().toLowerCase().startsWith('o que você recebe dentro da mentoria'));
     if(!heading)return;
 
     const anchorWidget=heading.closest('.elementor-element');
     if(!anchorWidget)return;
+    const contentContainer=anchorWidget.closest('.e-con-inner') || anchorWidget.parentElement;
+    if(!contentContainer)return;
 
     const gallery=document.createElement('section');
     gallery.className='ng-module-gallery';
@@ -389,8 +419,7 @@
     viewport.appendChild(track);
     gallery.appendChild(viewport);
 
-    const parent=anchorWidget.parentElement;
-    (parent||anchorWidget).insertAdjacentElement('afterend',gallery);
+    contentContainer.appendChild(gallery);
 
     const reveal=()=>{
       if(gallery.getBoundingClientRect().top < window.innerHeight*.95){
