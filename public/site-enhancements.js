@@ -595,6 +595,17 @@
     });
   }
 
+  function bindEnrollCheckout(){
+    document.querySelectorAll('a').forEach(link=>{
+      const label=(link.textContent||'').trim().toLowerCase();
+      if(label!=='inscreva-se agora')return;
+      link.addEventListener('click',event=>{
+        event.preventDefault();
+        window.location.href='/checkout';
+      },{passive:false});
+    });
+  }
+
   function ensureFinalPaymentLine(){
     const el=document.querySelector('[data-id="507177e"] .elementor-heading-title');
     if(!el)return;
@@ -659,6 +670,7 @@
     bindDominarVendasScroll();
     ensureFinalPaymentLine();
     ensureDeviceImage();
+    bindEnrollCheckout();
     hideEnding();
     setTimeout(ensureFinalPaymentLine,600);
     setTimeout(ensureDeviceImage,900);
