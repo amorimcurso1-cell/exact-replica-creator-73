@@ -390,6 +390,30 @@
     }
   }
 
+  /* Separar o texto "É um treinamento completo" da imagem dos dispositivos */
+  .elementor-element-7289298{
+    position:relative!important;
+    z-index:2!important;
+    margin-top:125px!important;
+    width:100%!important;
+  }
+  .elementor-element-aa8cff5{
+    position:relative!important;
+    z-index:3!important;
+    margin-top:0!important;
+    width:min(940px,92vw)!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+  @media(max-width:700px){
+    .elementor-element-7289298{
+      margin-top:90px!important;
+    }
+    .elementor-element-aa8cff5{
+      width:94vw!important;
+    }
+  }
+
   /* Efeito de entrada para todos os blocos ao rolar */
   .ng-scroll-item{
     opacity:0!important;
