@@ -402,6 +402,7 @@ function CheckoutPage() {
                   width: "100%",
                   maxWidth: 520,
                   margin: "14px auto 10px",
+                  justifyContent: "center",
                 }}
               >
                 {pixOptions.map((value) => (
@@ -421,7 +422,7 @@ function CheckoutPage() {
                     }}
                     aria-pressed={splitAmount === value}
                   >
-                    {money(value)}
+                    R$ {value}
                   </button>
                 ))}
               </div>
@@ -502,17 +503,17 @@ function CheckoutPage() {
                 <div style={{ ...styles.panelTitle, display: "flex", justifyContent: "center", marginBottom: 12 }}>
                   <img src={pixBrandLogo} alt="Pix" style={{ width: 96, height: 34, objectFit: "contain" }} />
                 </div>
-                {CHECKOUT.pixQrImage ? (
-                  <img src={CHECKOUT.pixQrImage} alt="QR Code PIX" style={styles.qr} />
-                ) : (
-                  <div style={styles.qrPlaceholder}>QR CODE PIX<br />aguardando o arquivo</div>
-                )}
                 <label style={{ ...styles.label, textAlign: "left" as const }}>Código PIX copia e cola</label>
                 <textarea
                   style={styles.code}
                   readOnly
                   value={CHECKOUT.pixCopyPaste}
                 />
+                {CHECKOUT.pixQrImage ? (
+                  <img src={CHECKOUT.pixQrImage} alt="QR Code PIX" style={styles.qr} />
+                ) : (
+                  <div style={styles.qrPlaceholder}>QR CODE PIX<br />aguardando o arquivo</div>
+                )}
               </div>
             )}
 
@@ -551,13 +552,13 @@ function CheckoutPage() {
                   <p style={styles.panelText}>Valor no PIX: <strong style={{ color: "#111" }}>{money(pixAmount)}</strong></p>
                   {pixAmount > 0 ? (
                     <>
+                      <label style={{ ...styles.label, textAlign: "left" as const }}>Código PIX copia e cola</label>
+                      <textarea style={styles.code} readOnly value={CHECKOUT.pixCopyPaste} />
                       {CHECKOUT.pixQrImage ? (
                         <img src={CHECKOUT.pixQrImage} alt="QR Code PIX" style={styles.qr} />
                       ) : (
                         <div style={styles.qrPlaceholder}>QR CODE PIX<br />aguardando o arquivo</div>
                       )}
-                      <label style={{ ...styles.label, textAlign: "left" as const }}>Código PIX copia e cola</label>
-                      <textarea style={styles.code} readOnly value={CHECKOUT.pixCopyPaste || "Informe o código PIX em CHECKOUT.pixCopyPaste"} />
                     </>
                   ) : (
                     <div style={{ padding: 18, borderRadius: 14, background: "#f3f3f3", color: "#777", fontSize: 13 }}>
