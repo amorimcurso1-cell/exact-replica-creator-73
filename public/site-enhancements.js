@@ -577,6 +577,19 @@
     });
   }
 
+  function bindDominarVendasScroll(){
+    document.querySelectorAll('a[href="#comprar"], a').forEach(link=>{
+      const text=(link.textContent||'').trim().toLowerCase();
+      if(text!=='quero dominar as vendas')return;
+      link.addEventListener('click',event=>{
+        const target=document.getElementById('comprar');
+        if(!target)return;
+        event.preventDefault();
+        target.scrollIntoView({behavior:'smooth',block:'start'});
+      },{passive:false});
+    });
+  }
+
   function init(){
     plus20();
     rewriteOriginalStrip();
@@ -585,6 +598,7 @@
     addModuleGallery();
     addMarkDinizLabel();
     initUniversalScrollEffects();
+    bindDominarVendasScroll();
     hideEnding();
     document.querySelectorAll('.elementor-element-11e7250').forEach(el=>el.style.setProperty('display','none','important'));
   }
