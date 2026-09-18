@@ -127,6 +127,162 @@
     }
   }
 
+  /* Ajustes finais de feedback */
+  .ng-live-feedbacks{
+    width:min(100%,360px)!important;
+    margin:18px auto 30px!important;
+  }
+  .ng-live-feedbacks__track{gap:10px!important}
+  .ng-live-feedbacks__card{
+    width:min(72vw,250px)!important;
+    padding:7px!important;
+    border-radius:20px!important;
+  }
+  .ng-live-feedbacks__device{
+    padding:6px!important;
+    border-radius:17px!important;
+  }
+  @media(max-width:700px){
+    .ng-live-feedbacks{
+      width:min(100%,300px)!important;
+    }
+    .ng-live-feedbacks__card{
+      width:min(66vw,215px)!important;
+    }
+  }
+
+  /* Galeria das novas aulas: abaixo do CTA principal */
+  .ng-module-gallery{
+    width:min(100%,1180px)!important;
+    margin:36px auto 56px!important;
+    padding:0 18px!important;
+    position:relative!important;
+    z-index:15!important;
+  }
+  .ng-module-gallery__viewport{
+    width:100%!important;
+    overflow:hidden!important;
+    padding:10px 2px 18px!important;
+  }
+  .ng-module-gallery__track{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:16px!important;
+    align-items:stretch!important;
+  }
+  .ng-module-gallery__card{
+    display:block!important;
+    min-width:0!important;
+    border-radius:16px!important;
+    overflow:hidden!important;
+    border:1px solid rgba(249,79,23,.28)!important;
+    background:#090909!important;
+    box-shadow:0 14px 34px rgba(0,0,0,.36),0 0 22px rgba(249,79,23,.07)!important;
+    transform:translateY(28px)!important;
+    opacity:0!important;
+    transition:opacity .7s ease,transform .7s ease,box-shadow .3s ease!important;
+  }
+  .ng-module-gallery.ng-module-gallery--in .ng-module-gallery__card{
+    opacity:1!important;
+    transform:none!important;
+  }
+  .ng-module-gallery__card:hover{
+    transform:translateY(-5px)!important;
+    box-shadow:0 20px 44px rgba(0,0,0,.45),0 0 28px rgba(249,79,23,.14)!important;
+  }
+  .ng-module-gallery__card img{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:2/3!important;
+    object-fit:cover!important;
+  }
+  @media(max-width:900px){
+    .ng-module-gallery__track{
+      display:flex!important;
+      width:max-content!important;
+      gap:12px!important;
+    }
+    .ng-module-gallery__card{
+      width:220px!important;
+      flex:0 0 220px!important;
+    }
+    .ng-module-gallery__viewport{
+      overflow-x:auto!important;
+      scrollbar-width:none!important;
+    }
+    .ng-module-gallery__viewport::-webkit-scrollbar{display:none!important}
+  }
+  @media(max-width:700px){
+    .ng-module-gallery{
+      margin:28px auto 44px!important;
+      padding:0 12px!important;
+    }
+    .ng-module-gallery__card{
+      width:188px!important;
+      flex-basis:188px!important;
+      border-radius:13px!important;
+    }
+  }
+
+  /* Nome do professor sobre a imagem e entrada suave do bloco */
+  .ng-device-stage{
+    position:relative!important;
+    opacity:0!important;
+    transform:translate3d(0,38px,0) scale(.985)!important;
+  }
+  .ng-device-stage.ng-device-ready{
+    animation:ngDeviceEnter .9s cubic-bezier(.22,.61,.36,1) forwards!important;
+  }
+  .ng-device-stage .ng-device-label{
+    position:absolute!important;
+    top:12%!important;
+    right:13%!important;
+    z-index:6!important;
+    padding:7px 14px!important;
+    border:1px solid rgba(255,255,255,.22)!important;
+    border-radius:999px!important;
+    background:rgba(0,0,0,.34)!important;
+    box-shadow:0 8px 22px rgba(0,0,0,.28),0 0 22px rgba(249,79,23,.12)!important;
+    color:#fff!important;
+    font:700 13px/1 "Barlow Condensed",Arial,sans-serif!important;
+    letter-spacing:2px!important;
+    text-transform:uppercase!important;
+    opacity:0!important;
+    transform:translateY(10px)!important;
+  }
+  .ng-device-stage.ng-device-ready .ng-device-label{
+    animation:ngLabelEnter .7s .35s cubic-bezier(.22,.61,.36,1) forwards!important;
+  }
+  @keyframes ngDeviceEnter{
+    from{opacity:0;transform:translate3d(0,38px,0) scale(.985)}
+    to{opacity:1;transform:none}
+  }
+  @keyframes ngLabelEnter{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:none}
+  }
+  @media(max-width:700px){
+    .ng-device-stage .ng-device-label{
+      top:13%!important;
+      right:10%!important;
+      font-size:11px!important;
+      letter-spacing:1.6px!important;
+      padding:6px 11px!important;
+    }
+  }
+
+  /* Efeito de entrada para todos os blocos ao rolar */
+  .ng-scroll-item{
+    opacity:0!important;
+    transform:translate3d(0,26px,0)!important;
+    transition:opacity .72s cubic-bezier(.22,.61,.36,1),transform .72s cubic-bezier(.22,.61,.36,1)!important;
+    will-change:opacity,transform!important;
+  }
+  .ng-scroll-item.ng-scroll-in{
+    opacity:1!important;
+    transform:none!important;
+  }
   /* Final da página: somente preto, sem conteúdo */
   .ng-final-page-clean{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important}
   `;
@@ -199,6 +355,99 @@
     });
   }
 
+  function addModuleGallery(){
+    if(document.querySelector('.ng-module-gallery'))return;
+    const button=[...document.querySelectorAll('.elementor-button-text')]
+      .find(el=>el.textContent.trim()==='QUERO DOMINAR AS VENDAS');
+    if(!button)return;
+    const widget=button.closest('.elementor-widget-button');
+    if(!widget)return;
+    const gallery=document.createElement('section');
+    gallery.className='ng-module-gallery';
+    gallery.setAttribute('aria-label','Aulas atualizadas para 2026');
+    const viewport=document.createElement('div');
+    viewport.className='ng-module-gallery__viewport';
+    const track=document.createElement('div');
+    track.className='ng-module-gallery__track';
+    const modules=['06','05','13','12','03','07','04','09'];
+    modules.forEach((num,idx)=>{
+      const card=document.createElement('article');
+      card.className='ng-module-gallery__card';
+      card.style.transitionDelay=(idx*0.06)+'s';
+      const img=document.createElement('img');
+      img.src='/images/'+num+'.webp';
+      img.alt='Aula atualizada para 2026 — módulo '+num;
+      img.loading='lazy';
+      card.appendChild(img);
+      track.appendChild(card);
+    });
+    viewport.appendChild(track);
+    gallery.appendChild(viewport);
+    widget.insertAdjacentElement('afterend',gallery);
+
+    const reveal=()=>{
+      const rect=gallery.getBoundingClientRect();
+      if(rect.top < window.innerHeight*.9){
+        gallery.classList.add('ng-module-gallery--in');
+        return true;
+      }
+      return false;
+    };
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            gallery.classList.add('ng-module-gallery--in');
+            io.disconnect();
+          }
+        });
+      },{threshold:.08});
+      io.observe(gallery);
+    }else reveal();
+  }
+
+  function addMarkDinizLabel(){
+    const host=document.querySelector('.elementor-element-60d7a7b');
+    if(!host||host.querySelector('.ng-device-label'))return;
+    host.classList.add('ng-device-stage');
+    const label=document.createElement('div');
+    label.className='ng-device-label';
+    label.textContent='MARK DINIZ';
+    host.appendChild(label);
+    requestAnimationFrame(()=>host.classList.add('ng-device-ready'));
+  }
+
+  function initUniversalScrollEffects(){
+    const skip=new Set(['faixas-secao','comprar']);
+    const elements=[...document.querySelectorAll('.elementor > .e-con.e-parent')];
+    elements.forEach(section=>{
+      if(skip.has(section.id)||section.classList.contains('ng-module-gallery'))return;
+      const items=[...section.querySelectorAll(':scope > .e-con-inner > .elementor-element, :scope > .e-con-inner > .e-con > .elementor-element')]
+        .filter(el=>!el.classList.contains('ng-module-gallery'))
+        .slice(0,24);
+      items.forEach((el,idx)=>{
+        if(el.closest('.ng-live-feedbacks'))return;
+        el.classList.add('ng-scroll-item');
+        el.style.transitionDelay=(Math.min(idx,8)*0.05)+'s';
+      });
+    });
+    const targets=[...document.querySelectorAll('.ng-scroll-item')];
+    if(!targets.length)return;
+    if(!('IntersectionObserver' in window)){
+      targets.forEach(el=>el.classList.add('ng-scroll-in'));
+      return;
+    }
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('ng-scroll-in');
+          io.unobserve(entry.target);
+        }
+      });
+    },{threshold:.08,rootMargin:'0px 0px -7% 0px'});
+    targets.forEach(el=>io.observe(el));
+  }
+
   function hideEnding(){
     const selectors=[
       'footer',
@@ -221,7 +470,17 @@
     });
   }
 
-  function init(){plus20();rewriteOriginalStrip();feedbacks();whoFloat();hideEnding();document.querySelectorAll('.elementor-element-11e7250').forEach(el=>el.style.setProperty('display','none','important'));}
+  function init(){
+    plus20();
+    rewriteOriginalStrip();
+    feedbacks();
+    whoFloat();
+    addModuleGallery();
+    addMarkDinizLabel();
+    initUniversalScrollEffects();
+    hideEnding();
+    document.querySelectorAll('.elementor-element-11e7250').forEach(el=>el.style.setProperty('display','none','important'));
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
   setTimeout(hideEnding,500);
 })();
