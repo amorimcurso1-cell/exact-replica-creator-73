@@ -595,6 +595,46 @@
     });
   }
 
+  function ensureFinalPaymentLine(){
+    const el=document.querySelector('[data-id="507177e"] .elementor-heading-title');
+    if(!el)return;
+    el.textContent='ou R$59,98 à vista';
+    el.style.setProperty('display','block','important');
+    el.style.setProperty('visibility','visible','important');
+    el.style.setProperty('opacity','1','important');
+    el.style.setProperty('color','#fff','important');
+    el.style.setProperty('text-align','center','important');
+    el.style.setProperty('margin','0','important');
+    const box=el.closest('[data-id="507177e"]');
+    if(box){
+      box.style.setProperty('display','flex','important');
+      box.style.setProperty('visibility','visible','important');
+      box.style.setProperty('opacity','1','important');
+      box.style.setProperty('justify-content','center','important');
+      box.style.setProperty('align-items','center','important');
+      box.style.setProperty('width','100%','important');
+      box.classList.remove('elementor-invisible','ng-scroll-item');
+    }
+  }
+
+  function ensureDeviceImage(){
+    const img=document.querySelector('[data-id="60d7a7b"] img');
+    if(!img)return;
+    const src='https://i.postimg.cc/NGC0ZFdq/Chat-GPT-Image-17-de-set-de-2026-21-26-07.png';
+    if(img.getAttribute('src')!==src)img.setAttribute('src',src);
+    img.removeAttribute('srcset');
+    img.removeAttribute('data-src');
+    img.removeAttribute('data-lazy-src');
+    img.classList.remove('lazyloaded','lazyload','swiper-lazy');
+    img.setAttribute('loading','eager');
+    img.setAttribute('decoding','async');
+    img.style.setProperty('display','block','important');
+    img.style.setProperty('visibility','visible','important');
+    img.style.setProperty('opacity','1','important');
+    img.style.setProperty('background','transparent','important');
+    img.style.setProperty('margin','0 auto','important');
+  }
+
   function bindDominarVendasScroll(){
     document.querySelectorAll('a[href="#comprar"], a').forEach(link=>{
       const text=(link.textContent||'').trim().toLowerCase();
@@ -617,7 +657,11 @@
     addMarkDinizLabel();
     initUniversalScrollEffects();
     bindDominarVendasScroll();
+    ensureFinalPaymentLine();
+    ensureDeviceImage();
     hideEnding();
+    setTimeout(ensureFinalPaymentLine,600);
+    setTimeout(ensureDeviceImage,900);
     document.querySelectorAll('.elementor-element-11e7250').forEach(el=>el.style.setProperty('display','none','important'));
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
