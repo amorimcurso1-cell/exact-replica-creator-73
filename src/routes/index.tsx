@@ -75,6 +75,31 @@ html,body{
   background-image:none !important;
   box-shadow:none !important;
 }
+.elementor-element-60d7a7b .nextgen-device-embed{
+  display:block !important;
+  width:min(733px,88vw) !important;
+  max-width:100% !important;
+  height:620px !important;
+  margin:0 auto !important;
+  border:0 !important;
+  background:transparent !important;
+  overflow:hidden !important;
+  animation:nextgenTabletOriginalFloat 3s ease-in-out infinite !important;
+  will-change:transform !important;
+  color-scheme:dark !important;
+}
+@media (max-width:1024px){
+  .elementor-element-60d7a7b .nextgen-device-embed{
+    width:min(650px,90vw) !important;
+    height:560px !important;
+  }
+}
+@media (max-width:767px){
+  .elementor-element-60d7a7b .nextgen-device-embed{
+    width:min(560px,94vw) !important;
+    height:500px !important;
+  }
+}
 .elementor-element-60d7a7b img{
   display:block !important;
   background:transparent !important;
