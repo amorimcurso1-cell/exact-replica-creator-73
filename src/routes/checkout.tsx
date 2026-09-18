@@ -18,6 +18,8 @@ const CHECKOUT = {
 
 type PaymentMethod = "card" | "pix";
 
+const installmentOptions = Array.from({ length: 12 }, (_, index) => index + 1);
+
 const styles = {
   page: {
     minHeight: "100vh",
@@ -218,6 +220,7 @@ export const Route = createFileRoute("/checkout")({
 
 function CheckoutPage() {
   const [method, setMethod] = useState<PaymentMethod>("card");
+  const [installments, setInstallments] = useState(12);
   const [secondsLeft, setSecondsLeft] = useState(59 * 60 + 59);
 
   useEffect(() => {
@@ -346,7 +349,7 @@ function CheckoutPage() {
                 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
                     <span style={{ fontSize: 11, letterSpacing: ".14em", opacity: .65 }}>CARTÃO</span>
-                    <span style={{ fontSize: 12, fontWeight: 800, color: "#ff7a30" }}>12x de R$ 5,00</span>
+                    <span style={{ fontSize: 12, fontWeight: 800, color: "#ff7a30" }}>{installments}x de R$ {(59.98 / installments).toFixed(2).replace(".", ",")}</span>
                   </div>
                   <div style={{ marginTop: 34, fontFamily: "monospace", fontSize: 18, letterSpacing: ".12em" }}>
                     •••• •••• •••• ••••
@@ -363,13 +366,6 @@ function CheckoutPage() {
                   placeholder="0000 0000 0000 0000"
                   inputMode="numeric"
                   autoComplete="cc-number"
-                />
-
-                <label style={styles.label}>Nome no cartão</label>
-                <input
-                  style={styles.input}
-                  placeholder="Nome como aparece no cartão"
-                  autoComplete="cc-name"
                 />
 
                 <div style={styles.grid2}>
@@ -393,9 +389,34 @@ function CheckoutPage() {
                   </div>
                 </div>
 
-                <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", paddingTop: 4 }}>
+                <label style={styles.label}>Escolha o número de parcelas</label>
+                <select
+                  value={installments}
+                  onChange={(event) => setInstallments(Number(event.target.value))}
+                  style={{
+                    ...styles.input,
+                    appearance: "none",
+                    marginBottom: 8,
+                    fontWeight: 800,
+                    cursor: "pointer",
+                  }}
+                  aria-label="Escolha o número de parcelas"
+                >
+                  {installmentOptions.map((count) => {
+                    const amount = (59.98 / count).toFixed(2).replace(".", ",");
+                    return (
+                      <option key={count} value={count}>
+                        {count}x de R$ {amount}
+                      </option>
+                    );
+                  })}
+                </select>
+
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", paddingTop: 6 }}>
                   <span style={{ fontSize: 12, color: "#777" }}>Parcelamento escolhido</span>
-                  <strong style={{ color: "#111", fontSize: 15 }}>12x de R$ 5,00</strong>
+                  <strong style={{ color: "#111", fontSize: 15 }}>
+                    {installments}x de R$ {(59.98 / installments).toFixed(2).replace(".", ",")}
+                  </strong>
                 </div>
               </div>
             )}
