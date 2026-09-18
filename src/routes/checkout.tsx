@@ -15,6 +15,7 @@ const CHECKOUT = {
 };
 
 const installmentOptions = Array.from({ length: 12 }, (_, index) => index + 1);
+type PaymentMode = "pix" | "card" | "split";
 type SplitBase = "pix" | "card";
 
 const money = (value: number) =>
@@ -107,7 +108,7 @@ const styles = {
   form: { padding: "28px clamp(18px,4vw,38px) 34px" } as React.CSSProperties,
   sectionTitle: { margin: 0, fontSize: 27, fontWeight: 900, textAlign: "center" as const } as React.CSSProperties,
   muted: { margin: "7px 0 0", color: "#6f6f6f", fontSize: 14, textAlign: "center" as const } as React.CSSProperties,
-  methodRow: { display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 10, margin: "24px 0 16px" } as React.CSSProperties,
+  methodRow: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, margin: "24px 0 16px" } as React.CSSProperties,
   method: {
     border: "1px solid #dfdfdf",
     borderRadius: 14,
@@ -216,6 +217,7 @@ export const Route = createFileRoute("/checkout")({
 });
 
 function CheckoutPage() {
+  const [paymentMode, setPaymentMode] = useState<PaymentMode>("card");
   const [splitBase, setSplitBase] = useState<SplitBase>("pix");
   const [splitAmount, setSplitAmount] = useState(CHECKOUT.price / 2);
   const [installments, setInstallments] = useState(12);
@@ -298,13 +300,27 @@ function CheckoutPage() {
 
           <div style={styles.form}>
             <h2 style={styles.sectionTitle}>FORMAS DE PAGAMENTO</h2>
-            <p style={styles.muted}>Cartão + PIX na mesma tela, com divisão automática do valor.</p>
+            <p style={styles.muted}>Escolha uma opção para continuar.</p>
 
             <div style={styles.methodRow}>
-              <div style={{ ...styles.method, ...styles.activeMethod }}>💳 Cartão</div>
-              <div style={{ ...styles.method, ...styles.activeMethod }}>PIX</div>
+              {([
+                ["card", "💳 Cartão"],
+                ["pix", "⚡ PIX"],
+                ["split", "💳 + ⚡ Cartão + PIX"],
+              ] as const).map(([value, label]) => (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => setPaymentMode(value)}
+                  style={{ ...styles.method, ...(paymentMode === value ? styles.activeMethod : {}) }}
+                  aria-pressed={paymentMode === value}
+                >
+                  {label}
+                </button>
+              ))}
             </div>
 
+            {paymentMode === "split" && (
             <div style={{ ...styles.panel, background: "#fff" }}>
               <div style={styles.panelTitle}>Como deseja dividir os {money(CHECKOUT.price)}?</div>
               <p style={styles.panelText}>
@@ -373,6 +389,7 @@ function CheckoutPage() {
                 </div>
               </div>
             </div>
+            )}
 
             <label style={styles.label}>Nome completo</label>
             <input style={styles.input} placeholder="Digite seu nome" autoComplete="name" />
@@ -386,9 +403,9 @@ function CheckoutPage() {
             <label style={styles.label}>Celular</label>
             <input style={styles.input} placeholder="(00) 00000-0000" inputMode="tel" autoComplete="tel" />
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-              <div style={styles.panel}>
-                <div style={styles.panelTitle}>💳 Dados do cartão</div>
+            {paymentMode === "card" && (
+              <div style={{ ...styles.panel, background: "#fff" }}>
+                <div style={styles.panelTitle}>💳 Pagamento com cartão</div>
 
                 <label style={styles.label}>Número do cartão</label>
                 <input
@@ -401,79 +418,97 @@ function CheckoutPage() {
                 <div style={styles.grid2}>
                   <div>
                     <label style={styles.label}>Mês / Ano</label>
-                    <input
-                      style={styles.input}
-                      placeholder="MM / AA"
-                      inputMode="numeric"
-                      autoComplete="cc-exp"
-                    />
+                    <input style={styles.input} placeholder="MM / AA" inputMode="numeric" autoComplete="cc-exp" />
                   </div>
                   <div>
                     <label style={styles.label}>Código de segurança</label>
-                    <input
-                      style={styles.input}
-                      placeholder="CVV"
-                      inputMode="numeric"
-                      autoComplete="cc-csc"
-                    />
+                    <input style={styles.input} placeholder="CVV" inputMode="numeric" autoComplete="cc-csc" />
                   </div>
                 </div>
 
-                <label style={styles.label}>Parcelas no cartão</label>
+                <label style={styles.label}>Parcelas</label>
                 <select
                   value={installments}
                   onChange={(event) => setInstallments(Number(event.target.value))}
-                  style={{
-                    ...styles.input,
-                    appearance: "none",
-                    fontWeight: 800,
-                    cursor: "pointer",
-                  }}
-                  aria-label="Escolha o número de parcelas"
+                  style={{ ...styles.input, appearance: "none", fontWeight: 800, cursor: "pointer" }}
                 >
                   {installmentOptions.map((count) => (
                     <option key={count} value={count}>
-                      {count}x de {money(cardPerInstallment)}
+                      {count}x de {money(CHECKOUT.price / count)}
                     </option>
                   ))}
                 </select>
+              </div>
+            )}
 
-                <div style={{ fontSize: 12, color: "#666", marginTop: -3 }}>
-                  Total no cartão: <strong>{money(cardAmount)}</strong>
+            {paymentMode === "pix" && (
+              <div style={{ ...styles.panel, background: "#fff", textAlign: "center" as const }}>
+                <div style={styles.panelTitle}>⚡ Pagamento com PIX</div>
+                {CHECKOUT.pixQrImage ? (
+                  <img src={CHECKOUT.pixQrImage} alt="QR Code PIX" style={styles.qr} />
+                ) : (
+                  <div style={styles.qrPlaceholder}>QR CODE PIX<br />aguardando o arquivo</div>
+                )}
+                <label style={{ ...styles.label, textAlign: "left" as const }}>Código PIX copia e cola</label>
+                <textarea
+                  style={styles.code}
+                  readOnly
+                  value={CHECKOUT.pixCopyPaste || "Informe o código PIX em CHECKOUT.pixCopyPaste"}
+                />
+              </div>
+            )}
+
+            {paymentMode === "split" && (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                <div style={{ ...styles.panel, background: "#fff" }}>
+                  <div style={styles.panelTitle}>💳 Cartão</div>
+                  <label style={styles.label}>Número do cartão</label>
+                  <input style={{ ...styles.input, fontSize: 17, letterSpacing: ".08em" }} placeholder="0000 0000 0000 0000" inputMode="numeric" autoComplete="cc-number" />
+                  <div style={styles.grid2}>
+                    <div>
+                      <label style={styles.label}>Mês / Ano</label>
+                      <input style={styles.input} placeholder="MM / AA" inputMode="numeric" autoComplete="cc-exp" />
+                    </div>
+                    <div>
+                      <label style={styles.label}>Código de segurança</label>
+                      <input style={styles.input} placeholder="CVV" inputMode="numeric" autoComplete="cc-csc" />
+                    </div>
+                  </div>
+                  <label style={styles.label}>Parcelas no cartão</label>
+                  <select
+                    value={installments}
+                    onChange={(event) => setInstallments(Number(event.target.value))}
+                    style={{ ...styles.input, appearance: "none", fontWeight: 800, cursor: "pointer" }}
+                  >
+                    {installmentOptions.map((count) => (
+                      <option key={count} value={count}>
+                        {count}x de {money(cardPerInstallment)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div style={{ ...styles.panel, background: "#fff", textAlign: "center" as const }}>
+                  <div style={styles.panelTitle}>⚡ PIX</div>
+                  <p style={styles.panelText}>Valor no PIX: <strong style={{ color: "#111" }}>{money(pixAmount)}</strong></p>
+                  {pixAmount > 0 ? (
+                    <>
+                      {CHECKOUT.pixQrImage ? (
+                        <img src={CHECKOUT.pixQrImage} alt="QR Code PIX" style={styles.qr} />
+                      ) : (
+                        <div style={styles.qrPlaceholder}>QR CODE PIX<br />aguardando o arquivo</div>
+                      )}
+                      <label style={{ ...styles.label, textAlign: "left" as const }}>Código PIX copia e cola</label>
+                      <textarea style={styles.code} readOnly value={CHECKOUT.pixCopyPaste || "Informe o código PIX em CHECKOUT.pixCopyPaste"} />
+                    </>
+                  ) : (
+                    <div style={{ padding: 18, borderRadius: 14, background: "#f3f3f3", color: "#777", fontSize: 13 }}>
+                      Valor do PIX definido como R$ 0,00.
+                    </div>
+                  )}
                 </div>
               </div>
-
-              <div style={styles.panel}>
-                <div style={styles.panelTitle}>PIX</div>
-                <p style={styles.panelText}>
-                  Valor no PIX: <strong style={{ color: "#111" }}>{money(pixAmount)}</strong>
-                </p>
-
-                {pixAmount > 0 ? (
-                  <>
-                    {CHECKOUT.pixQrImage ? (
-                      <img src={CHECKOUT.pixQrImage} alt="QR Code PIX" style={styles.qr} />
-                    ) : (
-                      <div style={styles.qrPlaceholder}>
-                        QR CODE PIX<br />aguardando o arquivo
-                      </div>
-                    )}
-
-                    <label style={styles.label}>Código PIX copia e cola</label>
-                    <textarea
-                      style={styles.code}
-                      readOnly
-                      value={CHECKOUT.pixCopyPaste || "Informe o código PIX em CHECKOUT.pixCopyPaste"}
-                    />
-                  </>
-                ) : (
-                  <div style={{ padding: 18, borderRadius: 14, background: "#f3f3f3", color: "#777", fontSize: 13 }}>
-                    Valor do PIX definido como R$ 0,00.
-                  </div>
-                )}
-              </div>
-            </div>
-
+            )}
             <div style={styles.total}>
               <span style={{ fontWeight: 700, color: "#666" }}>Total da inscrição</span>
               <strong style={{ fontSize: 27 }}>{money(CHECKOUT.price)}</strong>
