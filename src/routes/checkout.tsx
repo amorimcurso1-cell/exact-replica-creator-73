@@ -16,7 +16,7 @@ const CHECKOUT = {
   bannerTexts: ["O NOVO JOGO", "0 AO 100K FACIL", "APROVEITA A OPORTUNIDADE"],
 };
 
-type PaymentMethod = "pix" | "card" | "boleto";
+type PaymentMethod = "card" | "pix";
 
 const styles = {
   page: {
@@ -114,7 +114,7 @@ const styles = {
   form: { padding: "30px clamp(20px,4vw,38px) 34px" } as React.CSSProperties,
   sectionTitle: { margin: 0, fontSize: 27, fontWeight: 900 } as React.CSSProperties,
   muted: { margin: "7px 0 0", color: "#6f6f6f", fontSize: 14 } as React.CSSProperties,
-  methodRow: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, margin: "24px 0 20px" } as React.CSSProperties,
+  methodRow: { display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 10, margin: "24px 0 20px" } as React.CSSProperties,
   method: {
     border: "1px solid #dfdfdf",
     borderRadius: 14,
@@ -217,7 +217,7 @@ export const Route = createFileRoute("/checkout")({
 });
 
 function CheckoutPage() {
-  const [method, setMethod] = useState<PaymentMethod>("pix");
+  const [method, setMethod] = useState<PaymentMethod>("card");
   const [secondsLeft, setSecondsLeft] = useState(59 * 60 + 59);
 
   useEffect(() => {
@@ -277,9 +277,8 @@ function CheckoutPage() {
 
             <div style={styles.methodRow}>
               {([
-                ["pix", "PIX"],
                 ["card", "Cartão"],
-                ["boleto", "Boleto"],
+                ["pix", "PIX"],
               ] as const).map(([value, label]) => (
                 <button
                   key={value}
@@ -328,34 +327,76 @@ function CheckoutPage() {
             )}
 
             {method === "card" && (
-              <div style={styles.panel}>
-                <div style={styles.panelTitle}>Pagamento com cartão</div>
-
-                <label style={styles.label}>Número do cartão</label>
-                <input style={styles.input} placeholder="0000 0000 0000 0000" />
-
-                <div style={styles.grid2}>
+              <div style={{ ...styles.panel, background: "#fff", border: "1px solid #e7e7e7", boxShadow: "0 14px 32px rgba(0,0,0,.07)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, marginBottom: 14 }}>
                   <div>
-                    <label style={styles.label}>Validade</label>
-                    <input style={styles.input} placeholder="MM/AA" />
+                    <div style={styles.panelTitle}>Dados do cartão</div>
+                    <p style={{ ...styles.panelText, margin: 0 }}>Preencha os dados para finalizar sua inscrição.</p>
                   </div>
-                  <div>
-                    <label style={styles.label}>CVV</label>
-                    <input style={styles.input} placeholder="123" />
+                  <div style={{ fontSize: 12, fontWeight: 900, color: "#666" }}>🔒 Seguro</div>
+                </div>
+
+                <div style={{
+                  borderRadius: 18,
+                  padding: 18,
+                  background: "linear-gradient(135deg,#151515 0%,#2a2a2a 100%)",
+                  color: "#fff",
+                  boxShadow: "0 16px 28px rgba(0,0,0,.16)",
+                  marginBottom: 18,
+                }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+                    <span style={{ fontSize: 11, letterSpacing: ".14em", opacity: .65 }}>CARTÃO</span>
+                    <span style={{ fontSize: 12, fontWeight: 800, color: "#ff7a30" }}>12x de R$ 5,00</span>
+                  </div>
+                  <div style={{ marginTop: 34, fontFamily: "monospace", fontSize: 18, letterSpacing: ".12em" }}>
+                    •••• •••• •••• ••••
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 18, fontSize: 11, opacity: .75 }}>
+                    <span>NOME NO CARTÃO</span>
+                    <span>MM/AA</span>
                   </div>
                 </div>
 
-                <label style={styles.label}>Nome no cartão</label>
-                <input style={styles.input} placeholder="Nome impresso no cartão" />
-              </div>
-            )}
+                <label style={styles.label}>Número do cartão</label>
+                <input
+                  style={{ ...styles.input, fontSize: 17, letterSpacing: ".08em" }}
+                  placeholder="0000 0000 0000 0000"
+                  inputMode="numeric"
+                  autoComplete="cc-number"
+                />
 
-            {method === "boleto" && (
-              <div style={styles.panel}>
-                <div style={styles.panelTitle}>Pagamento via boleto</div>
-                <p style={styles.panelText}>
-                  Ao continuar, o ambiente de pagamento disponibiliza a opção de boleto para emissão.
-                </p>
+                <label style={styles.label}>Nome no cartão</label>
+                <input
+                  style={styles.input}
+                  placeholder="Nome como aparece no cartão"
+                  autoComplete="cc-name"
+                />
+
+                <div style={styles.grid2}>
+                  <div>
+                    <label style={styles.label}>Mês / Ano</label>
+                    <input
+                      style={styles.input}
+                      placeholder="MM / AA"
+                      inputMode="numeric"
+                      autoComplete="cc-exp"
+                    />
+                  </div>
+                  <div>
+                    <label style={styles.label}>Código de segurança</label>
+                    <input
+                      style={styles.input}
+                      placeholder="CVV"
+                      inputMode="numeric"
+                      autoComplete="cc-csc"
+                    />
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", paddingTop: 4 }}>
+                  <span style={{ fontSize: 12, color: "#777" }}>Parcelamento escolhido</span>
+                  <strong style={{ color: "#111", fontSize: 15 }}>12x de R$ 5,00</strong>
+                </div>
               </div>
             )}
 
