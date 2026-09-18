@@ -390,27 +390,72 @@
     }
   }
 
-  /* Separar o texto "É um treinamento completo" da imagem dos dispositivos */
-  .elementor-element-7289298{
-    position:relative!important;
-    z-index:2!important;
-    margin-top:125px!important;
-    width:100%!important;
-  }
-  .elementor-element-aa8cff5{
-    position:relative!important;
-    z-index:3!important;
-    margin-top:0!important;
-    width:min(940px,92vw)!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
-  }
-  @media(max-width:700px){
+  /* Ajuste fino para computador: separar totalmente o texto da imagem */
+  @media(min-width:1024px){
+    html,body{
+      overflow-x:hidden!important;
+    }
+    .elementor > .e-con.e-parent{
+      width:100%!important;
+      max-width:100%!important;
+      box-sizing:border-box!important;
+    }
+    .elementor-element-6a282cb{
+      width:100%!important;
+      max-width:1180px!important;
+      margin-left:auto!important;
+      margin-right:auto!important;
+      box-sizing:border-box!important;
+    }
+    .elementor-element-e964a3d{
+      width:min(880px,78vw)!important;
+      margin-left:auto!important;
+      margin-right:auto!important;
+    }
+    .elementor-element-60d7a7b{
+      width:min(820px,78vw)!important;
+      max-width:820px!important;
+      margin-top:165px!important;
+      margin-left:auto!important;
+      margin-right:auto!important;
+      overflow:visible!important;
+    }
+    .elementor-element-60d7a7b img{
+      width:100%!important;
+      max-width:100%!important;
+      height:auto!important;
+      display:block!important;
+      margin:0 auto!important;
+    }
     .elementor-element-7289298{
-      margin-top:90px!important;
+      width:min(1000px,90vw)!important;
+      margin:150px auto 0!important;
+      position:relative!important;
+      z-index:8!important;
+      clear:both!important;
     }
     .elementor-element-aa8cff5{
-      width:94vw!important;
+      width:min(960px,88vw)!important;
+      max-width:960px!important;
+      margin:24px auto 0!important;
+      position:relative!important;
+      z-index:9!important;
+      clear:both!important;
+    }
+    .elementor-element-aa8cff5 .elementor-heading-title{
+      max-width:900px!important;
+      margin-left:auto!important;
+      margin-right:auto!important;
+      text-align:center!important;
+    }
+  }
+
+  @media(min-width:1024px) and (max-width:1280px){
+    .elementor-element-60d7a7b{
+      margin-top:145px!important;
+    }
+    .elementor-element-7289298{
+      margin-top:130px!important;
     }
   }
 
