@@ -348,20 +348,23 @@
   }
   .ng-device-stage .ng-device-label{
     position:absolute!important;
-    top:12%!important;
-    right:13%!important;
+    top:7%!important;
+    right:18%!important;
     z-index:6!important;
-    padding:7px 14px!important;
-    border:1px solid rgba(255,255,255,.22)!important;
-    border-radius:999px!important;
-    background:rgba(0,0,0,.34)!important;
-    box-shadow:0 8px 22px rgba(0,0,0,.28),0 0 22px rgba(249,79,23,.12)!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
     color:#fff!important;
-    font:700 13px/1 "Barlow Condensed",Arial,sans-serif!important;
-    letter-spacing:2px!important;
+    font:800 15px/1 "Barlow Condensed",Arial,sans-serif!important;
+    letter-spacing:2.2px!important;
     text-transform:uppercase!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+    text-shadow:0 3px 14px rgba(0,0,0,.6),0 0 14px rgba(249,79,23,.22)!important;
     opacity:0!important;
-    transform:translateY(10px)!important;
+    transform:translate(50%,-2px)!important;
   }
   .ng-device-stage.ng-device-ready .ng-device-label{
     animation:ngLabelEnter .7s .35s cubic-bezier(.22,.61,.36,1) forwards!important;
