@@ -151,44 +151,41 @@
     }
   }
 
-  /* Galeria das novas aulas: abaixo do CTA principal */
+  /* Galeria das novas aulas: logo depois de "O que você recebe dentro do curso" */
   .ng-module-gallery{
     width:min(100%,1180px)!important;
-    margin:36px auto 56px!important;
-    padding:0 18px!important;
+    margin:26px auto 52px!important;
+    padding:0 14px!important;
     position:relative!important;
     z-index:15!important;
+    opacity:1!important;
   }
   .ng-module-gallery__viewport{
     width:100%!important;
     overflow:hidden!important;
-    padding:10px 2px 18px!important;
+    padding:8px 0 18px!important;
+    -webkit-mask-image:linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%);
+    mask-image:linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%);
   }
   .ng-module-gallery__track{
-    display:grid!important;
-    grid-template-columns:repeat(4,minmax(0,1fr))!important;
-    gap:16px!important;
+    display:flex!important;
+    width:max-content!important;
+    gap:14px!important;
     align-items:stretch!important;
+    animation:ngModuleMarquee 34s linear infinite!important;
+    will-change:transform!important;
+  }
+  .ng-module-gallery__viewport:hover .ng-module-gallery__track{
+    animation-play-state:paused!important;
   }
   .ng-module-gallery__card{
-    display:block!important;
-    min-width:0!important;
+    width:220px!important;
+    flex:0 0 220px!important;
     border-radius:16px!important;
     overflow:hidden!important;
-    border:1px solid rgba(249,79,23,.28)!important;
+    border:1px solid rgba(249,79,23,.26)!important;
     background:#090909!important;
-    box-shadow:0 14px 34px rgba(0,0,0,.36),0 0 22px rgba(249,79,23,.07)!important;
-    transform:translateY(28px)!important;
-    opacity:0!important;
-    transition:opacity .7s ease,transform .7s ease,box-shadow .3s ease!important;
-  }
-  .ng-module-gallery.ng-module-gallery--in .ng-module-gallery__card{
-    opacity:1!important;
-    transform:none!important;
-  }
-  .ng-module-gallery__card:hover{
-    transform:translateY(-5px)!important;
-    box-shadow:0 20px 44px rgba(0,0,0,.45),0 0 28px rgba(249,79,23,.14)!important;
+    box-shadow:0 14px 34px rgba(0,0,0,.34),0 0 20px rgba(249,79,23,.07)!important;
   }
   .ng-module-gallery__card img{
     display:block!important;
@@ -197,30 +194,23 @@
     aspect-ratio:2/3!important;
     object-fit:cover!important;
   }
-  @media(max-width:900px){
-    .ng-module-gallery__track{
-      display:flex!important;
-      width:max-content!important;
-      gap:12px!important;
-    }
-    .ng-module-gallery__card{
-      width:220px!important;
-      flex:0 0 220px!important;
-    }
-    .ng-module-gallery__viewport{
-      overflow-x:auto!important;
-      scrollbar-width:none!important;
-    }
-    .ng-module-gallery__viewport::-webkit-scrollbar{display:none!important}
+  @keyframes ngModuleMarquee{
+    from{transform:translate3d(0,0,0)}
+    to{transform:translate3d(-50%,0,0)}
   }
-  @media(max-width:700px){
+  @media(max-width:767px){
     .ng-module-gallery{
-      margin:28px auto 44px!important;
-      padding:0 12px!important;
+      width:100%!important;
+      margin:20px auto 42px!important;
+      padding:0 8px!important;
+    }
+    .ng-module-gallery__track{
+      gap:10px!important;
+      animation-duration:28s!important;
     }
     .ng-module-gallery__card{
-      width:188px!important;
-      flex-basis:188px!important;
+      width:170px!important;
+      flex-basis:170px!important;
       border-radius:13px!important;
     }
   }
@@ -357,23 +347,29 @@
 
   function addModuleGallery(){
     if(document.querySelector('.ng-module-gallery'))return;
-    const button=[...document.querySelectorAll('.elementor-button-text')]
-      .find(el=>el.textContent.trim()==='QUERO DOMINAR AS VENDAS');
-    if(!button)return;
-    const widget=button.closest('.elementor-widget-button');
-    if(!widget)return;
+
+    const heading=[...document.querySelectorAll('.elementor-heading-title')]
+      .find(el=>(el.textContent||'').trim().toLowerCase()==='o que você recebe dentro do curso:');
+    if(!heading)return;
+
+    const anchorWidget=heading.closest('.elementor-element');
+    if(!anchorWidget)return;
+
     const gallery=document.createElement('section');
     gallery.className='ng-module-gallery';
     gallery.setAttribute('aria-label','Aulas atualizadas para 2026');
+
     const viewport=document.createElement('div');
     viewport.className='ng-module-gallery__viewport';
+
     const track=document.createElement('div');
     track.className='ng-module-gallery__track';
+
     const modules=['06','05','13','12','03','07','04','09'];
-    modules.forEach((num,idx)=>{
+
+    [...modules,...modules].forEach((num,idx)=>{
       const card=document.createElement('article');
       card.className='ng-module-gallery__card';
-      card.style.transitionDelay=(idx*0.06)+'s';
       const img=document.createElement('img');
       img.src='/images/'+num+'.webp';
       img.alt='Aula atualizada para 2026 — módulo '+num;
@@ -381,18 +377,21 @@
       card.appendChild(img);
       track.appendChild(card);
     });
+
     viewport.appendChild(track);
     gallery.appendChild(viewport);
-    widget.insertAdjacentElement('afterend',gallery);
+
+    const parent=anchorWidget.parentElement;
+    (parent||anchorWidget).insertAdjacentElement('afterend',gallery);
 
     const reveal=()=>{
-      const rect=gallery.getBoundingClientRect();
-      if(rect.top < window.innerHeight*.9){
+      if(gallery.getBoundingClientRect().top < window.innerHeight*.95){
         gallery.classList.add('ng-module-gallery--in');
         return true;
       }
       return false;
     };
+
     if('IntersectionObserver' in window){
       const io=new IntersectionObserver(entries=>{
         entries.forEach(entry=>{
@@ -401,7 +400,7 @@
             io.disconnect();
           }
         });
-      },{threshold:.08});
+      },{threshold:.03});
       io.observe(gallery);
     }else reveal();
   }
