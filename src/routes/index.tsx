@@ -333,6 +333,7 @@ html,body{
   background:transparent !important;
   border:0 !important;
   box-shadow:0 24px 60px rgba(249,79,23,.16) !important;
+  filter:brightness(.72) contrast(1.15) saturate(1.18) !important;
   transform:none !important;
   animation:nextgenTabletOriginalFloat 3s ease-in-out infinite !important;
   will-change:transform !important;
