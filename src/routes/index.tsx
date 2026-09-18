@@ -257,6 +257,15 @@ html,body{
   display:none !important;
 }
 /* Área dos dispositivos: uma única camada sobre o fundo preto */
+/* Espaço visual para a imagem dos dispositivos antes da próxima seção */
+.elementor-element-6a282cb{
+  padding-top:55px !important;
+  padding-bottom:115px !important;
+  margin-bottom:10px !important;
+}
+.elementor-element-60d7a7b{
+  margin-bottom:20px !important;
+}
 .elementor-element-6a282cb,
 .elementor-element-6a282cb > .e-con-inner,
 .elementor-element-e964a3d,
@@ -310,9 +319,15 @@ html,body{
   }
 }
 @media (max-width:767px){
+  .elementor-element-6a282cb{
+    padding-top:35px !important;
+    padding-bottom:90px !important;
+    margin-bottom:8px !important;
+  }
   .elementor-element-60d7a7b{
     width:min(560px,94vw) !important;
     max-width:94vw !important;
+    margin-bottom:18px !important;
   }
 }
 @media (prefers-reduced-motion:reduce){
