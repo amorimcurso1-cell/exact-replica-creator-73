@@ -192,7 +192,13 @@ html,body{
 })();
 </script>`;
 
-const enhancedSiteHtml = siteHtml.replace(/\+70/g, '+20').replace('<head>', `<head>${timerGuard}`).replace('</body>', `${countdownOverride}<script src="/site-enhancements.js"></script></body>`);
+const enhancedSiteHtml = siteHtml
+  .replace(/\+70/g, '+20')
+  .replace('<head>', `<head>
+<link rel="preconnect" href="https://i.postimg.cc" crossorigin>
+<link rel="preload" as="image" href="https://i.postimg.cc/NGC0ZFdq/Chat-GPT-Image-17-de-set-de-2026-21-26-07.png" fetchpriority="high">
+${timerGuard}`)
+  .replace('</body>', `${countdownOverride}<script src="/site-enhancements.js"></script></body>`);
 
 export const Route = createFileRoute("/")({
   head: () => ({
