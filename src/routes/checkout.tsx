@@ -18,7 +18,6 @@ const CHECKOUT = {
 
 const installmentOptions = Array.from({ length: 12 }, (_, index) => index + 1);
 const pixOptions = [15, 20, 25, 30];
-const cardImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Credit-card-1369111.svg/600px-Credit-card-1369111.svg.png";
 type PaymentMode = "pix" | "card" | "split";
 
 const money = (value: number) =>
@@ -96,8 +95,48 @@ const styles = {
     maxWidth: 430,
   } as React.CSSProperties,
   orange: { color: "#f94f17" } as React.CSSProperties,
-  price: { marginTop: 22, fontSize: "clamp(40px,5vw,58px)", lineHeight: 1, fontWeight: 900 } as React.CSSProperties,
-  small: { marginTop: 8, color: "rgba(255,255,255,.68)", fontSize: 14 } as React.CSSProperties,
+  installmentOffer: {
+    margin: "22px auto 0",
+    width: "min(100%,330px)",
+    padding: "18px 20px 16px",
+    borderRadius: 20,
+    border: "1px solid rgba(255,255,255,.12)",
+    background: "linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02))",
+    boxShadow: "0 14px 34px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.05)",
+    textAlign: "left" as const,
+  } as React.CSSProperties,
+  installmentEyebrow: {
+    color: "rgba(255,255,255,.55)",
+    fontSize: 10,
+    fontWeight: 900,
+    letterSpacing: ".16em",
+    marginBottom: 7,
+  } as React.CSSProperties,
+  installmentMain: {
+    display: "flex",
+    alignItems: "baseline",
+    gap: 10,
+  } as React.CSSProperties,
+  installmentCount: {
+    fontSize: "clamp(34px,5vw,48px)",
+    lineHeight: 1,
+    fontWeight: 900,
+    color: "#fff",
+  } as React.CSSProperties,
+  installmentCopy: {
+    display: "flex",
+    alignItems: "baseline",
+    gap: 7,
+    color: "rgba(255,255,255,.65)",
+    fontSize: 12,
+    fontWeight: 800,
+    letterSpacing: ".08em",
+  } as React.CSSProperties,
+  installmentSub: {
+    marginTop: 9,
+    color: "rgba(255,255,255,.68)",
+    fontSize: 13,
+  } as React.CSSProperties,
   timerBox: {
     margin: "0 auto 22px",
     padding: "16px 18px",
@@ -108,7 +147,31 @@ const styles = {
     boxShadow: "inset 0 1px 0 rgba(255,255,255,.04),0 12px 30px rgba(0,0,0,.18)",
   } as React.CSSProperties,
   timerLabel: { color: "rgba(255,255,255,.62)", fontSize: 11, marginBottom: 8, textTransform: "uppercase", letterSpacing: ".12em", fontWeight: 800 } as React.CSSProperties,
-  timer: { fontSize: "clamp(38px,6vw,54px)", lineHeight: 1, fontWeight: 900, letterSpacing: ".12em", fontVariantNumeric: "tabular-nums", textShadow: "0 0 24px rgba(249,79,23,.18)" } as React.CSSProperties,
+  timerDisplay: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 7,
+    fontVariantNumeric: "tabular-nums",
+  } as React.CSSProperties,
+  timerDigit: {
+    display: "inline-grid",
+    placeItems: "center",
+    minWidth: 76,
+    height: 64,
+    borderRadius: 12,
+    background: "linear-gradient(180deg,#151515,#090909)",
+    border: "1px solid rgba(255,255,255,.1)",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,.04),0 8px 22px rgba(0,0,0,.18)",
+    fontSize: "clamp(34px,5vw,50px)",
+    fontWeight: 900,
+    letterSpacing: ".04em",
+  } as React.CSSProperties,
+  timerColon: {
+    fontSize: 34,
+    fontWeight: 900,
+    color: "#f94f17",
+  } as React.CSSProperties,
   form: { padding: "28px clamp(18px,4vw,38px) 34px" } as React.CSSProperties,
   sectionTitle: { margin: 0, fontSize: 27, fontWeight: 900, textAlign: "center" as const } as React.CSSProperties,
   muted: { margin: "7px 0 0", color: "#6f6f6f", fontSize: 14, textAlign: "center" as const } as React.CSSProperties,
@@ -267,22 +330,27 @@ function CheckoutPage() {
           <aside style={styles.summary}>
             <div style={styles.timerBox}>
               <div style={styles.timerLabel}>Tempo reservado para concluir o pagamento</div>
-              <div style={styles.timer}>{minutes}:{seconds}</div>
+              <div style={styles.timerDisplay}>
+                <span style={styles.timerDigit}>{minutes}</span>
+                <span style={styles.timerColon}>:</span>
+                <span style={styles.timerDigit}>{seconds}</span>
+              </div>
             </div>
 
             <h1 style={styles.title}>
               Garanta seu acesso à <span style={styles.orange}>mentoria</span>
             </h1>
 
-            <div style={styles.price}>12x de R$ 5,00</div>
-            <div style={styles.small}>
-              Ou R$ 59,98 à vista • Você pode combinar PIX e Cartão como preferir.
-            </div>
-
-            <div style={{ marginTop: 26, display: "grid", gap: 10, textAlign: "left" as const }}>
-              {["Pagamento com PIX + Cartão", "Parcelamento no cartão", "Ambiente seguro"].map((item) => (
-                <div key={item} style={{ color: "rgba(255,255,255,.84)", fontSize: 14 }}>✓ {item}</div>
-              ))}
+            <div style={styles.installmentOffer}>
+              <div style={styles.installmentEyebrow}>OFERTA ESPECIAL</div>
+              <div style={styles.installmentMain}>
+                <span style={styles.installmentCount}>12X</span>
+                <span style={styles.installmentCopy}>
+                  <span>DE</span>
+                  <strong style={{ color: "#f94f17", fontSize: "clamp(28px,4vw,42px)", lineHeight: 1 }}>R$ 5,00</strong>
+                </span>
+              </div>
+              <div style={styles.installmentSub}>Ou R$ 59,98 à vista</div>
             </div>
           </aside>
 
@@ -380,18 +448,6 @@ function CheckoutPage() {
             {paymentMode === "card" && (
               <div style={{ ...styles.panel, background: "#fff" }}>
                 <div style={styles.panelTitle}>Pagamento com cartão</div>
-                <img
-                  src={cardImageUrl}
-                  alt="Cartão de crédito"
-                  style={{
-                    display: "block",
-                    width: "min(260px,100%)",
-                    height: "auto",
-                    margin: "4px auto 18px",
-                    borderRadius: 14,
-                  }}
-                />
-
                 <label style={styles.label}>Número do cartão</label>
                 <input
                   style={{ ...styles.input, fontSize: 17, letterSpacing: ".08em" }}
