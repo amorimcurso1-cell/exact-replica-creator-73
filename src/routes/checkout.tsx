@@ -274,9 +274,9 @@ function CheckoutPage() {
               Garanta seu acesso à <span style={styles.orange}>mentoria</span>
             </h1>
 
-            <div style={styles.price}>{money(CHECKOUT.price)}</div>
+            <div style={styles.price}>12x de R$ 5,00</div>
             <div style={styles.small}>
-              Você pode combinar PIX e Cartão como preferir.
+              Ou R$ 59,98 à vista • Você pode combinar PIX e Cartão como preferir.
             </div>
 
             <div style={{ marginTop: 26, display: "grid", gap: 10, textAlign: "left" as const }}>
