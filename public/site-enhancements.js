@@ -72,6 +72,9 @@
     white-space:nowrap!important;
   }
   #faixas-secao .elementor-icon-list-icon,
+  #faixas-secao .elementor-icon-list-icon{
+    display:none!important;
+  }
   #faixas-secao .elementor-icon-list-text{
     display:inline-flex!important;
     align-items:center!important;
@@ -112,6 +115,15 @@
     }
     #faixas-secao .elementor-icon-list-icon{
       margin-inline-end:9px!important;
+    }
+  }
+
+  .elementor-element-60d7a7b{
+    margin-top:42px !important;
+  }
+  @media(max-width:700px){
+    .elementor-element-60d7a7b{
+      margin-top:28px !important;
     }
   }
 
