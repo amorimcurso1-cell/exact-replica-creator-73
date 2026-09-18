@@ -184,7 +184,7 @@ function CheckoutPage() {
           <Link to="/" style={styles.back}>← Voltar para a página</Link>
         </div>
 
-        <section style={styles.card}>
+        <section className="checkout-card" style={styles.card}>
           <aside style={styles.summary}>
             <div style={styles.badge}>Inscrição</div>
             <h1 style={styles.title}>
