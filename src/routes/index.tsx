@@ -266,33 +266,68 @@ html,body{
 .elementor-element-60d7a7b{
   margin-bottom:20px !important;
 }
+/* Dispositivos: mesmo fundo do site, centralizados e com o efeito de subida/descida */
 .elementor-element-6a282cb,
 .elementor-element-6a282cb > .e-con-inner,
 .elementor-element-e964a3d,
 .elementor-element-60d7a7b,
 .elementor-element-60d7a7b > .elementor-widget-container{
-  background:#000 !important;
+  background:transparent !important;
   background-image:none !important;
   box-shadow:none !important;
 }
-.elementor-element-6a282cb::before,
+.elementor-element-6a282cb{
+  position:relative !important;
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  width:100% !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  overflow:visible !important;
+}
+.elementor-element-6a282cb::before{
+  content:"" !important;
+  position:absolute !important;
+  left:50% !important;
+  top:50% !important;
+  width:min(760px,92vw) !important;
+  height:440px !important;
+  transform:translate(-50%,-50%) !important;
+  background:radial-gradient(circle,rgba(249,79,23,.22) 0%,rgba(249,79,23,.10) 32%,rgba(249,79,23,0) 72%) !important;
+  filter:blur(18px) !important;
+  pointer-events:none !important;
+  z-index:0 !important;
+}
 .elementor-element-6a282cb::after{
   content:none !important;
-  display:none !important;
 }
 .elementor-element-60d7a7b{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
   width:min(733px,88vw) !important;
   max-width:733px !important;
   margin-left:auto !important;
   margin-right:auto !important;
   transform:none !important;
   overflow:visible !important;
+  position:relative !important;
+  z-index:1 !important;
+}
+.elementor-element-60d7a7b .elementor-widget-container{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  width:100% !important;
 }
 .elementor-element-60d7a7b img{
   display:block !important;
   width:100% !important;
   max-width:100% !important;
   height:auto !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
   object-fit:contain !important;
   object-position:center center !important;
   background:transparent !important;
@@ -323,11 +358,23 @@ html,body{
     padding-top:35px !important;
     padding-bottom:90px !important;
     margin-bottom:8px !important;
+    padding-left:0 !important;
+    padding-right:0 !important;
+  }
+  .elementor-element-6a282cb::before{
+    width:115vw !important;
+    height:360px !important;
   }
   .elementor-element-60d7a7b{
     width:min(560px,94vw) !important;
     max-width:94vw !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
     margin-bottom:18px !important;
+  }
+  .elementor-element-60d7a7b img{
+    width:100% !important;
+    max-width:100% !important;
   }
 }
 @media (prefers-reduced-motion:reduce){
