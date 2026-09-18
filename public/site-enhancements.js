@@ -72,8 +72,9 @@
     white-space:nowrap!important;
   }
   #faixas-secao .elementor-icon-list-icon,
-  #faixas-secao .elementor-icon-list-icon{
-    display:none!important;
+  #faixas-secao .elementor-icon-list-text{
+    display:inline-flex!important;
+    align-items:center!important;
   }
   #faixas-secao .elementor-icon-list-text{
     display:inline-flex!important;
@@ -128,7 +129,9 @@
   }
 
   /* Remover as duas faixas finais do Manual do Milhão */
-  .elementor-element-832a124{
+  /* Remover os dois blocos decorativos finais da página */
+  .elementor-element-19a582c,
+  .elementor-element-b4693e5{
     display:none!important;
     height:0!important;
     min-height:0!important;
