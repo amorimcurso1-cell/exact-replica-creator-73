@@ -305,8 +305,8 @@ function CheckoutPage() {
             <div style={styles.methodRow}>
               {([
                 ["card", "💳 Cartão"],
-                ["pix", "⚡ PIX"],
-                ["split", "💳 + ⚡ Cartão + PIX"],
+                ["pix", "PIX"],
+                ["split", "💳 + PIX"],
               ] as const).map(([value, label]) => (
                 <button
                   key={value}
@@ -315,7 +315,24 @@ function CheckoutPage() {
                   style={{ ...styles.method, ...(paymentMode === value ? styles.activeMethod : {}) }}
                   aria-pressed={paymentMode === value}
                 >
-                  {label}
+                  {value === "pix" ? (
+                    <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+                      <span aria-hidden="true" style={{
+                        display: "inline-flex",
+                        width: 20,
+                        height: 20,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: 5,
+                        background: "#32bcad",
+                        color: "#fff",
+                        fontWeight: 900,
+                        fontSize: 11,
+                        lineHeight: 1,
+                      }}>P</span>
+                      PIX
+                    </span>
+                  ) : label}
                 </button>
               ))}
             </div>
@@ -443,7 +460,7 @@ function CheckoutPage() {
 
             {paymentMode === "pix" && (
               <div style={{ ...styles.panel, background: "#fff", textAlign: "center" as const }}>
-                <div style={styles.panelTitle}>⚡ Pagamento com PIX</div>
+                <div style={styles.panelTitle}>PIX</div>
                 {CHECKOUT.pixQrImage ? (
                   <img src={CHECKOUT.pixQrImage} alt="QR Code PIX" style={styles.qr} />
                 ) : (
@@ -489,7 +506,7 @@ function CheckoutPage() {
                 </div>
 
                 <div style={{ ...styles.panel, background: "#fff", textAlign: "center" as const }}>
-                  <div style={styles.panelTitle}>⚡ PIX</div>
+                  <div style={styles.panelTitle}>PIX</div>
                   <p style={styles.panelText}>Valor no PIX: <strong style={{ color: "#111" }}>{money(pixAmount)}</strong></p>
                   {pixAmount > 0 ? (
                     <>
