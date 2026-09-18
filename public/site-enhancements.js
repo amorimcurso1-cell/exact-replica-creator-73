@@ -127,6 +127,10 @@
     }
   }
 
+  /* Remover carrossel antigo de imagens abaixo dos benefícios */
+  .elementor-element-36758a8{
+    display:none!important;
+  }
   /* Ajustes finais de feedback */
   .ng-live-feedbacks{
     width:min(100%,360px)!important;
@@ -216,8 +220,9 @@
   }
 
   /* Nome do professor sobre a imagem e entrada suave do bloco */
-  .ng-device-stage{
+   .ng-device-stage{
     position:relative!important;
+    margin-top:70px!important;
     opacity:0!important;
     transform:translate3d(0,38px,0) scale(.985)!important;
   }
@@ -253,6 +258,9 @@
     to{opacity:1;transform:none}
   }
   @media(max-width:700px){
+    .ng-device-stage{
+      margin-top:45px!important;
+    }
     .ng-device-stage .ng-device-label{
       top:13%!important;
       right:10%!important;
@@ -417,7 +425,7 @@
   }
 
   function initUniversalScrollEffects(){
-    const skip=new Set(['faixas-secao','comprar']);
+    const skip=new Set(['faixas-secao']);
     const elements=[...document.querySelectorAll('.elementor > .e-con.e-parent')];
     elements.forEach(section=>{
       if(skip.has(section.id)||section.classList.contains('ng-module-gallery'))return;
